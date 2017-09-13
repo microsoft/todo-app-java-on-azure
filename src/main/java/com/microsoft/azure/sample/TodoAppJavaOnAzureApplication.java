@@ -9,9 +9,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class AzureSpringBootSampleApplication {
+public class TodoAppJavaOnAzureApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(AzureSpringBootSampleApplication.class, args);
+        SpringApplication.run(TodoAppJavaOnAzureApplication.class, args);
     }
 }

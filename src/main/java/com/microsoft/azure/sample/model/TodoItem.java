@@ -12,7 +12,6 @@ import java.util.Objects;
 
 @Document(collection = "mycollection")
 public class TodoItem {
-    @Id
     private String id;
     private String description;
     private String owner;
