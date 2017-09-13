@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="theme-color" content="#000000" />
+    <title>Todo List App Java on Azure</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" />
+    <style>
+        .list-group-item { word-wrap: break-word; }
+        #todolist button { margin-left: 5px; }
+    </style>
+</head>
+<body ng-app="todoApp" ng-controller="homeCtrl" role="document">
+<nav class="navbar fixed-top navbar-expand-sm navbar-dark bg-dark">
+    <div class="container">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navBarToggler" aria-controls="navBarToggler" aria-expanded="false" aria-label="Azure Spring Boot Sample">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navBarToggler">
+            <a class="navbar-brand" href="#/Home">Todo List Java on Azure</a>
+            <ul class="navbar-nav">
+                <li ng-class="{ active: isActive('/Home') }"><a class="nav-link" href="#/Home">Home</a></li>
+                <li ng-class="{ active: isActive('/TodoList') }"><a class="nav-link" href="#/TodoList">Todo List</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container" role="main" style="margin-top: 80px !important;">
+    <div ng-view class="panel-body">
+</div>
+</div>
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular.min.js"></script>
+<script src="https://code.angularjs.org/1.2.25/angular-route.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
+<script src="Scripts/app.js"></script>
+<script src="Scripts/homeCtrl.js"></script>
+<script src="Scripts/todoListCtrl.js"></script>
+<script src="Scripts/todoListSvc.js"></script>
+</html>
