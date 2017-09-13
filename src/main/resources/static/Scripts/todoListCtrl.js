@@ -15,7 +15,7 @@ angular.module('todoApp')
 
         $scope.finishSwitch = function (todo) {
             todoListSvc.putItem(todo).error(function (err) {
-                todo.finish = !todo.finish;
+                todo.finished = !todo.finished;
                 $scope.error = err;
                 $scope.loadingMessage = '';
             })
@@ -26,7 +26,7 @@ angular.module('todoApp')
             if (todo.edit) {
                 $scope.editInProgressTodo.description = todo.description;
                 $scope.editInProgressTodo.id = todo.id;
-                $scope.editInProgressTodo.finish = todo.finish;
+                $scope.editInProgressTodo.finished = todo.finished;
                 $scope.editingInProgress = true;
             } else {
                 $scope.editingInProgress = false;

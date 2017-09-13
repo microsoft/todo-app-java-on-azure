@@ -15,7 +15,7 @@ public class TodoItem {
     private String id;
     private String description;
     private String owner;
-    private boolean finish;
+    private boolean finished;
 
     public TodoItem() {
     }
@@ -24,15 +24,15 @@ public class TodoItem {
         this.description = description;
         this.id = id;
         this.owner = owner;
-        this.finish = false;
+        this.finished = false;
     }
 
-    public boolean isFinish() {
-        return finish;
+    public boolean isFinished() {
+        return finished;
     }
 
-    public void setFinish(boolean finish) {
-        this.finish = finish;
+    public void setFinish(boolean finished) {
+        this.finished = finished;
     }
 
     public String getDescription() {

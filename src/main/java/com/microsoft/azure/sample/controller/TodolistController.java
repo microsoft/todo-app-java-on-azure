@@ -19,12 +19,12 @@ import java.util.Map;
 import java.util.UUID;
 
 @RestController
-public class TodolistController {
+public class TodoListController {
 
     @Autowired
     private TodoItemRepository todoItemRepository;
 
-    public TodolistController() {
+    public TodoListController() {
     }
 
     @RequestMapping("/home")
