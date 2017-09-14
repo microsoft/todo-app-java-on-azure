@@ -61,6 +61,7 @@
                             <failsOnError>true</failsOnError>
                             <failOnViolation>true</failOnViolation>
                             <includeTestSourceDirectory>true</includeTestSourceDirectory>
+                            <resourceIncludes>**/*</resourceIncludes>
                         </configuration>
                         <goals>
                             <goal>check</goal>
