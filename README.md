@@ -5,6 +5,8 @@ This TodoList app uses Azure DocumentDB spring boot starter and AngularJS to int
 ## Requirements
 
 * Azure Cosmos DB DocumentDB([create one](https://docs.microsoft.com/en-us/azure/cosmos-db/create-documentdb-java))
+* Azure Container Service with Kubernetes cluster ([create one](https://docs.microsoft.com/en-us/azure/container-service/kubernetes/container-service-kubernetes-walkthrough))
+* Azure Container Registry([cresate one](https://docs.microsoft.com/en-us/azure/container-service/kubernetes/container-service-tutorial-kubernetes-prepare-acr))
 * [JDK](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html) 1.8 and above
 * [Maven](https://maven.apache.org/) 3.0 and above
 
@@ -17,12 +19,50 @@ This TodoList app uses Azure DocumentDB spring boot starter and AngularJS to int
     azure.documentdb.key=put-your-documentdb-key-here
     azure.documentdb.database=put-your-documentdb-databasename-here
     ``` 
+    
+* Modify `~/.m2/settings.xml` to add server information
+
+    ```xml
+    <server>
+      <id>put-your-docker-registry-url</id>
+      <username>put-your-docker-username</username>
+      <password>put-your-docker-key</password>
+      <configuration>
+        <email>put-your-email</email>
+      </configuration>
+    </server>
+    ```
+    
+* Modify `pom.xml`'s properties field
+
+    ```xml
+    <docker.image.prefix>put-your-docker-registry-url</docker.image.prefix>
+    ```
+    
 
 ## Run it
 
 1. `mvn package`
-1. `java -jar target/todo-app-java-on-azure-0.0.1-SNAPSHOT.jar`
-1. Open `http://localhost:8080` you can see the web pages to show the todo list app
+1. Build docker image and push it
+
+    ```bash
+    mvn docker:build docker:push
+    ```
+1. Deploy the image to your kubernetes cluster
+
+    ```bash
+    mvn fabric8:resource fabric8:apply
+    ```
+ 
+1. Wait about one minutes to deploy. Get the service external url by running:
+
+    ```bash
+    kubectl get svc
+    ```
+    
+    > If the deployment hasn't finished yet, the external url field will show `pending`
+    
+1. Open external url obtained in last you can see the web pages to show the todo list app
 
 ## Contributing
 
