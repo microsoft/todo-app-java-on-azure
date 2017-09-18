@@ -1,5 +1,7 @@
 # Todo App Java On Azure
 
+This TodoList app uses Azure DocumentDB spring boot starter and AngularJS to interact with Azure.
+
 ## Requirements
 
 * Azure Cosmos DB DocumentDB([create one](https://docs.microsoft.com/en-us/azure/cosmos-db/create-documentdb-java))
@@ -20,6 +22,7 @@
 
 1. `mvn package`
 1. `java -jar target/todo-app-java-on-azure-0.0.1-SNAPSHOT.jar`
+1. Open `http://localhost:8080` you can see the web pages to show the todo list app
 
 ## Contributing
 
