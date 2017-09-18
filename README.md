@@ -1,5 +1,27 @@
+# Todo App Java On Azure
 
-# Contributing
+## Requirements
+
+* Azure Document DB
+* JDK 1.8 and above
+* Maven 3.0 and above
+
+## Configuration
+
+* Modify `src/main/resources/application.properties` file and save it
+
+    ``` txt
+    azure.documentdb.uri=put-your-documentdb-uri-here
+    azure.documentdb.key=put-your-documentdb-key-here
+    azure.documentdb.database=put-your-documentdb-databasename-here
+    ``` 
+
+## Run it
+
+1. `mvn package`
+1. `java -jar target/todo-app-java-on-azure-0.0.1-SNAPSHOT.jar`
+
+## Contributing
 
 This project welcomes contributions and suggestions.  Most contributions require you to agree to a
 Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us
