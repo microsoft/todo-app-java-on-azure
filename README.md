@@ -2,9 +2,9 @@
 
 ## Requirements
 
-* Azure Document DB
-* JDK 1.8 and above
-* Maven 3.0 and above
+* Azure Cosmos DB DocumentDB([create one](https://docs.microsoft.com/en-us/azure/cosmos-db/create-documentdb-java))
+* [JDK](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html) 1.8 and above
+* [Maven](https://maven.apache.org/) 3.0 and above
 
 ## Configuration
 
