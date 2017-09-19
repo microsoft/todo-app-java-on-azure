@@ -76,7 +76,7 @@
                 <artifactId>fabric8-maven-plugin</artifactId>
                 <version>${plugin.fmp.version}</version>
                 <configuration>
-                    <ignoreServices>true</ignoreServices>
+                    <ignoreServices>false</ignoreServices>
                     <registry>${docker.image.prefix}</registry>
                 </configuration>
             </plugin>
