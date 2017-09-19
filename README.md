@@ -2,6 +2,10 @@
 
 This TodoList app uses Azure DocumentDB spring boot starter and AngularJS to interact with Azure.
 
+This branch show how to deploy the java project to kubernetes cluster using maven plugin.
+It firstly uses spotify maven plugin to builds a docker image and push the image to a private Azure Container Registry.
+Then, it uses fabric8 maven plugin to generate kubernetes resource yaml file and apply the yaml file to your cluster.
+
 ## Requirements
 
 * Azure Cosmos DB DocumentDB([create one](https://docs.microsoft.com/en-us/azure/cosmos-db/create-documentdb-java))
