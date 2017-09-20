@@ -4,6 +4,20 @@ This TodoList app uses Azure DocumentDB spring boot starter and AngularJS to int
 It supports end-to-end CRUD operation to todo list item from front-end AngularJS code, and call a Spring Restful API in backend.
 Then the backend Java code uses Azure DocumentDB spring boot starter to interact with Azure.
 
+## TOC
+
+* [Requeirements](#Requirements)
+* [Create Azure Cosmos DB documentDB](create-azure-cosmos-db-documentdb)
+* [Configuration](#Configuration)
+* [Run it](#run-it)
+* [Contribution](#contribution)
+* Add new features
+    * [Add AAD]()
+    * [Add KeyVault]()
+* Deployment
+    * [Deploy to Azure Container Service Kubernetes cluster using maven plugin]()
+    * [Deploy to Azure Web App using maven plugin]()
+
 ## Requirements
 
 * [JDK](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html) 1.8 and above
