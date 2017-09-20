@@ -22,9 +22,6 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
         <azure.spring.boot.starter.version>0.1.7</azure.spring.boot.starter.version>
-        <plugin.fmp.version>3.5.30</plugin.fmp.version>
-        <plugin.spotify.version>0.4.11</plugin.spotify.version>
-        <docker.image.prefix>put-your-docker-registry-url</docker.image.prefix>
     </properties>
 
     <dependencies>
@@ -48,37 +45,6 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>com.spotify</groupId>
-                <artifactId>docker-maven-plugin</artifactId>
-                <version>${plugin.spotify.version}</version>
-                <configuration>
-                    <imageName>${docker.image.prefix}/${project.artifactId}</imageName>
-                    <imageTags>
-                        <imageTag>${project.version}</imageTag>
-                    </imageTags>
-                    <baseImage>java</baseImage>
-                    <entryPoint>["java", "-jar", "/${project.build.finalName}.jar"]</entryPoint>
-                    <resources>
-                        <resource>
-                            <targetPath>/</targetPath>
-                            <directory>${project.build.directory}</directory>
-                            <include>${project.build.finalName}.jar</include>
-                        </resource>
-                    </resources>
-                    <registryUrl>https://${docker.image.prefix}</registryUrl>
-                    <serverId>${docker.image.prefix}</serverId>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>io.fabric8</groupId>
-                <artifactId>fabric8-maven-plugin</artifactId>
-                <version>${plugin.fmp.version}</version>
-                <configuration>
-                    <ignoreServices>true</ignoreServices>
-                    <registry>${docker.image.prefix}</registry>
-                </configuration>
             </plugin>
              <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -109,4 +75,6 @@
             </plugin>
         </plugins>
     </build>
+
+
 </project>
