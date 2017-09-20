@@ -19,9 +19,15 @@
         </button>
         <div class="collapse navbar-collapse" id="navBarToggler">
             <a class="navbar-brand" href="#/Home">Todo List Java on Azure</a>
-            <ul class="navbar-nav">
+            <ul class="nav navbar-nav">
                 <li ng-class="{ active: isActive('/Home') }"><a class="nav-link" href="#/Home">Home</a></li>
                 <li ng-class="{ active: isActive('/TodoList') }"><a class="nav-link" href="#/TodoList">Todo List</a></li>
+                <li ng-class="{ active: isActive('/UserData') }"><a class="nav-link" href="#/UserData"
+                                                                    ng-show="userInfo.isAuthenticated">User</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a class="nav-link" ng-show="userInfo.isAuthenticated" ng-click="logout()">Logout</a></li>
+                <li><a class="nav-link" ng-hide="userInfo.isAuthenticated" ng-click="login()">Login</a></li>
             </ul>
         </div>
     </div>
@@ -37,8 +43,11 @@
 <script src="https://code.angularjs.org/1.2.25/angular-route.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
+<script src="Scripts/adal.js"></script>
+<script src="Scripts/adal-angular.js"></script>
 <script src="Scripts/app.js"></script>
 <script src="Scripts/homeCtrl.js"></script>
+<script src="Scripts/userDataCtrl.js"></script>
 <script src="Scripts/todoListCtrl.js"></script>
 <script src="Scripts/todoListSvc.js"></script>
 </html>

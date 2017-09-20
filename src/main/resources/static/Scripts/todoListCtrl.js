@@ -6,12 +6,22 @@
 
 'use strict';
 angular.module('todoApp')
-    .controller('todoListCtrl', ['$scope', '$location', 'todoListSvc', function ($scope, $location, todoListSvc) {
+    .controller('todoListCtrl', ['$scope', '$location', 'todoListSvc', 'adalAuthenticationService', function ($scope, $location, todoListSvc, adalService) {
         $scope.error = '';
         $scope.loadingMessage = '';
         $scope.todoList = null;
         $scope.editingInProgress = false;
         $scope.newTodoCaption = '';
+
+        $scope.login = function () {
+            adalService.login();
+        };
+        $scope.logout = function () {
+            adalService.logOut();
+        };
+        $scope.isActive = function (viewLocation) {
+            return viewLocation === $location.path();
+        };
 
         $scope.editInProgressTodo = {
             description: '',
@@ -80,7 +90,7 @@ angular.module('todoApp')
 
             todoListSvc.postItem({
                 'description': $scope.newTodoCaption,
-                'owner': getUser(),
+                'owner': adalService.userInfo.userName,
                 'finish': 'false'
             }).success(function (results) {
                 $scope.newTodoCaption = '';
