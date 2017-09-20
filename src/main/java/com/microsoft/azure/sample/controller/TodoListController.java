@@ -70,7 +70,7 @@ public class TodoListController {
             todoItemRepository.save(item);
             return new ResponseEntity<String>("Entity created", HttpStatus.CREATED);
         } catch (Exception e) {
-            return new ResponseEntity<String>("Entity created failed", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<String>("Entity creation failed", HttpStatus.CONFLICT);
         }
     }
 
@@ -82,9 +82,9 @@ public class TodoListController {
         try {
             todoItemRepository.delete(item.getID());
             todoItemRepository.save(item);
-            return new ResponseEntity<String>("Entity is updated", HttpStatus.OK);
+            return new ResponseEntity<String>("Entity updated", HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<String>("Not implemented yet", HttpStatus.NOT_IMPLEMENTED);
+            return new ResponseEntity<String>("Entity updating failed", HttpStatus.NOT_FOUND);
         }
     }
 
@@ -95,9 +95,9 @@ public class TodoListController {
     public ResponseEntity<String> deleteTodoItem(@PathVariable("id") String id) {
         try {
             todoItemRepository.delete(id);
-            return new ResponseEntity<String>("Entity is deleted", HttpStatus.OK);
+            return new ResponseEntity<String>("Entity deleted", HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<String>("Entity not found", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<String>("Entity deletion failed", HttpStatus.NOT_FOUND);
         }
 
     }
