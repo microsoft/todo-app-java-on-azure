@@ -1,12 +1,12 @@
-# Deploy to Azure Container Service use maven plugin
+# Deploy to Azure Container Service use Fabric8 Maven Plugin
 
-This document shows how to deploy this todo app java project to kubernetes cluster using maven plugin.
-It firstly uses spotify maven plugin to builds a docker image and push the image to a private Azure Container Registry.
-Then, it uses fabric8 maven plugin to generate kubernetes resource yaml file and apply the yaml file to your cluster.
+This document shows how to deploy this todo app java project to Kubernetes cluster using Maven plugin.
+It firstly uses Spotify Docker Maven Plugin to builds a docker image and push the image to a private Azure Container Registry.
+Then, it uses Fabric8 Maven Plugin to generate Kubernetes resource yaml file and apply the yaml file to your cluster.
 
 ## Create Azure services
 
-You can create the Azure Container Service using azure-cli ([install azure-cli 2.0](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest)).
+You can create the Azure Services using azure-cli ([install azure-cli 2.0](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest)).
 
 ### Create Azure Container Service
 
@@ -16,13 +16,13 @@ You can create the Azure Container Service using azure-cli ([install azure-cli 2
     az group create --name <your-resource-group-name> --location westeurope
     ```
 
-1. Create kubernetes cluster
+1. Create Kubernetes cluster
 
     ```bash
     az acs create --orchestrator-type kubernetes --resource-group <your-resource-group-name> --name <your-kubernetes-cluster-name> --generate-ssh-keys
     ```
 
-1. Connect to the cluster
+1. Connect to the cluster, this command download the Kubernetes configuration to your profile folder. The Fabric8 Maven Plugin and kubectl will use this configure file to interact with your Kubernetes cluster.
 
     ```bash
     az acs kubernetes get-credentials --resource-group=<your-resource-group-name> --name=<your-kubernetes-cluster-name>
@@ -42,7 +42,7 @@ You can create the Azure Container Service using azure-cli ([install azure-cli 2
    az acr create -n <your-registry-name> -g <your-resource-group-name>
    ```
 
-1. Get your Azure Container Registry credential key
+1. Get your Azure Container Registry credential key, note your docker registry username and password.
 
     ```bash
     az acr credential show
@@ -50,7 +50,7 @@ You can create the Azure Container Service using azure-cli ([install azure-cli 2
 
 ## Configuration
 
-1. Save your docker registry key in your maven settings file `~/.m2/settings.xml`
+1. Save your docker registry key in your Maven settings file `~/.m2/settings.xml`
 
     ```xml
     <server>
@@ -63,53 +63,15 @@ You can create the Azure Container Service using azure-cli ([install azure-cli 2
     </server>
     ```
 
-1. Add your docker registry url to your `pom.xml`'s `properties` field.
+1. Modify the `pom.xml`'s `properties` field with your docker registry url.
 
     ```xml
     <docker.image.prefix>put-your-docker-registry-url</docker.image.prefix>
     ```
 
-1. Install the spotify maven plugin to build/push your project docker image, and install the fabric8 maven plugin to build/apply your kubernetes resource yaml file to cluster in the `pom.xml`'s `plugins` field.
+1. Create Kubernetes resource yaml file fragments. 
 
-    ```xml
-    <plugin>
-        <groupId>com.spotify</groupId>
-        <artifactId>docker-maven-plugin</artifactId>
-        <version>0.4.11</version>
-        <configuration>
-            <imageName>${docker.image.prefix}/${project.artifactId}</imageName>
-            <imageTags>
-                <imageTag>${project.version}</imageTag>
-            </imageTags>
-            <baseImage>java</baseImage>
-            <entryPoint>["java", "-jar", "/${project.build.finalName}.jar"]</entryPoint>
-            <resources>
-                <resource>
-                    <targetPath>/</targetPath>
-                    <directory>${project.build.directory}</directory>
-                    <include>${project.build.finalName}.jar</include>
-                </resource>
-            </resources>
-            <registryUrl>https://${docker.image.prefix}</registryUrl>
-            <serverId>${docker.image.prefix}</serverId>
-        </configuration>
-    </plugin>
-    <plugin>
-        <groupId>io.fabric8</groupId>
-        <artifactId>fabric8-maven-plugin</artifactId>
-        <version>3.5.30</version>
-        <configuration>
-            <ignoreServices>false</ignoreServices>
-            <registry>${docker.image.prefix}</registry>
-        </configuration>
-    </plugin>
-    ```
-
-    > At this point, your `pom.xml` should like [this `pom.xml`](../resources/poms/kuberntes-pom.xml)(Still need to configure your azure container registry url).
-
-1. Create kubernetes resource yaml file fragments. 
-
-    The `fabric8-maven-plugin` supports putting kubernetes yaml files in the `src/main/fabric8` folder. And this plugin will aggregate these yaml file into one kubernetes resource list file, which can be apply to cluster directly.
+    The Fabric8 Maven Plugin supports putting Kubernetes yaml files in the `src/main/fabric8` folder. And this plugin will aggregate these yaml file into one Kubernetes resource list file, which can be apply to cluster directly.
 
     * Create `src/main/fabric8/deployment.yml` with yaml content from [this file](../resource/fabric8/deployment.yml). This file defines a deployment with the docker image you pushed to your Azure Container Registry.
 
@@ -133,22 +95,22 @@ You can create the Azure Container Service using azure-cli ([install azure-cli 2
     mvn docker:build docker:push
     ```
 
-1. Deploy to image to your kubernetes cluster.
+1. Deploy image to your Kubernetes cluster.
 
     ```bash
     mvn fabric8:resource fabric8:apply
     ```
 
-    > You can also combine these maven command into one line:  
+    > You can also combine these Maven command into one line:  
     > `mvn package docker:build docker:push fabric8:resource fabric8:apply`
 
 1. Get the external IP address. This may take a few minutes to wait the deploy success. Before finishing, the `external-ip` field should show `pending`.
 
     ```bash
-    kubectl get svc
+    kubectl get svc -w
     ```
 
-1. Open the url you obtained in last step in your browser, you can find the todo app has been deploy to the kubernetes cluster. 
+1. Open the url you obtained in last step in your browser, you can find the todo app has been deployed to the kubernetes cluster. 
 
 ## Clean up
 
