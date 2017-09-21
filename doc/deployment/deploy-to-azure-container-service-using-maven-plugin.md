@@ -1,7 +1,7 @@
-# Deploy to Azure Container Service use Fabric8 Maven Plugin
+# Deploy to Azure Container Service using Fabric8 Maven Plugin
 
 This document shows how to deploy this todo app java project to Kubernetes cluster using Maven plugin.
-It firstly uses Spotify Docker Maven Plugin to builds a docker image and push the image to a private Azure Container Registry.
+It firstly uses Spotify Docker Maven Plugin to build a docker image and push the image to a private Azure Container Registry.
 Then, it uses Fabric8 Maven Plugin to generate Kubernetes resource yaml file and apply the yaml file to your cluster.
 
 ## Create Azure services
