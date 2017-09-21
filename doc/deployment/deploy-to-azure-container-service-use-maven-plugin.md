@@ -6,7 +6,7 @@ Then, it uses fabric8 maven plugin to generate kubernetes resource yaml file and
 
 ## Create Azure services
 
-You can create the Azure Container Service using azure-cli ([install azure-cli 2.0]()).
+You can create the Azure Container Service using azure-cli ([install azure-cli 2.0](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest)).
 
 ### Create Azure Container Service
 
@@ -105,6 +105,8 @@ You can create the Azure Container Service using azure-cli ([install azure-cli 2
     </plugin>
     ```
 
+    > At this point, your `pom.xml` should like [this xml](kubernetes-pom.xml)(Still need to configure your azure container registry url).
+
 1. Create kubernetes resource yaml file fragments. 
 
     The `fabric8-maven-plugin` supports putting kubernetes yaml files in the `src/main/fabric8` folder. And this plugin will aggregate these yaml file into one kubernetes resource list file, which can be apply to cluster directly.
@@ -134,8 +136,12 @@ You can create the Azure Container Service using azure-cli ([install azure-cli 2
 1. Deploy to image to your kubernetes cluster.
 
     ```bash
-    mvn fabric8:resource 
+    mvn fabric8:resource fabric8:apply
     ```
+
+    > You can also combine these maven command into one line:
+    >
+    > `mvn package docker:build docker:push fabric8:resource fabric8:apply`
 
 1. Get the external IP address. This may take a few minutes to wait the deploy success. Before finishing, the `external-ip` field should show `pending`.
 

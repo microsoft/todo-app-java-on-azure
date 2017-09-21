@@ -15,7 +15,7 @@ Then the backend Java code uses Azure DocumentDB spring boot starter to interact
     * [Add AAD]()
     * [Add KeyVault]()
 * Deployment
-    * [Deploy to Azure Container Service Kubernetes cluster using maven plugin]()
+    * [Deploy to Azure Container Service Kubernetes cluster using maven plugin](./doc/deployment/deploy-to-azure-container-service-use-maven-plugin.md)
     * [Deploy to Azure Web App using maven plugin]()
 
 ## Requirements
