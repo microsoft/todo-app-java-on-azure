@@ -6,7 +6,7 @@ Then, it uses Fabric8 Maven Plugin to generate Kubernetes resource yaml file and
 
 ## Create Azure services
 
-You can create the Azure Services using azure-cli ([install azure-cli 2.0](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest)).
+You can create the Azure Services using azure-cli ([install Azure CLI 2.0](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest)).
 
 ### Create Azure Container Service
 
@@ -114,7 +114,7 @@ You can create the Azure Services using azure-cli ([install azure-cli 2.0](https
 
 ## Clean up
 
-Delete the Azure Services you created by running:
+Delete the Azure resources you created by running:
 
 ```bash
 az group delete --name <your-resource-group-name> --yes --no-wait

@@ -25,10 +25,10 @@ Then the backend Java code uses Azure CosmosDB DocumentDB spring boot starter to
 
 ## Create Azure Cosmos DB documentDB
 
-You can follow our steps using [azure-cli](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest) to deploy an Azure Cosmos DB documentDB,
-or follow [this article](https://docs.microsoft.com/en-us/azure/cosmos-db/create-documentdb-java) to create it from azure portal.
+You can follow our steps using [Azure CLI 2.0](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest) to deploy an Azure Cosmos DB documentDB,
+or follow [this article](https://docs.microsoft.com/en-us/azure/cosmos-db/create-documentdb-java) to create it from Azure portal.
 
-1. login your azure cli, and set your subscription id 
+1. login your Azure CLI, and set your subscription id 
     
     ```bash
     az login
@@ -71,7 +71,7 @@ or follow [this article](https://docs.microsoft.com/en-us/azure/cosmos-db/create
 
 ## Clean up
 
-Delete the azure resource you created by running the following command:
+Delete the Azure resources you created by running the following command:
 
 ```bash
 az group delete --name <your-resource-group-name> --yes --no-wait
