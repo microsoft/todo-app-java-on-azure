@@ -6,7 +6,7 @@ Then, it uses Fabric8 Maven Plugin to generate Kubernetes resource yaml file and
 
 ## Create Azure services
 
-You can create the Azure Services using azure-cli ([install Azure CLI 2.0](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest)).
+You can create the Azure Services using [Azure CLI 2.0](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest).
 
 ### Create Azure Container Service
 
@@ -36,21 +36,23 @@ You can create the Azure Services using azure-cli ([install Azure CLI 2.0](https
 
 ### Create Azure Container Registry
 
-1. Create your Azure Container Registry service, after created, note your `login server` as your docker registry url
+1. Run below command to create an Azure Container Registry.
+After creation, use `login server` as Docker registry URL in the next section.
 
    ```bash
    az acr create -n <your-registry-name> -g <your-resource-group-name>
    ```
 
-1. Get your Azure Container Registry credential key, note your docker registry username and password.
+1. Run below command to show your Azure Container Registry credentials.
+You will use Docker registry username and password in the next section.
 
     ```bash
-    az acr credential show
+    az acr credential show -n <your-registry-name>
     ```
 
 ## Configuration
 
-1. Save your docker registry key in your Maven settings file `~/.m2/settings.xml`
+1. In the Maven settings file `~/.m2/settings.xml`, add a new `<server>` element with your container registry credentials from previous steps.
 
     ```xml
     <server>
@@ -63,7 +65,7 @@ You can create the Azure Services using azure-cli ([install Azure CLI 2.0](https
     </server>
     ```
 
-1. Modify the `pom.xml`'s `properties` field with your docker registry url.
+1. In `<properties>` section of the project's `pom.xml`, replace value in `<docker.image.prefix>` element with your docker registry URL.
 
     ```xml
     <docker.image.prefix>put-your-docker-registry-url</docker.image.prefix>
@@ -81,12 +83,12 @@ You can create the Azure Services using azure-cli ([install Azure CLI 2.0](https
 
 
 ## Run it
-1. Verify you can run your project successfully in your local envrionment. ([Run project on local machine](../../README.md))
+1. Verify you can run your project successfully in your local environment. ([Run project on local machine](../../README.md))
 
 1. Build the project package
 
     ```bash
-    mvn package
+    mvn clean package
     ```
 
 1. Build the docker image and push it to your Azure Container Registry.
@@ -101,8 +103,8 @@ You can create the Azure Services using azure-cli ([install Azure CLI 2.0](https
     mvn fabric8:resource fabric8:apply
     ```
 
-    > You can also combine these Maven command into one line:  
-    > `mvn package docker:build docker:push fabric8:resource fabric8:apply`
+    > NOTE: You can also above commands as a one-liner:  
+    > `mvn clean package docker:build docker:push fabric8:resource fabric8:apply`
 
 1. Get the external IP address. This may take a few minutes to wait the deploy success. Before finishing, the `external-ip` field should show `pending`.
 
@@ -110,12 +112,12 @@ You can create the Azure Services using azure-cli ([install Azure CLI 2.0](https
     kubectl get svc -w
     ```
 
-1. Open the url you obtained in last step in your browser, you can find the todo app has been deployed to the kubernetes cluster. 
+1. Open the url you obtained in last step in your browser, you will find the todo app has been deployed to your Kubernetes cluster. 
 
 ## Clean up
 
-Delete the Azure resources you created by running:
+Delete the Azure resources you just created by running below command:
 
 ```bash
-az group delete --name <your-resource-group-name> --yes --no-wait
+az group delete -y --no-wait -n <your-resource-group-name>
 ```
