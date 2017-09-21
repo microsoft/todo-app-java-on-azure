@@ -1,8 +1,8 @@
 # Todo App Java On Azure
 
-This TodoList app uses Azure DocumentDB spring boot starter and AngularJS to interact with Azure.
+This TodoList app uses Azure CosmosDB DocumentDB spring boot starter and AngularJS to interact with Azure.
 It supports end-to-end CRUD operation to todo list item from front-end AngularJS code, and calls a Spring Restful API in backend.
-Then the backend Java code uses Azure DocumentDB spring boot starter to interact with Azure.
+Then the backend Java code uses Azure CosmosDB DocumentDB spring boot starter to interact with Azure.
 
 ## TOC
 
@@ -46,7 +46,7 @@ or follow [this article](https://docs.microsoft.com/en-us/azure/cosmos-db/create
    az cosmosdb create --kind GlobalDocumentDB -g <your-azure-group-name> -n <your-azure-documentDB-name>
    ```
    
-1. get your Azure Cosmos DB key, get the `primaryMasterKey` of the Document DB you just created.
+1. get your Azure Cosmos DB key, get the `primaryMasterKey` of the DocumentDB you just created.
 
     ```bash
     az cosmosdb list-keys
