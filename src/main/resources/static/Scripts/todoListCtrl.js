@@ -51,7 +51,7 @@ angular.module('todoApp')
         $scope.delete = function (id) {
             todoListSvc.deleteItem(id).success(function (results) {
                 $scope.populate();
-                $scope.loadingMessage = 'deleteItem: ' + results;
+                $scope.loadingMessage = results;
                 $scope.error = '';
             }).error(function (err) {
                 $scope.error = err;
@@ -63,7 +63,7 @@ angular.module('todoApp')
             todoListSvc.putItem($scope.editInProgressTodo).success(function (results) {
                 $scope.populate();
                 $scope.editSwitch(todo);
-                $scope.loadingMessage = 'putItem: ' + results;
+                $scope.loadingMessage = results;
                 $scope.error = '';
             }).error(function (err) {
                 $scope.error = err;
@@ -85,7 +85,7 @@ angular.module('todoApp')
             }).success(function (results) {
                 $scope.newTodoCaption = '';
                 $scope.populate();
-                $scope.loadingMessage = 'postItem: ' + results;
+                $scope.loadingMessage = results;
                 $scope.error = '';
             }).error(function (err) {
                 $scope.error = err;
