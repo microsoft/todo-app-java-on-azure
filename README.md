@@ -1,14 +1,14 @@
 # Todo App Java On Azure
 
 This TodoList app uses Azure DocumentDB spring boot starter and AngularJS to interact with Azure.
-It supports end-to-end CRUD operation to todo list item from front-end AngularJS code, and call a Spring Restful API in backend.
+It supports end-to-end CRUD operation to todo list item from front-end AngularJS code, and calls a Spring Restful API in backend.
 Then the backend Java code uses Azure DocumentDB spring boot starter to interact with Azure.
 
 ## TOC
 
-* [Requeirements](#Requirements)
-* [Create Azure Cosmos DB documentDB](create-azure-cosmos-db-documentdb)
-* [Configuration](#Configuration)
+* [Requeirements](#requirements)
+* [Create Azure Cosmos DB documentDB](#create-azure-cosmos-db-documentdb)
+* [Configuration](#configuration)
 * [Run it](#run-it)
 * [Contribution](#contribution)
 * Add new features
@@ -69,6 +69,13 @@ or follow [this article](https://docs.microsoft.com/en-us/azure/cosmos-db/create
 1. Run the project using `java -jar target/todo-app-java-on-azure-0.0.1-SNAPSHOT.jar`
 1. Open `http://localhost:8080` you can see the web pages to show the todo list app
 
+## Clean up
+
+Delete the azure resource you created by running the following command:
+
+```bash
+az group delete --name <your-resource-group-name> --yes --no-wait
+```
 
 ## Contributing
 
