@@ -114,6 +114,8 @@ You can create the Azure Services using azure-cli ([install azure-cli 2.0](https
 
 ## Clean up
 
+Delete the Azure Services you created by running:
+
 ```bash
 az group delete --name <your-resource-group-name> --yes --no-wait
 ```
