@@ -15,8 +15,8 @@ Then the backend Java code uses Azure CosmosDB DocumentDB spring boot starter to
     * [Add AAD]()
     * [Add KeyVault]()
 * Deployment
-    * [Deploy to Azure Container Service Kubernetes cluster using maven plugin](./doc/deployment/deploy-to-azure-container-service-use-maven-plugin.md)
-    * [Deploy to Azure Web App using maven plugin]()
+    * [Deploy to Azure Container Service Kubernetes cluster using Maven plugin](./doc/deployment/deploy-to-azure-container-service-use-maven-plugin.md)
+    * [Deploy to Azure Web App using Maven plugin]()
 
 ## Requirements
 
