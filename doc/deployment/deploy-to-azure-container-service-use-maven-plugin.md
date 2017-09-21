@@ -105,7 +105,7 @@ You can create the Azure Container Service using azure-cli ([install azure-cli 2
     </plugin>
     ```
 
-    > At this point, your `pom.xml` should like [this xml](kubernetes-pom.xml)(Still need to configure your azure container registry url).
+    > At this point, your `pom.xml` should like [this `pom.xml`](../resources/poms/kuberntes-pom.xml)(Still need to configure your azure container registry url).
 
 1. Create kubernetes resource yaml file fragments. 
 
@@ -139,8 +139,7 @@ You can create the Azure Container Service using azure-cli ([install azure-cli 2
     mvn fabric8:resource fabric8:apply
     ```
 
-    > You can also combine these maven command into one line:
-    >
+    > You can also combine these maven command into one line:  
     > `mvn package docker:build docker:push fabric8:resource fabric8:apply`
 
 1. Get the external IP address. This may take a few minutes to wait the deploy success. Before finishing, the `external-ip` field should show `pending`.
