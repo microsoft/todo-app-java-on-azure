@@ -6,7 +6,7 @@ Then the backend Java code uses Azure CosmosDB DocumentDB spring boot starter to
 
 ## TOC
 
-* [Requeirements](#requirements)
+* [Requirements](#requirements)
 * [Create Azure Cosmos DB documentDB](#create-azure-cosmos-db-documentdb)
 * [Configuration](#configuration)
 * [Run it](#run-it)
@@ -16,7 +16,7 @@ Then the backend Java code uses Azure CosmosDB DocumentDB spring boot starter to
     * [Add KeyVault]()
 * Deployment
     * [Deploy to Azure Container Service Kubernetes cluster using Maven plugin](./doc/deployment/deploy-to-azure-container-service-using-maven-plugin.md)
-    * [Deploy to Azure Web App using Maven plugin]()
+    * [Deploy to Azure Web App for Containers using Maven plugin](./doc/deployment/deploy-to-azure-web-app-using-maven-plugin.md)
 
 ## Requirements
 
@@ -66,7 +66,7 @@ or follow [this article](https://docs.microsoft.com/en-us/azure/cosmos-db/create
 ## Run it
 
 1. package the project using `mvn package`
-1. Run the project using `java -jar target/todo-app-java-on-azure-0.0.1-SNAPSHOT.jar`
+1. Run the project using `java -jar target/todo-app-java-on-azure-1.0-SNAPSHOT.jar`
 1. Open `http://localhost:8080` you can see the web pages to show the todo list app
 
 ## Clean up
@@ -74,7 +74,7 @@ or follow [this article](https://docs.microsoft.com/en-us/azure/cosmos-db/create
 Delete the Azure resources you created by running the following command:
 
 ```bash
-az group delete --name <your-resource-group-name> --yes --no-wait
+az group delete -y --no-wait -n <your-resource-group-name>
 ```
 
 ## Contributing
