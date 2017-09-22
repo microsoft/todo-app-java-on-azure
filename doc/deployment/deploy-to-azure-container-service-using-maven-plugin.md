@@ -75,11 +75,11 @@ You will use Docker registry username and password in the next section.
 
     The Fabric8 Maven Plugin supports putting Kubernetes yaml files in the `src/main/fabric8` folder. And this plugin will aggregate these yaml file into one Kubernetes resource list file, which can be apply to cluster directly.
 
-    * Create `src/main/fabric8/deployment.yml` with yaml content from [this file](../resource/fabric8/deployment.yml). This file defines a deployment with the docker image you pushed to your Azure Container Registry.
+    * Create `src/main/fabric8/deployment.yml` with yaml content from [this file](../resources/fabric8/deployment.yml). This file defines a deployment with the docker image you pushed to your Azure Container Registry.
 
-    * Create `src/main/fabric8/service.yml` with yaml content from [this file](../resource/fabric8/service.yml). This file defines a service to expose the deployment to external internet.
+    * Create `src/main/fabric8/service.yml` with yaml content from [this file](../resources/fabric8/service.yml). This file defines a service to expose the deployment to external internet.
 
-    * Create `src/main/fabric8/secrets.yml` with yaml content from [this file](../resource/fabric8/secrets.yml). This file defines a docker-registry secrets, which will be used to pull image from your Azure Container Registry.
+    * Create `src/main/fabric8/secrets.yml` with yaml content from [this file](../resources/fabric8/secrets.yml). This file defines a docker-registry secrets, which will be used to pull image from your Azure Container Registry.
 
 
 ## Run it
