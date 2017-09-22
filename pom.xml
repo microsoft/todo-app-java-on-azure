@@ -94,7 +94,7 @@
             </plugin>
 
             <!--*************************************************-->
-            <!-- Deploy to Azure Web App for Containers -->
+            <!-- Deploy to Azure Web App for Containers          -->
             <!--*************************************************-->
             <plugin>
                 <groupId>com.microsoft.azure</groupId>
