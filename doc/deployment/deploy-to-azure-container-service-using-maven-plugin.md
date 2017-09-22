@@ -13,19 +13,19 @@ You can create the Azure Services using [Azure CLI 2.0](https://docs.microsoft.c
 1. Create a resource group
 
     ```bash
-    az group create --name <your-resource-group-name> --location westeurope
+    az group create -n <your-resource-group-name> -l westeurope
     ```
 
 1. Create Kubernetes cluster
 
     ```bash
-    az acs create --orchestrator-type kubernetes --resource-group <your-resource-group-name> --name <your-kubernetes-cluster-name> --generate-ssh-keys
+    az acs create --orchestrator-type kubernetes -g <your-resource-group-name> -n <your-kubernetes-cluster-name> --generate-ssh-keys
     ```
 
 1. Connect to the cluster, this command download the Kubernetes configuration to your profile folder. The Fabric8 Maven Plugin and kubectl will use this configure file to interact with your Kubernetes cluster.
 
     ```bash
-    az acs kubernetes get-credentials --resource-group=<your-resource-group-name> --name=<your-kubernetes-cluster-name>
+    az acs kubernetes get-credentials -g <your-resource-group-name> -n <your-kubernetes-cluster-name>
     ```
 
 1. Install the kubectl command line
