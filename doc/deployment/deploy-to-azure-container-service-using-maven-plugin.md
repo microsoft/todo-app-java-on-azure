@@ -103,7 +103,7 @@ You will use Docker registry username and password in the next section.
     mvn fabric8:resource fabric8:apply
     ```
 
-    > NOTE: You can also above commands as a one-liner:  
+    > NOTE: You can also run above commands as a one-liner:  
     > `mvn clean package docker:build docker:push fabric8:resource fabric8:apply`
 
 1. Get the external IP address. This may take a few minutes to wait the deploy success. Before finishing, the `external-ip` field should show `pending`.
