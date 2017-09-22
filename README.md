@@ -74,7 +74,7 @@ or follow [this article](https://docs.microsoft.com/en-us/azure/cosmos-db/create
 Delete the Azure resources you created by running the following command:
 
 ```bash
-az group delete --name <your-resource-group-name> --yes --no-wait
+az group delete -y --no-wait -n <your-resource-group-name>
 ```
 
 ## Contributing
