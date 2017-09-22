@@ -66,7 +66,7 @@ or follow [this article](https://docs.microsoft.com/en-us/azure/cosmos-db/create
 ## Run it
 
 1. package the project using `mvn package`
-1. Run the project using `java -jar target/todo-app-java-on-azure-0.0.1-SNAPSHOT.jar`
+1. Run the project using `java -jar target/todo-app-java-on-azure-1.0-SNAPSHOT.jar`
 1. Open `http://localhost:8080` you can see the web pages to show the todo list app
 
 ## Clean up
