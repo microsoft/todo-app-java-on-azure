@@ -1,6 +1,6 @@
 # Deploy to Azure Web App for Containers using IntelliJ Plugin
 
-This tutorial shows you how to deploy this containerized app to Azure Web App for Containers using [IntelliJ Plugin for Azure Web Apps](https://github.com/Microsoft/azure-tools-for-java).
+This tutorial shows you how to deploy this containerized app to Azure Web App for Containers using [Azure Toolkit for IntelliJ](https://github.com/Microsoft/azure-tools-for-java).
 Below are the major steps in this tutorial.
 - [Create Azure Container Registry](#create-acr)
 - [Deploy to Azure Web App for Containers using IntelliJ Plugin](#deploy)
