@@ -1,14 +1,14 @@
-node('container') {
+node {
   stage('init') {
     // git clone
     checkout scm
   }
 
-  stage('build data-app') {
+  stage('build') {
     sh 'mvn clean package'
   }
 
-  stage('deploy data-app') {
+  stage('deploy') {
     withCredentials([usernamePassword(credentialsId: env.ACR_CRED_ID, usernameVariable: 'ACR_USER', passwordVariable: 'ACR_PASSWORD')]) {
       sh 'docker login -u $ACR_USER -p $ACR_PASSWORD http://$ACR_SERVER'
       // build image

@@ -1,4 +1,4 @@
-node ('container') {
+node {
   stage('init') {
     checkout scm
   }
