@@ -1,4 +1,4 @@
-node('container') {
+node {
   stage('init') {
     // git clone
     checkout scm

@@ -59,8 +59,7 @@ You will use Docker registry username and password in the next section.
 
 1. Add a pipeline job.
 
-1. Enable "Prepare an environment for the run", and put the following environment variables
-   in "Properties Content":
+1. Enable "Prepare an environment for the run", and put the following environment variables in "Properties Content":
     ```
     ACS_SERVER=[your Azure Container Service server]
     ACS_CRED_ID=[your credential id of ACS login credential]
