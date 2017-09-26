@@ -1,8 +1,7 @@
 # Todo App Java On Azure
 
-This TodoList app uses Azure CosmosDB DocumentDB spring boot starter and AngularJS to interact with Azure.
-It supports end-to-end CRUD operation to todo list item from front-end AngularJS code, and calls a Spring Restful API in backend.
-Then the backend Java code uses Azure CosmosDB DocumentDB spring boot starter to interact with Azure.
+This TodoList app is an Azure Java application. It provides end-to-end CRUD operation to todo list item from front-end AngularJS code. Behind the sense, todo list item data store is [Azure CosmosDB DocumentDB](https://docs.microsoft.com/en-us/azure/cosmos-db/documentdb-introduction). This application uses [Azure CosmosDB DocumentDB spring boot starter]((https://github.com/Microsoft/spring-data-documentdb)) and AngularJS to interact with Azure. This sample application provides several deployment option to deploy to Azure: [Azure maven plugin](https://github.com/microsoft/azure-maven-plugins), Azure Eclipse/Intellij plugins. With Azure support in Spring Starters and maven plugin, Azure Java application development and deployment is effortless now.
+
 
 ## TOC
 
