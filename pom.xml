@@ -25,7 +25,7 @@
 
         <!-- dependency versions -->
         <java.version>1.8</java.version>
-        <azure.spring.boot.starter.version>0.1.7</azure.spring.boot.starter.version>
+        <azure.spring.boot.starter.version>0.1.8</azure.spring.boot.starter.version>
         <plugin.fmp.version>3.5.30</plugin.fmp.version>
         <plugin.spotify.version>0.4.11</plugin.spotify.version>
         <plugin.azure.webapp.version>0.1.3</plugin.azure.webapp.version>
@@ -47,6 +47,11 @@
         <dependency>
             <groupId>com.microsoft.azure</groupId>
             <artifactId>azure-documentdb-spring-boot-starter</artifactId>
+            <version>${azure.spring.boot.starter.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.microsoft.azure</groupId>
+            <artifactId>azure-keyvault-secrets-spring-boot-starter</artifactId>
             <version>${azure.spring.boot.starter.version}</version>
         </dependency>
     </dependencies>
