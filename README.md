@@ -15,6 +15,8 @@ Then the backend Java code uses Azure CosmosDB DocumentDB spring boot starter to
     * [Add AAD](https://github.com/Microsoft/todo-app-java-on-azure/tree/aad-start)
     * [Add KeyVault]()
 * Deployment
+    * [Deploy to Azure Web App for Containers using IntelliJ plugin](./doc/deployment/deploy-to-azure-web-app-using-intelliJ-plugin.md)
+    * [Deploy to Azure Web App for Containers using Eclipse plugin](./doc/deployment/deploy-to-azure-web-app-using-eclipse-plugin.md)
     * [Deploy to Azure Container Service Kubernetes cluster using Maven plugin](./doc/deployment/deploy-to-azure-container-service-using-maven-plugin.md)
     * [Deploy to Azure Web App for Containers using Maven plugin](./doc/deployment/deploy-to-azure-web-app-using-maven-plugin.md)
 
