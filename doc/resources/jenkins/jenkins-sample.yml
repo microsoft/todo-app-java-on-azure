@@ -4,17 +4,17 @@ items:
 - apiVersion: extensions/v1beta1
   kind: Deployment
   metadata:
-    name: ${$WEB_APP}
+    name: ${WEB_APP}
   spec:
     replicas: 2
     template:
       metadata:
         labels:
-          app: ${$WEB_APP}
+          app: ${WEB_APP}
       spec:
         containers:
-        - name: ${$WEB_APP}
-          image: ${ACR_SERVER}/${$WEB_APP}:${BUILD_NUMBER}
+        - name: ${WEB_APP}
+          image: ${ACR_SERVER}/${WEB_APP}:${BUILD_NUMBER}
           ports:
           - containerPort: 8080
         imagePullSecrets:
@@ -22,11 +22,11 @@ items:
 - apiVersion: v1
   kind: Service
   metadata:
-    name: ${$WEB_APP}
+    name: ${WEB_APP}
   spec:
     type: LoadBalancer
     selector:
-      app: ${$WEB_APP}
+      app: ${WEB_APP}
     ports:
     - port: 80
       targetPort: 8080
