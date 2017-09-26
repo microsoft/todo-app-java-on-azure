@@ -65,31 +65,31 @@ Or you could follow our steps using [Azure CLI 2.0](https://docs.microsoft.com/e
 
 1. create one Azure service principal, and note your `appId` and `password` in output.
 
-```txt
-az ad sp create-for-rbac --name <your-azure-service-principal-name>
-```
+    ```txt
+    az ad sp create-for-rbac --name <your-azure-service-principal-name>
+    ```
 
 1. create Aazure Key Vault Secrets, note your `vaultUri` in output.
 
-```txt
-az keyvault create --name <your-vault-name> --resource-group <your-azure-resource-group-name> --location <your-azure-resource-group-location> --enabled-for-deployment true --enabled-for-disk-encryption true --enabled-for-template-deployment true --sku standard
-```
+    ```txt
+    az keyvault create --name <your-vault-name> --resource-group <your-azure-resource-group-name> --location <your-azure-resource-group-location> --enabled-for-deployment true --enabled-for-disk-encryption true --enabled-for-template-deployment true --sku standard
+    ```
 
 1. set Key Vault Policy, to assign permission to your service principal created at step 1.
 
-```txt
-az keyvault set-policy --name <your-vault-name> --secret-permission set get list delete --object-id <your-service-principal-id>
-```
-`<your-service-principal-id>` is `appId` you already noted at step 1.
+    ```txt
+    az keyvault set-policy --name <your-vault-name> --secret-permission set get list delete --object-id <your-service-principal-id>
+    ```
+    `<your-service-principal-id>` is `appId` you already noted at step 1.
 
 
 1. save credentials to Azure Key Vault Secrets.
 
-```txt
-az keyvault secret set --vault-name <your-vault-name> --name azure-documentdb-uri --value <your-azure-cosmosdb-uri>
-az keyvault secret set --vault-name <your-vault-name> --name azure-documentdb-key --value <your-azure-cosmosdb-key>
-az keyvault secret set --vault-name <your-vault-name> --name azure-documentdb-database --value <your-azure-cosmosdb-database>
-```
+    ```txt
+    az keyvault secret set --vault-name <your-vault-name> --name azure-documentdb-uri --value <your-azure-cosmosdb-uri>
+    az keyvault secret set --vault-name <your-vault-name> --name azure-documentdb-key --value <your-azure-cosmosdb-key>
+    az keyvault secret set --vault-name <your-vault-name> --name azure-documentdb-database --value <your-azure-cosmosdb-database>
+    ```
 
 
 
