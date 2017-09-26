@@ -20,7 +20,7 @@ You can create the Azure Services using [Azure CLI 2.0](https://docs.microsoft.c
     az acs create --orchestrator-type kubernetes -g <your-resource-group-name> -n <your-kubernetes-cluster-name> --generate-ssh-keys
     ```
 
-1. Connect to the cluster, this command download the Kubernetes configuration to your profile folder. The Fabric8 Maven Plugin and kubectl will use this configure file to interact with your Kubernetes cluster.
+1. Connect to the cluster, this command download the Kubernetes configuration to your profile folder. The kubectl will use this configure file to interact with your Kubernetes cluster.
 
     ```bash
     az acs kubernetes get-credentials -g <your-resource-group-name> -n <your-kubernetes-cluster-name>

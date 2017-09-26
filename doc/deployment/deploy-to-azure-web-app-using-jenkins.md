@@ -1,4 +1,4 @@
-# Deploy to Azure Web App for Containers using Maven Plugin
+# Deploy to Azure Web App for Containers using Jenkins
 
 This tutorial shows you how to deploy this containerized app to Azure Web App for Containers using [Azure App Service Plugin](https://wiki.jenkins.io/display/JENKINS/Azure+App+Service+Plugin).
 Below are the major steps in this tutorial.
