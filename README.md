@@ -12,7 +12,7 @@ This TodoList app is an Azure Java application. It provides end-to-end CRUD oper
 * [Contribution](#contribution)
 * Add new features
     * [Add AAD](https://github.com/Microsoft/todo-app-java-on-azure/tree/aad-start)
-    * [Add KeyVault](https://github.com/Microsoft/todo-app-java-on-azure/tree/aad-start/keyvault-secrets)
+    * [Add KeyVault Secrets](https://github.com/Microsoft/todo-app-java-on-azure/tree/keyvault-secrets)
 * Deployment
     * [Deploy to Azure Container Service Kubernetes cluster using Maven plugin](./doc/deployment/deploy-to-azure-container-service-using-maven-plugin.md)
     * [Deploy to Azure Web App for Containers using Maven plugin](./doc/deployment/deploy-to-azure-web-app-using-maven-plugin.md)
@@ -62,24 +62,29 @@ You can follow [this article](https://blogs.technet.microsoft.com/kv/2015/06/02/
 
 Or you could follow our steps using [Azure CLI 2.0](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest) to save above credentials into Azure Key Vault Secrets.
 
-1. Create one Azure service principal, and note your `appId` and `password` in output.
+
+1. create one Azure service principal, and note your `appId` and `password` in output.
+
 ```txt
 az ad sp create-for-rbac --name <your-azure-service-principal-name>
 ```
 
-1. Create Aazure Key Vault Secrets, note your `vaultUri` in output.
+1. create Aazure Key Vault Secrets, note your `vaultUri` in output.
+
 ```txt
 az keyvault create --name <your-vault-name> --resource-group <your-azure-resource-group-name> --location <your-azure-resource-group-location> --enabled-for-deployment true --enabled-for-disk-encryption true --enabled-for-template-deployment true --sku standard
 ```
 
-1. Set Key Vault Policy, to assign permission to your service principal created at step 1.
+1. set Key Vault Policy, to assign permission to your service principal created at step 1.
+
 ```txt
 az keyvault set-policy --name <your-vault-name> --secret-permission set get list delete --object-id <your-service-principal-id>
 ```
 `<your-service-principal-id>` is `appId` you already noted at step 1.
 
 
-1. Save credentials to Azure Key Vault Secrets.
+1. save credentials to Azure Key Vault Secrets.
+
 ```txt
 az keyvault secret set --vault-name <your-vault-name> --name azure-documentdb-uri --value <your-azure-cosmosdb-uri>
 az keyvault secret set --vault-name <your-vault-name> --name azure-documentdb-key --value <your-azure-cosmosdb-key>
@@ -92,11 +97,11 @@ az keyvault secret set --vault-name <your-vault-name> --name azure-documentdb-da
 
 * Note your Azure service principal `appId`, `password` and Azure Key Vault Uri from above, then modify `src/main/resources/application.properties` file and save it.
 
-    ``` txt
-    azure.keyvault.uri=put-your-keyvault-uri-here
-    azure.keyvault.client-id=put-your-service-principal-appid-here
-    azure.keyvault.client-key=put-your-service-principal-password-here
-    ``` 
+``` txt
+azure.keyvault.uri=put-your-keyvault-uri-here
+azure.keyvault.client-id=put-your-service-principal-appid-here
+azure.keyvault.client-key=put-your-service-principal-password-here
+``` 
 
 ## Run it
 
