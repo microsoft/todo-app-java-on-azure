@@ -52,7 +52,7 @@ or follow [this article](https://docs.microsoft.com/en-us/azure/cosmos-db/create
 1. get your Azure Cosmos DB key, get the `primaryMasterKey` of the DocumentDB you just created.
 
     ```bash
-    az cosmosdb list-keys
+    az cosmosdb list-keys -g <your-azure-group-name> -n <your-azure-documentDB-name>
     ```
 
 ## Configuration
