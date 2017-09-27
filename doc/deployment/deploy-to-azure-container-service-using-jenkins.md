@@ -8,6 +8,13 @@ You can create the Azure Services using [Azure CLI 2.0](https://docs.microsoft.c
 
 ### Create Azure Container Service
 
+1. login your Azure CLI, and set your subscription id 
+    
+    ```bash
+    az login
+    az account set -s <your-subscription-id>
+    ```
+
 1. Create a resource group
 
     ```bash
@@ -34,6 +41,13 @@ You can create the Azure Services using [Azure CLI 2.0](https://docs.microsoft.c
 
 ### Create Azure Container Registry
 
+1. login your Azure CLI, and set your subscription id 
+   
+    ```bash
+    az login
+    az account set -s <your-subscription-id>
+    ```
+
 1. Run below command to create an Azure Container Registry.
 After creation, use `login server` as Docker registry URL in the next section.
 
@@ -48,18 +62,25 @@ You will use Docker registry username and password in the next section.
     az acr credential show -n <your-registry-name>
     ```
 
-## Prepare Jenkins Master
+## Prepare Jenkins server
+1. Deploy a Jenkins Master on Azure[https://aka.ms/jenkins-on-azure]
 
-## Configuration
+1. Connect to the server with SSH and install the build tools:
+   
+   ```
+   sudo apt-get install git maven docker.io
+   ```
 
-1. Install "EnvInject" plugin.
+1. Install the plugins in Jenkins. Click 'Manage Jenkins' -> 'Manage Plugins' -> 'Available', 
+then search and install the following plugins: EnvInject, Azure Kubernetes CD Plugin.
 
 1. Add a Credential in type "SSH Username with private key" with your Kubernetes login
    credential.
 
 1. Add a Credential in type "Username with password" with your account of docker registry.
 
-1. Add a pipeline job.
+## Create job
+1. Add a new job in type "Pipeline".
 
 1. Enable "Prepare an environment for the run", and put the following environment variables in "Properties Content":
     ```
@@ -67,11 +88,15 @@ You will use Docker registry username and password in the next section.
     ACS_CRED_ID=[your credential id of ACS login credential]
     ACR_SERVER=[your Azure Container Registry]
     ACR_CRED_ID=[your credential id of ACR account]
+    WEB_APP=[the name of the app]
+    DOCUMENTDB_URI=[your documentdb uri]
+    DOCUMENTDB_KEY=[your documentdb key]
+    DOCUMENTDB_DBNAME=[your documentdb databasename]
     ```
 
 1. Choose "Pipeline script from SCM" in "Pipeline" -> "Definition".
 
-1. Fill in the SCM repo and script path.
+1. Fill in the SCM repo url and script path.
 
 1. Create Kubernetes resource yaml file fragments. 
 
