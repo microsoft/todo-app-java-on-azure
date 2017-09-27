@@ -5,28 +5,41 @@ items:
   kind: Deployment
   metadata:
     name: ${WEB_APP}
+    labels:
+      run: spring
   spec:
-    replicas: 2
+    replicas: 1
+    selector:
+      matchLabels:
+        run: spring
+    strategy:
+      rollingUpdate:
+        maxSurge: 1
+        maxUnavailable: 1
+      type: RollingUpdate
     template:
       metadata:
         labels:
-          app: ${WEB_APP}
+          run: spring
       spec:
         containers:
         - name: ${WEB_APP}
           image: ${ACR_SERVER}/${WEB_APP}:${BUILD_NUMBER}
           ports:
-          - containerPort: 8080
+          - containerPort: 80
+        imagePullPolicy: Always
         imagePullSecrets:
-        - name: ${KUBERNETES_SECRET_NAME}
+          - name: ${KUBERNETES_SECRET_NAME}
 - apiVersion: v1
   kind: Service
   metadata:
     name: ${WEB_APP}
+    labels:
+      expose: "true"
   spec:
-    type: LoadBalancer
     selector:
-      app: ${WEB_APP}
+      run: spring
     ports:
     - port: 80
-      targetPort: 8080
+      targetPort: 80
+    type: LoadBalancer
