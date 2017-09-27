@@ -48,6 +48,8 @@ You will use Docker registry username and password in the next section.
     az acr credential show -n <your-registry-name>
     ```
 
+## Prepare Jenkins Master
+
 ## Configuration
 
 1. Install "EnvInject" plugin.
@@ -55,7 +57,7 @@ You will use Docker registry username and password in the next section.
 1. Add a Credential in type "SSH Username with private key" with your Kubernetes login
    credential.
 
-1. Add a Credential in type "Username with password	" with your account of docker registry.
+1. Add a Credential in type "Username with password" with your account of docker registry.
 
 1. Add a pipeline job.
 
