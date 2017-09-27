@@ -8,6 +8,13 @@ Below are the major steps in this tutorial.
 <a name="create-acr"></a>
 ## Create Azure Container Registry
 
+1. login your Azure CLI, and set your subscription id 
+    
+   ```bash
+   az login
+   az account set -s <your-subscription-id>
+   ```
+
 1. Run below command to create an Azure Container Registry.
 After creation, use `login server` as Container Registry URL in the next section.
 

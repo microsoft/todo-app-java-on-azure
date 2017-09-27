@@ -10,6 +10,13 @@ You can create the Azure Services using [Azure CLI 2.0](https://docs.microsoft.c
 
 ### Create Azure Container Service
 
+1. login your Azure CLI, and set your subscription id 
+    
+    ```bash
+    az login
+    az account set -s <your-subscription-id>
+    ```
+
 1. Create a resource group
 
     ```bash
