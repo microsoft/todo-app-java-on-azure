@@ -26,8 +26,9 @@ After creation, use `login server` as Container Registry URL in the next section
 You will use Docker registry username and password in the next section.
 
     ```bash
-    az acr credential show -n <your-registry-name>
+    az acr credential show -n <your-registry-name> --sku <sku-name>
     ```
+    where `<sku-name>` is one of the following: `{Basic,Managed_Basic,Managed_Standard,Managed_Premium}`.
 
 <a name="deploy"></a>
 ## Deploy to Azure Web App for Containers using IntelliJ Plugin
