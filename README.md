@@ -18,6 +18,7 @@ This TodoList app is an Azure Java application. It provides end-to-end CRUD oper
     * [Deploy to Azure Web App for Containers using Eclipse plugin](./doc/deployment/deploy-to-azure-web-app-using-eclipse-plugin.md)
     * [Deploy to Azure Container Service Kubernetes cluster using Maven plugin](./doc/deployment/deploy-to-azure-container-service-using-maven-plugin.md)
     * [Deploy to Azure Web App for Containers using Maven plugin](./doc/deployment/deploy-to-azure-web-app-using-maven-plugin.md)
+* [Useful link](#useful-link)
 
 ## Requirements
 
@@ -38,7 +39,7 @@ or follow [this article](https://docs.microsoft.com/en-us/azure/cosmos-db/create
 1. create an Azure Resource Group, and note your group name
 
     ```bash
-    az group create -n <your-azure-group-name>
+    az group create -n <your-azure-group-name> -l <your-resource-group-region>
     ```
 
 1. create Azure Cosmos DB with DocumentDB kind. Note the `documentEndpoint` field in the response.
@@ -46,6 +47,7 @@ or follow [this article](https://docs.microsoft.com/en-us/azure/cosmos-db/create
    ```bash
    az cosmosdb create --kind GlobalDocumentDB -g <your-azure-group-name> -n <your-azure-documentDB-name>
    ```
+   **Note** name of cosmos db must be in lowercase.
    
 1. get your Azure Cosmos DB key, get the `primaryMasterKey` of the DocumentDB you just created.
 
