@@ -63,6 +63,15 @@ or follow [this article](https://docs.microsoft.com/en-us/azure/cosmos-db/create
     azure.documentdb.database=put-your-documentdb-databasename-here
     ``` 
 
+* If you don't want to modify configuration in the source code manually, you can put variables in this file and 
+  set their values in system environment variables: `DOCUMENTDB_URI`, `DOCUMENTDB_KEY` and `DOCUMENTDB_DBNAME`.
+  Then maven will substitute them during the build phase.
+    ``` txt
+    azure.documentdb.uri=@env.DOCUMENTDB_URI@
+    azure.documentdb.key=@env.DOCUMENTDB_KEY@
+    azure.documentdb.database=@env.DOCUMENTDB_DBNAME@
+    ``` 
+
 ## Run it
 
 1. package the project using `mvn package`
