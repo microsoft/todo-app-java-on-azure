@@ -35,7 +35,7 @@ You may be prompted to run `az acr update -n <your-registry-name> --admin-enable
 ## Deploy to Azure Web App for Containers using IntelliJ Plugin
 1. Create or import a Maven project in IntelliJ IDEA. 
 
-1. Right-click on the project and choose "Azure -> Add Docker Support". It will automatically generate a Dockerfile. 
+1. If you don't already have a Dockerfile, right-click on the project and choose "Azure -> Add Docker Support" to automatically generate one. 
 
 1. Right-click on the project and choose "Azure -> Run on Web App on Linux".  
 
