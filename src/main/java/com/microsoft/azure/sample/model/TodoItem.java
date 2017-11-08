@@ -10,7 +10,6 @@ import org.springframework.data.annotation.Id;
 
 import java.util.Objects;
 
-@Document(collection = "mycollection")
 public class TodoItem {
     private String id;
     private String description;
