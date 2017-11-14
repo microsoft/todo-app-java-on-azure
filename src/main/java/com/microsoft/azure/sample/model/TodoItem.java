@@ -5,9 +5,6 @@
  */
 package com.microsoft.azure.sample.model;
 
-import com.microsoft.azure.spring.data.documentdb.core.mapping.Document;
-import org.springframework.data.annotation.Id;
-
 import java.util.Objects;
 
 public class TodoItem {
@@ -67,9 +64,9 @@ public class TodoItem {
             return false;
         }
         final TodoItem group = (TodoItem) o;
-        return this.getDescription().equals(group.getDescription())
-                && this.getOwner().equals(group.getOwner())
-                && this.getID().equals(group.getID());
+        return Objects.equals(this.getDescription(), group.getDescription())
+                && Objects.equals(this.getOwner(), group.getOwner())
+                && Objects.equals(this.getID(), group.getID());
     }
 
     @Override
