@@ -5,19 +5,20 @@
  */
 package com.microsoft.azure.sample;
 
+import static org.junit.Assert.*;
+import static org.mockito.BDDMockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.forwardedUrl;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.forwardedUrl;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 
 import org.junit.After;
 import org.junit.Before;
@@ -31,9 +32,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-
-import static org.junit.Assert.*;
-import static org.mockito.BDDMockito.*;
 
 import com.microsoft.azure.sample.dao.TodoItemRepository;
 import com.microsoft.azure.sample.model.TodoItem;
@@ -63,7 +61,10 @@ public class TodoApplicationTest {
 
         given(this.todoItemRepository.save(any(TodoItem.class))).willAnswer((InvocationOnMock invocation) -> {
             final TodoItem item = invocation.getArgumentAt(0, TodoItem.class);
-            repository.putIfAbsent(item.getID(), item);
+            if (repository.containsKey(item.getID())) {
+                throw new Exception("Conflict.");
+            }
+            repository.put(item.getID(), item);
             return item;
         });
 
@@ -131,11 +132,34 @@ public class TodoApplicationTest {
 
     @Test
     public void canUpdateTodoItems() throws Exception {
-        mockMvc.perform(
-                put("/api/todolist").contentType(MediaType.APPLICATION_JSON_VALUE)
-                        .content(String.format("{\"id\":\"%s\",\"description\":\"%s\",\"owner\":\"%s\"}",
-                                mockItemA.getID(), mockItemA.getDescription(), "New Owner")))
+        final String newItemJsonString = String.format("{\"id\":\"%s\",\"description\":\"%s\",\"owner\":\"%s\"}",
+                mockItemA.getID(), mockItemA.getDescription(), "New Owner");
+        mockMvc.perform(put("/api/todolist").contentType(MediaType.APPLICATION_JSON_VALUE).content(newItemJsonString))
                 .andDo(print()).andExpect(status().isOk());
         assertTrue(repository.get(mockItemA.getID()).getOwner().equals("New Owner"));
+    }
+
+    @Test
+    public void canNotDeleteNonExistingTodoItems() throws Exception {
+        final int size = repository.size();
+        mockMvc.perform(delete(String.format("/api/todolist/%s", "Non-Existing-ID"))).andDo(print())
+                .andExpect(status().isNotFound());
+        assertTrue(size == repository.size());
+    }
+
+    /**
+     * PUT should be idempotent.
+     */
+    @Test
+    public void idempotenceOfPut() throws Exception {
+        final String newItemJsonString = String.format("{\"id\":\"%s\",\"description\":\"%s\",\"owner\":\"%s\"}",
+                mockItemA.getID(), mockItemA.getDescription(), "New Owner");
+        mockMvc.perform(put("/api/todolist").contentType(MediaType.APPLICATION_JSON_VALUE).content(newItemJsonString))
+                .andDo(print()).andExpect(status().isOk());
+        final TodoItem firstRes = repository.get(mockItemA.getID());
+        mockMvc.perform(put("/api/todolist").contentType(MediaType.APPLICATION_JSON_VALUE).content(newItemJsonString))
+                .andDo(print()).andExpect(status().isOk());
+        final TodoItem secondRes = repository.get(mockItemA.getID());
+        assertTrue(firstRes.equals(secondRes));
     }
 }
