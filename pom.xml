@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.microsoft.azure</groupId>
@@ -77,8 +78,7 @@
                         <imageTag>${project.version}</imageTag>
                     </imageTags>
                     <baseImage>java</baseImage>
-                    <entryPoint>["java", "-jar",
-                        "/${project.build.finalName}.jar"]</entryPoint>
+                    <entryPoint>["java", "-jar", "/${project.build.finalName}.jar"]</entryPoint>
                     <resources>
                         <resource>
                             <targetPath>/</targetPath>
@@ -91,9 +91,9 @@
                 </configuration>
             </plugin>
 
-            <!--************************************************* -->
+            <!--*************************************************-->
             <!-- Deploy to Kubernetes on Azure Container Service -->
-            <!--************************************************* -->
+            <!--*************************************************-->
             <plugin>
                 <groupId>io.fabric8</groupId>
                 <artifactId>fabric8-maven-plugin</artifactId>
@@ -104,9 +104,9 @@
                 </configuration>
             </plugin>
 
-            <!--************************************************* -->
-            <!-- Deploy to Azure Web App for Containers -->
-            <!--************************************************* -->
+            <!--*************************************************-->
+            <!-- Deploy to Azure Web App for Containers          -->
+            <!--*************************************************-->
             <plugin>
                 <groupId>com.microsoft.azure</groupId>
                 <artifactId>azure-webapp-maven-plugin</artifactId>

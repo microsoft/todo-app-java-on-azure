@@ -130,6 +130,7 @@ public class TodoApplicationTest {
         mockMvc.perform(delete(String.format("/api/todolist/%s", mockItemA.getID()))).andDo(print())
                 .andExpect(status().isOk());
         assertTrue(size - 1 == repository.size());
+        assertFalse(repository.containsKey(mockItemA.getID()));
     }
 
     @Test
