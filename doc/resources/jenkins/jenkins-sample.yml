@@ -1,0 +1,45 @@
+apiVersion: v1
+kind: "List"
+items:
+- apiVersion: extensions/v1beta1
+  kind: Deployment
+  metadata:
+    name: ${WEB_APP}
+    labels:
+      run: spring
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        run: spring
+    strategy:
+      rollingUpdate:
+        maxSurge: 1
+        maxUnavailable: 1
+      type: RollingUpdate
+    template:
+      metadata:
+        labels:
+          run: spring
+      spec:
+        containers:
+        - name: ${WEB_APP}
+          image: ${ACR_SERVER}/${WEB_APP}:${BUILD_NUMBER}
+          ports:
+          - containerPort: 80
+        imagePullPolicy: Always
+        imagePullSecrets:
+          - name: ${KUBERNETES_SECRET_NAME}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    name: ${WEB_APP}
+    labels:
+      expose: "true"
+  spec:
+    selector:
+      run: spring
+    ports:
+    - port: 80
+      targetPort: 80
+    type: LoadBalancer

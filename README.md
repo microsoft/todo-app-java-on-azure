@@ -52,7 +52,7 @@ or follow [this article](https://docs.microsoft.com/en-us/azure/cosmos-db/create
 1. get your Azure Cosmos DB key, get the `primaryMasterKey` of the DocumentDB you just created.
 
     ```bash
-    az cosmosdb list-keys
+    az cosmosdb list-keys -g <your-azure-group-name> -n <your-azure-documentDB-name>
     ```
 
 ## Save Cosmos DB credentials in Azure Key Vault Secrets
@@ -106,6 +106,15 @@ azure.keyvault.uri=put-your-keyvault-uri-here
 azure.keyvault.client-id=put-your-service-principal-appid-here
 azure.keyvault.client-key=put-your-service-principal-password-here
 ``` 
+
+* If you don't want to modify configuration in the source code manually, you can put variables in this file and 
+  set their values in system environment variables: `DOCUMENTDB_URI`, `DOCUMENTDB_KEY` and `DOCUMENTDB_DBNAME`.
+  Then maven will substitute them during the build phase.
+    ``` txt
+    azure.documentdb.uri=@env.DOCUMENTDB_URI@
+    azure.documentdb.key=@env.DOCUMENTDB_KEY@
+    azure.documentdb.database=@env.DOCUMENTDB_DBNAME@
+    ``` 
 
 ## Run it
 
