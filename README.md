@@ -82,7 +82,7 @@ Or you could follow our steps using [Azure CLI 2.0](https://docs.microsoft.com/e
 1. set Key Vault Policy, to assign permission to your service principal created at step 1.
 
     ```txt
-    az keyvault set-policy --name <your-vault-name> --secret-permission set get list delete --object-id <your-service-principal-id>
+    az keyvault set-policy --name <your-vault-name> --secret-permission set get list delete --spn <your-service-principal-id>
     ```
     `<your-service-principal-id>` is `appId` you already noted at step 1.
 
