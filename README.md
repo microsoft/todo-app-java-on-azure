@@ -42,6 +42,22 @@ This TodoList app uses Azure DocumentDB spring boot starter and AngularJS to int
         <version>${azure.spring.boot.starter.version}</version>^M
     </dependency>
     ```
+    
+* Customize Angular JS
+In `app.js`, make following changes. The client leverages Azure AD library for JS to handle AAD authentication in single page application. The following snippet of code configures adal provider for your registered app.
+```
+        adalProvider.init(
+            {
+                instance: 'https://login.microsoftonline.com/',
+                tenant: 'your-aad-tenant',
+                clientId: 'your-application-id',
+                extraQueryParameter: 'nux=1',
+                cacheLocation: 'localStorage',
+            },
+            $httpProvider
+        );
+
+```
 
 ## Code
 
