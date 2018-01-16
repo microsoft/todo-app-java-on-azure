@@ -33,6 +33,10 @@ This TodoList app uses Azure DocumentDB spring boot starter and AngularJS to int
         <artifactId>spring-security-oauth2</artifactId>^M
     </dependency>
     <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-security</artifactId>
+    </dependency>
+    <dependency>
         <groupId>com.microsoft.azure</groupId>^M
         <artifactId>azure-ad-integration-spring-boot-starter</artifactId>^M
         <version>${azure.spring.boot.starter.version}</version>^M
@@ -50,7 +54,7 @@ This TodoList app uses Azure DocumentDB spring boot starter and AngularJS to int
      */
     package com.microsoft.azure.spring.boot.autoconfigure.aad.sample.security;
 
-    import com.microsoft.azure.spring.boot.autoconfigure.aad.AADAuthenticationFilter;
+    import com.microsoft.azure.autoconfigure.aad.AADAuthenticationFilter;
     import org.springframework.beans.factory.annotation.Autowired;
     import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth2Sso;
     import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
