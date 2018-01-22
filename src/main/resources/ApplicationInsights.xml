@@ -2,9 +2,15 @@
     <ApplicationInsights xmlns="http://schemas.microsoft.com/ApplicationInsights/2013/Settings" schemaVersion="2014-05-30">
 
 
-      <!-- The key from the portal: -->
+      <!-- The key from the portal -->
 
       <InstrumentationKey>put-your-instrumentation-key-here</InstrumentationKey>
+        
+      <!-- Turn on logging in the  IDE console windows to view Application Insights logging --> 
+      
+      <SDKLogger>
+        <Level>ALL</Level>
+      </SDKLogger>
 
       <!-- HTTP request component (not required for bare API) -->
 
