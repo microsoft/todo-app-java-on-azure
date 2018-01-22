@@ -20,6 +20,15 @@ COPY filebeat.yml /etc/filebeat/
 
 CMD ["/usr/local/bin/filebeat", "-e", "-c", "/etc/filebeat/filebeat.yml", "&"]
 
+RUN echo "Install Java"
+
+RUN apt-get update \
+  && apt-get -y --force-yes install software-properties-common python-software-properties debconf-utils
+
+RUN add-apt-repository -y ppa:openjdk-r/ppa \
+  && apt-get update \
+  && apt-get install -y openjdk-8-jre
+
 RUN echo "Run java application"
 
 VOLUME /tmp
