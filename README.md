@@ -29,6 +29,8 @@ In addition, you may notice that the following has already been configured for y
    ```
 * The 'src/main/java/com/microsoft/azure/sample/AppInsightsConfig.java' file has been added to register the HTTP filter using SpringBoot's FilterRegistrationBean.  This results in each of the HTTP requests being logged to Application Insights.  
 
+* The SDK Logger has been enabled in the 'src/main/resources/ApplicationInsights.xml' file which turns on logging messages so that they are displayed in the IDE's console window.  This is particularly useful for troubleshooting setting up the app to use Application Insights.
+
 ## Run it
 
 1. `mvn package`
