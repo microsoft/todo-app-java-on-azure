@@ -75,7 +75,7 @@ or follow [this article](https://docs.microsoft.com/en-us/azure/cosmos-db/create
     azure.documentdb.database=@env.DOCUMENTDB_DBNAME@
     ```
 
-* Confgiure the logstash ip address. Open the [`filebeat.yml`](https://github.com/yuwzho/todo-app-java-on-azure/blob/feed-logstash/filebeat.yml#L12), change the logstash ip address to your logstash endpoint.
+* Confgiure the logstash ip address. Open the [`filebeat.yml`](https://github.com/Microsoft/todo-app-java-on-azure/blob/feed-logstash/filebeat.yml#L12), change the logstash ip address to your logstash endpoint.
 
 
 ## Run it
