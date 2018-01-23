@@ -9,7 +9,7 @@ filebeat.prospectors:
   fields_under_root: true
 
 output.logstash:
-    hosts: ["52.168.51.41:5043"]
+    hosts: ["localhost:5043"]
     timeout: 15
 # Available log levels are: critical, error, warning, info, debug
 logging.level: info
