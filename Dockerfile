@@ -34,6 +34,6 @@ VOLUME /tmp
 ADD target/*.jar /app.jar
 
 COPY ./start.sh /usr/local/bin/start.sh
-RUN sed $'s/\r$//' /usr/local/bin/start.sh /usr/local/bin/start-run.sh
+RUN sed $'s/\r$//' /usr/local/bin/start.sh > /usr/local/bin/start-run.sh
 RUN chmod +x /usr/local/bin/start-run.sh
 CMD [ "/usr/local/bin/start-run.sh" ]
