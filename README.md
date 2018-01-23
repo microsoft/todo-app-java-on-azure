@@ -73,13 +73,31 @@ or follow [this article](https://docs.microsoft.com/en-us/azure/cosmos-db/create
     azure.documentdb.uri=@env.DOCUMENTDB_URI@
     azure.documentdb.key=@env.DOCUMENTDB_KEY@
     azure.documentdb.database=@env.DOCUMENTDB_DBNAME@
-    ``` 
+    ```
+
+* Confgiure the logstash ip address. Open the [`filebeat.yml`](https://github.com/yuwzho/todo-app-java-on-azure/blob/feed-logstash/filebeat.yml#L12), change the logstash ip address to your logstash endpoint.
+
 
 ## Run it
 
 1. package the project using `mvn package`
 1. Run the project using `java -jar target/todo-app-java-on-azure-1.0-SNAPSHOT.jar`
 1. Open `http://localhost:8080` you can see the web pages to show the todo list app
+
+
+## Run in docker
+
+1. Build the docker image:
+   
+   ```bash
+   docker build -t <your-docker-registry>/todo-app-java-on-azure .
+   ```
+ 
+1. Run the docker image
+
+   ```bash
+   docker run <your-docker-registry>/todo-app-java-on-azure
+   ```
 
 ## Clean up
 
