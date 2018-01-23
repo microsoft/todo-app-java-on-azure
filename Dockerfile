@@ -33,4 +33,4 @@ RUN echo "Run java application"
 
 VOLUME /tmp
 ADD target/*.jar /app.jar
-ENTRYPOINT [ "java", "-jar", "/app.jar", "--server.port=80" ]
+cmd [ "java", "-jar", "/app.jar", "--server.port=80" ]
