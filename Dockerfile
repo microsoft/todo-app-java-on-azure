@@ -17,8 +17,7 @@ RUN apt-get update && \
 RUN apt-get -y install curl
 
 COPY filebeat.yml /etc/filebeat/
-
-CMD ["/usr/local/bin/filebeat", "-e", "-c", "/etc/filebeat/filebeat.yml", "&"]
+RUN chmod go-w /etc/filebeat/filebeat.yml
 
 RUN echo "Install Java"
 
@@ -33,4 +32,7 @@ RUN echo "Run java application"
 
 VOLUME /tmp
 ADD target/*.jar /app.jar
-cmd [ "java", "-jar", "/app.jar", "--server.port=80" ]
+
+COPY ./start.sh /usr/local/bin/start.sh
+RUN chmod +x /usr/local/bin/start.sh
+CMD [ "/usr/local/bin/start.sh" ]
