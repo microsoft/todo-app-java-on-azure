@@ -12,7 +12,7 @@ This TodoList app is an Azure Java application. It provides end-to-end CRUD oper
 * [Contribution](#contribution)
 * Add new features
     * [Add AAD](https://github.com/Microsoft/todo-app-java-on-azure/tree/aad-start)
-    * [Add KeyVault]()
+    * [Add KeyVault](https://github.com/Microsoft/todo-app-java-on-azure/tree/keyvault-secrets)
 * Deployment
     * [Deploy to Azure Web App for Containers using IntelliJ plugin](./doc/deployment/deploy-to-azure-web-app-using-intelliJ-plugin.md)
     * [Deploy to Azure Web App for Containers using Eclipse plugin](./doc/deployment/deploy-to-azure-web-app-using-eclipse-plugin.md)
