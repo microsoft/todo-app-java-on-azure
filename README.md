@@ -2,6 +2,8 @@
 
 This TodoList app is an Azure Java application. It provides end-to-end CRUD operation to todo list item from front-end AngularJS code. Behind the scene, todo list item data store is [Azure CosmosDB DocumentDB](https://docs.microsoft.com/en-us/azure/cosmos-db/documentdb-introduction). This application uses [Azure CosmosDB DocumentDB Spring Boot Starter](https://github.com/Microsoft/azure-spring-boot/tree/master/azure-starters/azure-documentdb-spring-boot-starter) and AngularJS to interact with Azure. This sample application provides several deployment options to deploy to Azure, pls see deployment section below. With Azure support in Spring Starters, maven plugins and Eclipse/IntelliJ plugins, Azure Java application development and deployment is effortless now.
 
+This document contains how to build a docker image and deploy to Azure web app service. 
+The application sends the application logs to AWS elastic search endpoint and Azure Elastic Stack on Kubernetes.
 
 ## TOC
 
@@ -24,6 +26,7 @@ This TodoList app is an Azure Java application. It provides end-to-end CRUD oper
 
 * [JDK](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html) 1.8 and above
 * [Maven](https://maven.apache.org/) 3.0 and above
+* A docker registry where you can put your docker image.
 
 ## Create Azure Cosmos DB documentDB
 
@@ -55,6 +58,19 @@ or follow [this article](https://docs.microsoft.com/en-us/azure/cosmos-db/create
     az cosmosdb list-keys -g <your-azure-group-name> -n <your-azure-documentDB-name>
     ```
 
+## Create your Azure Event Hub
+Click the following button to deploy an Azure Event Hub
+![media/event-hubs-resource-manager-namespace-event-hub/deploybutton.png](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-quickstart-templates%2Fmaster%2F201-event-hubs-create-event-hub-and-consumer-group%2Fazuredeploy.json)
+
+Note your Azure Event Hub's namespace, credential key/value and event hub name.
+
+## Create your Elastic Stack on Kubernetes
+Follow the [this page](https://github.com/Microsoft/elk-acs-kubernetes) to create an Elastic stack on kubernetes with your new created Azure event hub.
+
+> Note: this Elastic Stack on Kubernetes should be created in a new resource group.
+
+Note your logstash endpoint after successfully deployed.
+
 ## Configuration
 
 * Note your DocumentDB uri and key from last step, specify a database name but no need to create it.
@@ -75,11 +91,25 @@ or follow [this article](https://docs.microsoft.com/en-us/azure/cosmos-db/create
     azure.documentdb.database=@env.DOCUMENTDB_DBNAME@
     ``` 
 
+* Paste your AWS Elasticsearch endpoint at 
+  [src/main/java/com/microsoft/azure/sample/TodoAppLogger.java#26](src/main/java/com/microsoft/azure/sample/TodoAppLogger.java#26)
+
+* Paste your Azure Elastic stack on kubernetes logstash endpoint at 
+  [filebeat.yml#12](filebeat.yml#12)
+
 ## Run it
 
 1. package the project using `mvn package`
 1. Run the project using `java -jar target/todo-app-java-on-azure-1.0-SNAPSHOT.jar`
 1. Open `http://localhost:8080` you can see the web pages to show the todo list app
+
+## Create your app service
+
+1. Login your docker hub or your private docker registry.
+1. Build your docker image use `docker build -t <your docker registry>/todo-app-java-on-azure`.
+1. Push your docker image to your registry.
+1. Create an Azure web app container with your new pushed docker image.
+1. Visit the web page and verify your AWS kibana and Azure kibana.
 
 ## Clean up
 
