@@ -89,7 +89,10 @@ Note your logstash endpoint after successfully deployed.
     azure.documentdb.uri=@env.DOCUMENTDB_URI@
     azure.documentdb.key=@env.DOCUMENTDB_KEY@
     azure.documentdb.database=@env.DOCUMENTDB_DBNAME@
-    ``` 
+    ```
+
+* Confgiure the logstash ip address. Open the [`filebeat.yml`](https://github.com/Microsoft/todo-app-java-on-azure/blob/feed-logstash/filebeat.yml#L12), change the logstash ip address to your logstash endpoint.
+
 
 * Paste your AWS Elasticsearch endpoint at 
   [src/main/java/com/microsoft/azure/sample/TodoAppLogger.java#26](src/main/java/com/microsoft/azure/sample/TodoAppLogger.java#26)
