@@ -23,7 +23,7 @@ import java.util.Collections;
 public class TodoAppLogger {
     private static TodoAppLogger todoAppLogger = null;
 
-    private String host = "search-movies-5gzyfcqs24budgnwutelxisoeu.us-west-2.es.amazonaws.com";
+    private String host = "your-aws-elasticsearch-endpoint";
 
     private Logger logger = Logger.getLogger(TodoApplication.class.getName());
 
