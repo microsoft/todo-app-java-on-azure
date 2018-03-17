@@ -60,29 +60,45 @@ or follow [this article](https://docs.microsoft.com/en-us/azure/cosmos-db/create
 
 ## Configuration
 
-* Note your DocumentDB uri and key from last step, specify a database name but no need to create it.
-  Pick an Azure Resource Group name and Web app name for App Service on Linux - you 
-  can use an existing resource group and Web app or let the Maven plugin 
-  create these for you. Set these values in system environment variables:
+Note down your DocumentDB uri and key from last step, 
+specify a database name but no need to create it. Pick an 
+Azure Resource Group name and Web app name for App Service 
+on Linux - you can use an existing resource group and Web 
+app or let the Maven plugin create these for you. Set these values in system environment variables:
 
-    ``` txt
-    DOCUMENTDB_URI=put-your-documentdb-uri-here
-    DOCUMENTDB_KEY=put-your-documentdb-key-here
-    DOCUMENTDB_DBNAME=put-your-documentdb-databasename-here
-    
-    WEBAPP_RESOURCEGROUP_NAME=put-your-resourcegroup-name-here
-    WEBAPP_NAME=put-your-webapp-name-here
-    ```
+``` txt
+DOCUMENTDB_URI=put-your-documentdb-uri-here
+DOCUMENTDB_KEY=put-your-documentdb-key-here
+DOCUMENTDB_DBNAME=put-your-documentdb-databasename-here
+
+WEBAPP_RESOURCEGROUP_NAME=put-your-resourcegroup-name-here
+WEBAPP_NAME=put-your-webapp-name-here
+```
+
+Optional. If you plan to test the Web app locally, then 
+you must start a local instance of Tomcat. Set another value in
+the system environment variable
+
+``` txt
+TOMCAT_HOME=put-your-tomcat-home-here
+```
 
 ## Build Todo List Web App (WAR)
 
-Package the project using `mvn package`.
+```bash
+mvn package
+```
 
-## Run it local = OPTIONAL STEP
+## Run it locally = OPTIONAL STEP
 
-1. Deploy the todo list app to local Tomcat `mvn cargo:deploy` 
-(Tomcat must be running locally and set a system environment variable `TOMCAT_HOME=put-your-tomcat-home-here`)
-1. Open `http://localhost:8080/todo-app-java-on-azure/#/TodoList` you can see the todo list app
+Deploy the todo list app to local Tomcat. You must start 
+a local instance of Tomcat.
+
+```bash
+mvn cargo:deploy
+```
+
+Open `http://localhost:8080/todo-app-java-on-azure` you can see the todo list app
 
 ## Deploy to Tomcat on Azure App Service on Linux
 
@@ -102,6 +118,9 @@ Deploy in one step:
 
 ```bash
 mvn azure-webapp:deploy
+```
+
+```bash
 ...
 ...
 [INFO] Updating target Web App...
@@ -118,7 +137,7 @@ mvn azure-webapp:deploy
 
 ```
 
-### Temporary Step - Until the App Service Team fixes this on the service-side
+### Temporary Step - until it is fixed on the App Service service-side
 
 1. Go the Web App on Linux in the Azure Portal
 2. Click on Development Tools / SSH
