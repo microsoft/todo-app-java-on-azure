@@ -7,7 +7,7 @@
     <groupId>com.microsoft.azure</groupId>
     <artifactId>todo-app-java-on-azure</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <packaging>jar</packaging>
+    <packaging>war</packaging>
 
     <name>todo-app-java-on-azure</name>
     <description>A todo list application uses AngularJS and Azure DocumentDB Spring boot starter</description>
@@ -31,7 +31,11 @@
 
         <!-- configurable properties -->
         <docker.image.prefix>put-your-docker-registry-url</docker.image.prefix>
-        <azure.app.name>todo-app-${maven.build.timestamp}</azure.app.name>
+        <azure.resourceGroup.name>${WEBAPP_RESOURCEGROUP_NAME}</azure.resourceGroup.name>
+        <azure.app.name>${WEBAPP_NAME}</azure.app.name>
+
+        <!-- where to start running the app -->
+        <start-class>com.microsoft.azure.sample.TodoApplication</start-class>
     </properties>
 
     <dependencyManagement>
@@ -59,6 +63,13 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
+        </dependency>
+
+        <!-- use embedded servlet container -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 
@@ -107,6 +118,7 @@
             <!--*************************************************-->
             <!-- Deploy to Azure Web App for Containers          -->
             <!--*************************************************-->
+            <!--
             <plugin>
                 <groupId>com.microsoft.azure</groupId>
                 <artifactId>azure-webapp-maven-plugin</artifactId>
@@ -127,6 +139,72 @@
                             <value>8080</value>
                         </property>
                     </appSettings>
+                </configuration>
+            </plugin>
+            -->
+
+            <!--*************************************************-->
+            <!-- Deploy to tomcat on localhost                   -->
+            <!--*************************************************-->
+            <plugin>
+                <groupId>org.codehaus.cargo</groupId>
+                <artifactId>cargo-maven2-plugin</artifactId>
+                <version>1.6.7</version>
+                <configuration>
+                    <container>
+                        <containerId>tomcat8x</containerId>
+                        <type>installed</type>
+                        <home>${TOMCAT_HOME}</home>
+                    </container>
+                    <configuration>
+                        <type>existing</type>
+                        <home>${TOMCAT_HOME}</home>
+                    </configuration>
+                </configuration>
+            </plugin>
+
+            <!--*************************************************-->
+            <!-- Deploy to Tomcat on Azure App Service Linux          -->
+            <!--*************************************************-->
+            <plugin>
+                <groupId>com.microsoft.azure</groupId>
+                <artifactId>azure-webapp-maven-plugin</artifactId>
+                <version>0.2.0-SNAPSHOT</version>
+                <configuration>
+                    <resourceGroup>${azure.resourceGroup.name}</resourceGroup>
+                    <appName>${azure.app.name}</appName>
+                    <region>westus</region>
+                    <pricingTier>S3</pricingTier>
+                    <linuxRuntime>tomcat 8.5-jre8</linuxRuntime>
+                    <deploymentType>war</deploymentType>
+
+                    <resources>
+                        <resource>
+                            <!-- Where your artifacts are stored -->
+                            <directory>${project.basedir}/target</directory>
+                            <!-- Relative path to /site/wwwroot/ -->
+                            <targetPath>.</targetPath>
+                            <includes>
+                                <include>*.war</include>
+                            </includes>
+                        </resource>
+                    </resources>
+
+                    <appSettings>
+                        <property>
+                            <name>DOCUMENTDB_URI</name>
+                            <value>${DOCUMENTDB_URI}</value>
+                        </property>
+                        <property>
+                            <name>DOCUMENTDB_KEY</name>
+                            <value>${DOCUMENTDB_KEY}</value>
+                        </property>
+                        <property>
+                            <name>DOCUMENTDB_DBNAME</name>
+                            <value>${DOCUMENTDB_DBNAME}</value>
+                        </property>
+                    </appSettings>
+
                 </configuration>
             </plugin>
 
