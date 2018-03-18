@@ -18,7 +18,8 @@ are effortless now.
 * [Requirements](#requirements)
 * [Create Azure Cosmos DB documentDB](#create-azure-cosmos-db-documentdb)
 * [Configuration](#configuration)
-* [Run it](#run-it)
+* [Run Locally](#run-it-locally---optional-step)
+* [Deploy to Tomcat on App Service on Linux](#deploy-to-tomcat-on-azure-app-service-on-linux)
 * [Contribution](#contribution)
 * [Useful link](#useful-link)
 
@@ -89,7 +90,7 @@ TOMCAT_HOME=put-your-tomcat-home-here
 mvn package
 ```
 
-## Run it locally = OPTIONAL STEP
+## Run it locally - OPTIONAL STEP
 
 Deploy the todo list app to local Tomcat. You must start 
 a local instance of Tomcat.
@@ -114,7 +115,8 @@ mvn clean install -DskipTests
 ```
 ### Deploy to Tomcat on Azure App Service on Linux
 
-Deploy in one step:
+Deploy in one step. You can continue to deploy again and 
+again without restarting Tomcat.
 
 ```bash
 mvn azure-webapp:deploy
@@ -136,6 +138,8 @@ mvn azure-webapp:deploy
 [INFO] ------------------------------------------------------------------------
 
 ```
+
+TODO: show how to deploy multiple applications.
 
 ### Temporary Step - until it is fixed on the App Service service-side
 
@@ -162,7 +166,7 @@ Delete the Azure resources you created by running the following command:
 az group delete -y --no-wait -n <your-resource-group-name>
 ```
 
-## Contributing
+## Contribution
 
 This project welcomes contributions and suggestions.  Most contributions require you to agree to a
 Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us
