@@ -18,6 +18,7 @@ are effortless now.
 * [Requirements](#requirements)
 * [Create Azure Cosmos DB documentDB](#create-azure-cosmos-db-documentdb)
 * [Configuration](#configuration)
+* [Build](#build-todo-list-web-app---war)
 * [Run Locally](#run-it-locally---optional-step)
 * [Deploy to Tomcat on App Service on Linux](#deploy-to-tomcat-on-azure-app-service-on-linux)
 * [Contribution](#contribution)
@@ -84,7 +85,7 @@ the system environment variable
 TOMCAT_HOME=put-your-tomcat-home-here
 ```
 
-## Build Todo List Web App (WAR)
+## Build Todo List Web App - WAR
 
 ```bash
 mvn package
