@@ -1,0 +1,15 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: todoapp-test-green
+  labels:
+    app: todoapp
+    role: test-green
+spec:
+  type: LoadBalancer
+  selector:
+    app: todoapp
+    role: green
+  ports:
+    - port: 80
+      targetPort: 8080

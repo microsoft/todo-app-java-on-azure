@@ -1,0 +1,15 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: todoapp-test-blue
+  labels:
+    app: todoapp
+    role: test-blue
+spec:
+  type: LoadBalancer
+  selector:
+    app: todoapp
+    role: blue
+  ports:
+    - port: 80
+      targetPort: 8080
