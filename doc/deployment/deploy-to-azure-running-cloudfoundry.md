@@ -45,7 +45,7 @@ Otherwise, login as an admin and satisfy these prerequisites as follows:
    ```
 
 <a name="deploy-broker"></a>
-1. To create a Cosmos service instance for the app to bind to, you will need an Azure service broker.  There
+2. To create a Cosmos service instance for the app to bind to, you will need an Azure service broker.  There
 are two to choose from: the [Meta Azure Service Broker (MASB)](https://github.com/Azure/meta-azure-service-broker)
 and the [Open Service Broker for Azure (OSBA)](https://github.com/Azure/open-service-broker-azure).  MASB is
 fully GA and being actively maintained, but new development will be for OSBA, which is expected to replace MASB
@@ -90,27 +90,27 @@ For OSBA:
      SPRING_PROFILES_ACTIVE: osba
    ```   
 
-1. Build project and docker container image, and push the image to Cloud Foundry.
+2. Build project and docker container image, and push the image to Cloud Foundry.
 
     ```bash
     mvn clean package
     cf push todo-app -p target/todo-app-java-on-azure-1.0-SNAPSHOT.jar
     ```
 
-1. Navigate to the website from your favorite browser.
+3. Navigate to the website from your favorite browser.
 You will see this app successfully running in Cloud Foundry on Azure.
 
 <a name="clean-up"></a>
 ## Clean Up Resources
 
 Unbind your app, delete it, and delete the Cosmos service instance:
-    ```bash
-    cf unbind-service todo-app todo-db
-    cf delete todo-app
-    cf delete-service todo-db
-    ```
+   ```bash
+   cf unbind-service todo-app todo-db
+   cf delete todo-app
+   cf delete-service todo-db
+   ```
 
 If you deployed Cloud Foundry yourself, and would like to delete it:
-    ```bash
-    az group delete -y --no-wait -n <your-resource-group-name>
-    ```
+   ```bash
+   az group delete -y --no-wait -n <your-resource-group-name>
+   ```
