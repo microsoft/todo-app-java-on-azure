@@ -1,19 +1,17 @@
 node('master') {
-    def repository = 'https://github.com/ArieShout/todo-app-java-on-azure.git'
-    def branch = 'aks'
 
-    def servicePrincipalId = 'jenkins-vmss-demo-sp'
-    def resourceGroup = 'jenkins-aks-demo'
-    def aks = 'aks'
+    def servicePrincipalId = '<your-service-principal>'
+    def resourceGroup = '<your-resource-group-name>'
+    def aks = '<your-kubernetes-cluster-name>'
 
-    def cosmosResourceGroup = 'jenkins-vmss-demo'
-    def cosmosDbName = 'jenkins-vmss-demo-cosmosdb'
-    def dbName = 'todoapp-aks'
+    def cosmosResourceGroup = '<your-cosmodb-resource-group>'
+    def cosmosDbName = '<your-cosmodb-name>'
+    def dbName = '<your-dbname>'
 
-    def dockerRegistry = 'jenkinsvmssdemoacr.azurecr.io'
+    def dockerRegistry = '<your-acr-name>.azurecr.io'
     def imageName = "todo-app:${env.BUILD_NUMBER}"
     env.IMAGE_TAG = "${dockerRegistry}/${imageName}"
-    def dockerCredentialId = 'jenkinsvmssdemoacr'
+    def dockerCredentialId = '<your-acr-credential-id>'
 
     def currentEnvironment = 'blue'
     def newEnvironment = { ->
@@ -21,7 +19,7 @@ node('master') {
     }
 
     stage('SCM') {
-        git url: repository, branch: branch
+        checkout scm
     }
 
     stage('Build') {
