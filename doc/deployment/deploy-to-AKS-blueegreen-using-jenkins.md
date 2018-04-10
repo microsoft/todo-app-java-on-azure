@@ -46,40 +46,39 @@ AKS is still in preview at the time when these instructions are created. You may
 Because we are doing blue/green deployment, we need to do some initial setup. You have two choices. 
 
 #### Run the set up script
-1. Edit [set up script](/../src/aks/setup/setup.sh) and update \<your-resource-group-name\>, \<your-kubernetes-cluster-name\>, \<your-location\> respectively:
+1. Edit [set up script](/../deploy/aks/setup/setup.sh) and update `<your-resource-group-name>`, `<your-kubernetes-cluster-name>`,
+   `<your-location>` and `<your-dns-name-suffix>` respectively:
 
     ``` bash   
     resource_group=<your-resource-group-name>
     location=<your-location>
     aks_name=<your-kubernetes-cluster-name>
+    dns_name_suffix=<your-dns-name-suffix>
     ```
 
 2. Run the script. 
 
 #### Set up manually 
 1. Download the Kubernetes configuration to your profile folder.
+
     ```bash
     az aks get-credentials -g <your-resource-group-name> -n <your-kubernetes-cluster-name> --admin
     ```
 
-2. Change directory to /src/aks/setup. Run the following kubectl commands
-    
-    Deploy a standard tomcat imgae to the blue and green environments:
-    ```
-    kubectl apply -f  deployment-blue.yml
-    kubectl apply -f  deployment-green.yml
-    ```
+2. Change directory to /deploy/aks/setup. Run the following kubectl commands to setup the services for
+    the public end point and the two test end points:
 
-    Set up the services for the public end point and the two test end points:
     ```
     kubectl apply -f  service-green.yml
     kubectl apply -f  test-endpoint-blue.yml
     kubectl apply -f  test-endpoint-green.yml
     ```
 
-3. Update the public and test end points DNS names. When AKS is created, an [additional resource group]( https://github.com/Azure/AKS/issues/3) is created. Look for resource group: MC_\<your-resource-group-name\>_\<your-kubernetes-cluster-name\>_\<your-location\>.
+3. Update the public and test end points DNS names. When AKS is created, an [additional resource group](https://github.com/Azure/AKS/issues/3)
+    is created. Look for resource group: `MC_<your-resource-group-name>_<your-kubernetes-cluster-name>_<your-location>`.
 
     Locate the public ip's in the resource group
+
     ![Public IP](images/publicip.png)
 
     For each of the services, find the external IP address by running:
@@ -100,22 +99,20 @@ Because we are doing blue/green deployment, we need to do some initial setup. Yo
 
     az network public-ip update --dns-name todoapp-green --ids /subscriptions/XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX/resourceGroups/MC_<resourcegroup>_<aks>_<location>/providers/Microsoft.Network/publicIPAddresses/kubernetes-CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
     ```
-    Note that the dns name needs to be unique in your subscription.
+    Note that the dns name needs to be unique in your subscription. `<your-dns-name-suffix>` can be used to ensure the uniqueness.
 
-    Now, you can visit your app by navigating to e.g.,  http://aks-todoapp.<your-location>.cloudapp.azure.com. If you see the following, the placeholder `Tomcat` image, you have succeeded in setting up your AKS cluster.  
-    ![Tomcat](images/tomcat.png)
 
 ### Create Azure Container Registry
 
 1. Run below command to create an Azure Container Registry.
-After creation, use `login server` as Docker registry URL in the next section.
+    After creation, use `login server` as Docker registry URL in the next section.
 
-   ```bash
-   az acr create -n <your-registry-name> -g <your-resource-group-name>
-   ```
+    ```bash
+    az acr create -n <your-registry-name> -g <your-resource-group-name>
+    ```
 
 1. Run below command to show your Azure Container Registry credentials.
-You will use Docker registry username and password in the next section.
+    You will use Docker registry username and password in the next section.
 
     ```bash
     az acr credential show -n <your-registry-name>
@@ -130,20 +127,20 @@ You will use Docker registry username and password in the next section.
    sudo apt-get install git maven 
    ```
    
-   Install Docker by following the steps [here](https://docs.docker.com/install/linux/docker-ce/ubuntu/#install-docker-ce)
+   Install Docker by following the steps [here](https://docs.docker.com/install/linux/docker-ce/ubuntu/#install-docker-ce).
+   Make sure the user `jenkins` has permission to run the `docker` commands.
 
 1. Install additional tools needed for this example:
 
-    [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/) 
+   * [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/) 
+   * [jq](https://stedolan.github.io/jq/download/)
 
-
-    [jq](https://stedolan.github.io/jq/download/)
-    ```
-    sudo apt-get install jq
-    ```
+   ```
+   sudo apt-get install jq
+   ```
    
 1. Install the plugins in Jenkins. Click 'Manage Jenkins' -> 'Manage Plugins' -> 'Available', 
-then search and install the following plugins: Azure Container Service Plugin.
+    then search and install the following plugins: Azure Container Service Plugin.
 
 1. Add dd a Credential in type "Microsoft Azure Service Principal" with your service principal.
 
@@ -151,11 +148,11 @@ then search and install the following plugins: Azure Container Service Plugin.
 
 ## Edit the Jenkinsfile
 
-1. In your own repo, navigate to /src/aks/ and open `Jenkinsfile`
+1. In your own repo, navigate to /deploy/aks/ and open `Jenkinsfile`
 
 2. Update:
 
-```
+    ```groovy
     def servicePrincipalId = '<your-service-principal>'
     def resourceGroup = '<your-resource-group-name>'
     def aks = '<your-kubernetes-cluster-name>'
@@ -165,20 +162,20 @@ then search and install the following plugins: Azure Container Service Plugin.
     def dbName = '<your-dbname>'
 
     def dockerRegistry = '<your-acr-name>.azurecr.io'
-```
+    ```
     
     And update ACR credential id
     
-```
+    ```
     def dockerCredentialId = '<your-acr-credential-id>'
-```
+    ```
 
 ## Create job
 1. Add a new job in type "Pipeline".
 
 1. Choose "Pipeline script from SCM" in "Pipeline" -> "Definition".
 
-1. Fill in the SCM repo url `your forked repo` and script path `src/aks/Jenkinsfile`
+1. Fill in the SCM repo url `your forked repo` and script path `deploy/aks/Jenkinsfile`
 
 
 ## Run it
@@ -187,9 +184,9 @@ then search and install the following plugins: Azure Container Service Plugin.
 1. Run jenkins job. If you run this for the first time, Jenkins will deploy the todo app to the Blue environment which is the default inactive environment. 
 
 1. To verify, open the urls:
-- Public end point: http://aks-todoapp.<your-location>.cloudapp.azure.com
-- Blue end point - http://aks-todoapp-blue.<your-location>.cloudapp.azure.com
-- Green end point - http://aks-todoapp-green.<your-location>.cloudapp.azure.com
+    - Public end point: `http://aks-todoapp<your-dns-name-suffix>.<your-location>.cloudapp.azure.com`
+    - Blue end point - `http://aks-todoapp-blue<your-dns-name-suffix>.<your-location>.cloudapp.azure.com`
+    - Green end point - `http://aks-todoapp-green<your-dns-name-suffix>.<your-location>.cloudapp.azure.com`
 
 The public and the Blue test end points have the same update while the Green end point shows the default tomcat image. 
 

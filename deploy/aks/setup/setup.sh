@@ -11,6 +11,7 @@ fi
 resource_group=<your-resource-group-name>
 location=<your-location>
 aks_name=<your-kubernetes-cluster-name>
+dns_name_suffix=<your-dns-name-suffix>
 companion_rg="MC_${resource_group}_${aks_name}_${location}"
 
 echo "Checking resource group $resource_group..."
@@ -60,16 +61,12 @@ function assign_dns {
 
     echo "Assign DNS name '$dns_name' for '$service'"
     az network public-ip update --dns-name "$dns_name" --ids "$public_ip"
+    [[ $? != 0 ]] && exit 1
 }
 
-assign_dns todoapp-service aks-todoapp
-assign_dns todoapp-test-blue aks-todoapp-blue
-assign_dns todoapp-test-green aks-todoapp-green
+assign_dns todoapp-service "aks-todoapp$dns_name_suffix"
+assign_dns todoapp-test-blue "aks-todoapp-blue$dns_name_suffix"
+assign_dns todoapp-test-green "aks-todoapp-green$dns_name_suffix"
 
 rm -f "$kubeconfig"
 
-cat <<EOF
-======================================================================
-Run the Jenkins job at least once to flush the placeholder deployments
-======================================================================
-EOF
