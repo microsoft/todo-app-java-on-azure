@@ -1,4 +1,4 @@
-# Deploy to Azure Container Service using Fabric8 Maven Plugin
+# Deploy to Azure Container Service (AKS) using Fabric8 Maven Plugin
 
 This document shows how to deploy this todo app java project to Kubernetes cluster using Maven plugin.
 It firstly uses Spotify Docker Maven Plugin to build a docker image and push the image to a private Azure Container Registry.
@@ -8,7 +8,7 @@ Then, it uses Fabric8 Maven Plugin to generate Kubernetes resource yaml file and
 
 You can create the Azure Services using [Azure CLI 2.0](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest).
 
-### Create Azure Container Service
+### Create Azure Container Service (AKS)
 
 1. login your Azure CLI, and set your subscription id 
     
@@ -23,16 +23,16 @@ You can create the Azure Services using [Azure CLI 2.0](https://docs.microsoft.c
     az group create -n <your-resource-group-name> -l westeurope
     ```
 
-1. Create Kubernetes cluster
+1. Create Kubernetes cluster in Azure Container Service (AKS)
 
     ```bash
-    az acs create --orchestrator-type kubernetes -g <your-resource-group-name> -n <your-kubernetes-cluster-name> --generate-ssh-keys
+    az aks create -g <your-resource-group-name> -n <your-kubernetes-cluster-name> --generate-ssh-keys
     ```
 
 1. Connect to the cluster, this command download the Kubernetes configuration to your profile folder. The Fabric8 Maven Plugin and kubectl will use this configure file to interact with your Kubernetes cluster.
 
     ```bash
-    az acs kubernetes get-credentials -g <your-resource-group-name> -n <your-kubernetes-cluster-name>
+    az aks get-credentials -g <your-resource-group-name> -n <your-kubernetes-cluster-name>
     ```
 
 1. Install the kubectl command line
