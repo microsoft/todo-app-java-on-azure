@@ -2,15 +2,18 @@ node {
   stage('init') {
     checkout scm
   }
-  
+
   stage('build') {
-    sh 'mvn clean package'
+    sh '''
+        mvn clean package
+        mv target/todo-app-java-on-azure-1.0-SNAPSHOT.war ROOT.war
+    '''
   }
-  
+
   stage('deploy') {
-    azureWebAppPublish azureCredentialsId: env.AZURE_CRED_ID, publishType: 'docker',
-                       resourceGroup: env.RES_GROUP, appName: env.WEB_APP,
-                       dockerImageName: "$env.ACR_SERVER/$env.WEB_APP", dockerImageTag: env.BUILD_NUMBER,
-                       dockerRegistryEndpoint: [url: "http://$env.ACR_SERVER", credentialsId: env.ACR_CRED_ID]
+    azureWebAppPublish azureCredentialsId: env.AZURE_CRED_ID, publishType: 'ftp',
+                       resourceGroup: env.RES_GROUP, appName: env.WEB_APP, filePath: "ROOT.war",
+                       targetDirectory: "webapps"
+
   }
 }
