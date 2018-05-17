@@ -104,16 +104,6 @@ Open `http://localhost:8080/todo-app-java-on-azure` you can see the todo list ap
 
 ## Deploy to Tomcat on Azure App Service on Linux
 
-### Temporary Step - Until the Updated Maven Plugin for Azure Web Apps is released
-
-Install a SNAPSHOT version of the Maven Plugin for Azure Web Apps:
-
-```bash
-git clone https://github.com/Microsoft/azure-maven-plugins.git
-cd azure-maven-plugins
-git checkout cs/wardeploy
-mvn clean install -DskipTests
-```
 ### Deploy to Tomcat on Azure App Service on Linux
 
 Deploy in one step. You can continue to deploy again and 
