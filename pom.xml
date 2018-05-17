@@ -177,18 +177,9 @@
                     <pricingTier>S3</pricingTier>
                     <linuxRuntime>tomcat 8.5-jre8</linuxRuntime>
                     <deploymentType>war</deploymentType>
-
-                    <resources>
-                        <resource>
-                            <!-- Where your artifacts are stored -->
-                            <directory>${project.basedir}/target</directory>
-                            <!-- Relative path to /site/wwwroot/ -->
-                            <targetPath>.</targetPath>
-                            <includes>
-                                <include>*.war</include>
-                            </includes>
-                        </resource>
-                    </resources>
+                    <!--
+                    <path></path>
+                    -->
 
                     <appSettings>
                         <property>
