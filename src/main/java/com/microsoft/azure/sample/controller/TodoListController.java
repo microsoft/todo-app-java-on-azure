@@ -42,7 +42,7 @@ public class TodoListController {
             method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<?> getTodoItem(@PathVariable("index") String index) {
         try {
-            return new ResponseEntity<TodoItem>(todoItemRepository.findOne(index), HttpStatus.OK);
+            return new ResponseEntity<TodoItem>(todoItemRepository.findById(index).get(), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<String>(index + " not found", HttpStatus.NOT_FOUND);
         }
@@ -54,7 +54,7 @@ public class TodoListController {
     @RequestMapping(value = "/api/todolist", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<?> getAllTodoItems() {
         try {
-            return new ResponseEntity<List<TodoItem>>(todoItemRepository.findAll(), HttpStatus.OK);
+            return new ResponseEntity<List<TodoItem>>((List<TodoItem>) todoItemRepository.findAll(), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<String>("Nothing found", HttpStatus.NOT_FOUND);
         }
@@ -80,7 +80,7 @@ public class TodoListController {
     @RequestMapping(value = "/api/todolist", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> updateTodoItem(@RequestBody TodoItem item) {
         try {
-            todoItemRepository.delete(item.getID());
+            todoItemRepository.delete(item);
             todoItemRepository.save(item);
             return new ResponseEntity<String>("Entity updated", HttpStatus.OK);
         } catch (Exception e) {
@@ -94,7 +94,7 @@ public class TodoListController {
     @RequestMapping(value = "/api/todolist/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<String> deleteTodoItem(@PathVariable("id") String id) {
         try {
-            todoItemRepository.delete(id);
+            todoItemRepository.deleteById(id);
             return new ResponseEntity<String>("Entity deleted", HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<String>("Entity deletion failed", HttpStatus.NOT_FOUND);
