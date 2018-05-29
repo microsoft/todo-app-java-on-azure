@@ -19,10 +19,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.invocation.InvocationOnMock;
@@ -72,7 +72,7 @@ public class TodoApplicationTest {
 
         given(this.todoItemRepository.findById(any(String.class))).willAnswer((InvocationOnMock invocation) -> {
             final String id = invocation.getArgument(0);
-            return repository.get(id);
+            return Optional.of(repository.get(id));
         });
 
         given(this.todoItemRepository.findAll()).willAnswer((InvocationOnMock invocation) -> {
@@ -85,6 +85,15 @@ public class TodoApplicationTest {
                 throw new Exception("Not Found.");
             }
             repository.remove(id);
+            return null;
+        }).given(this.todoItemRepository).deleteById(any(String.class));
+
+        willAnswer((InvocationOnMock invocation) -> {
+            final TodoItem todoItem = invocation.getArgument(0);
+            if (!repository.containsKey(todoItem.getID())) {
+                throw new Exception("Not Found.");
+            }
+            repository.remove(todoItem);
             return null;
         }).given(this.todoItemRepository).delete(any(TodoItem.class));
     }
@@ -99,7 +108,6 @@ public class TodoApplicationTest {
         mockMvc.perform(get("/")).andDo(print()).andExpect(status().isOk()).andExpect(forwardedUrl("index.html"));
     }
 
-    @Ignore
     @Test
     public void canGetTodoItem() throws Exception {
         mockMvc.perform(get(String.format("/api/todolist/%s", mockItemA.getID()))).andDo(print())
@@ -124,7 +132,6 @@ public class TodoApplicationTest {
         assertTrue(size + 1 == repository.size());
     }
 
-    @Ignore
     @Test
     public void canDeleteTodoItems() throws Exception {
         final int size = repository.size();
@@ -134,7 +141,6 @@ public class TodoApplicationTest {
         assertFalse(repository.containsKey(mockItemA.getID()));
     }
 
-    @Ignore
     @Test
     public void canUpdateTodoItems() throws Exception {
         final String newItemJsonString = String.format("{\"id\":\"%s\",\"description\":\"%s\",\"owner\":\"%s\"}",
@@ -144,11 +150,11 @@ public class TodoApplicationTest {
         assertTrue(repository.get(mockItemA.getID()).getOwner().equals("New Owner"));
     }
 
-    @Ignore
     @Test
     public void canNotDeleteNonExistingTodoItems() throws Exception {
         final int size = repository.size();
-        mockMvc.perform(delete(String.format("/api/todolist/%s", "Non-Existing-ID"))).andDo(print())
+        mockMvc.perform(delete(String.format("/api/todolist/%s", "Non-Existing-ID")))
+        .andDo(print())
                 .andExpect(status().isNotFound());
         assertTrue(size == repository.size());
     }
@@ -156,7 +162,6 @@ public class TodoApplicationTest {
     /**
      * PUT should be idempotent.
      */
-    @Ignore
     @Test
     public void idempotenceOfPut() throws Exception {
         final String newItemJsonString = String.format("{\"id\":\"%s\",\"description\":\"%s\",\"owner\":\"%s\"}",

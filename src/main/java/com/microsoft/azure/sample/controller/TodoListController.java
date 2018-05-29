@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
 
 @RestController
@@ -42,7 +43,7 @@ public class TodoListController {
             method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<?> getTodoItem(@PathVariable("index") String index) {
         try {
-            return new ResponseEntity<TodoItem>(todoItemRepository.findById(index).get(), HttpStatus.OK);
+            return new ResponseEntity<Optional<TodoItem>>(todoItemRepository.findById(index), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<String>(index + " not found", HttpStatus.NOT_FOUND);
         }
@@ -80,7 +81,7 @@ public class TodoListController {
     @RequestMapping(value = "/api/todolist", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> updateTodoItem(@RequestBody TodoItem item) {
         try {
-            todoItemRepository.delete(item);
+            todoItemRepository.deleteById(item.getID());
             todoItemRepository.save(item);
             return new ResponseEntity<String>("Entity updated", HttpStatus.OK);
         } catch (Exception e) {
