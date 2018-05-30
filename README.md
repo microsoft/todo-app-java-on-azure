@@ -8,7 +8,7 @@ This application uses [Azure CosmosDB DocumentDB Spring Boot Starter](https://gi
 and AngularJS to interact with Azure. This sample application 
 provides several deployment options to deploy to Azure, pls 
 see deployment section below. With Azure support in Spring 
-Starters, maven plugins and Eclipse / IntelliJ plugins, 
+Starters, maven and gradle plugins and Eclipse / IntelliJ plugins, 
 Java application development and deployment on Azure
 are effortless now.
 
@@ -29,7 +29,6 @@ are effortless now.
 * [JDK](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html) 1.8 and above
 * [Gradle](https://gradle.org/) 4.0 and above
 * [Tomcat](https://tomcat.apache.org/download-80.cgi) 8.5 and above
-* [Azure WebApp Gradle Plugin](https://github.com/lenala/azure-gradle-plugins)
 ## Create Azure Cosmos DB documentDB
 
 You can follow our steps using [Azure CLI 2.0](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest) to deploy an Azure Cosmos DB documentDB,
@@ -89,6 +88,13 @@ TOMCAT_HOME=put-your-tomcat-home-here
 
 ```bash
 gradle bootWar
+```
+
+## Run it locally - OPTIONAL STEP
+Deploy the todo list app to local Tomcat.
+
+```bash
+gradle cargoRunLocal
 ```
 
 ## Deploy to Tomcat on Azure App Service on Linux

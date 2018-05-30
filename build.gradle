@@ -11,6 +11,7 @@ buildscript {
                 version: '1.0-SNAPSHOT'
         classpath 'io.spring.gradle:dependency-management-plugin:1.0.5.RELEASE'
         classpath "org.springframework.boot:spring-boot-gradle-plugin:2.0.2.RELEASE"
+        classpath 'com.bmuschko:gradle-cargo-plugin:2.3'
     }
 }
 
@@ -18,6 +19,7 @@ apply plugin: 'war'
 apply plugin: 'io.spring.dependency-management'
 apply plugin: "org.springframework.boot"
 apply plugin: 'com.microsoft.azure.azurewebapp'
+apply plugin: 'com.bmuschko.cargo'
 
 
 repositories {
@@ -30,8 +32,19 @@ dependencies {
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version:'2.0.2.RELEASE'
     compile group: 'com.microsoft.azure', name: 'spring-data-documentdb', version: '2.0.2'
     compile group: 'com.microsoft.azure', name: 'azure-documentdb-spring-boot-starter', version: '0.2.0'
-    testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: '1.5.8.RELEASE'
+    testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: '2.0.2.RELEASE'
     providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
+}
+
+cargo {
+    containerId = 'tomcat8x'
+    deployable {
+        context = 'todoapp'
+    }
+    local {
+        homeDir = file('/Users/farlen/Java/apache-tomcat-8.5.31/')
+        outputFile = file('/Users/farlen/stuff/todo-app-java-on-azure.main/output.log')
+    }
 }
 
 azurewebapp {
