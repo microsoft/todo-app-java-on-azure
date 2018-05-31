@@ -1,0 +1,23 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: todoapp-deployment-${TARGET_ROLE}
+spec:
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: todoapp
+        role: ${TARGET_ROLE}
+    spec:
+      containers:
+      - name: todoapp-container
+        image: ${IMAGE_TAG}
+        ports:
+        - containerPort: 8080
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 8080
+      imagePullSecrets:
+      - name: ${KUBERNETES_SECRET_NAME}

@@ -1,0 +1,16 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: todoapp-service
+  labels:
+    app: todoapp
+    role: green
+    env: prod
+spec:
+  type: LoadBalancer
+  selector:
+    app: todoapp
+    role: green
+  ports:
+    - port: 80
+      targetPort: 8080

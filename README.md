@@ -18,6 +18,9 @@ This TodoList app is an Azure Java application. It provides end-to-end CRUD oper
     * [Deploy to Azure Web App for Containers using Eclipse plugin](./doc/deployment/deploy-to-azure-web-app-using-eclipse-plugin.md)
     * [Deploy to Azure Container Service Kubernetes cluster using Maven plugin](./doc/deployment/deploy-to-azure-container-service-using-maven-plugin.md)
     * [Deploy to Azure Web App for Containers using Maven plugin](./doc/deployment/deploy-to-azure-web-app-using-maven-plugin.md)
+    * [Deploy to Azure Web App for Container using Jenkins](./doc/deployment/deploy-to-azure-web-app-using-jenkins.md)
+    * [Deploy to Azure Container Service using Jenkins](./doc/deployment/deploy-to-azure-container-service-using-jenkins.md)
+    * [Deploy to AKS using Jenkins and Blue/Green Deployment](./doc/deployment/deploy-to-AKS-blueegreen-using-jenkins.md)
 * [Useful link](#useful-link)
 
 ## Requirements
