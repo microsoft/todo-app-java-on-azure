@@ -42,15 +42,15 @@ cargo {
         context = 'todoapp'
     }
     local {
-        homeDir = file('/Users/farlen/Java/apache-tomcat-8.5.31/')
+        homeDir = file("$System.env.TOMCAT_HOME")
         outputFile = file('/Users/farlen/stuff/todo-app-java-on-azure.main/output.log')
     }
 }
 
 azurewebapp {
     deploymentType = 'wardeploy'
-    resourceGroup = "todoapp-linux"
-    appName = "todoapp-linux"
+    resourceGroup = "${System.env.WEBAPP_RESOURCE_GROUP}"
+    appName = "${System.env.WEBAPP_NAME}"
     pricingTier = "S2"
     authFile = file('/Users/farlen/stuff/my2.azureauth')
     // if 'target' is not specified, dafault output of the 'war' plugin will be used
