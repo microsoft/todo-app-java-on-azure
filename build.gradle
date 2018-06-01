@@ -1,0 +1,68 @@
+
+buildscript {
+    repositories {
+        jcenter()
+        maven {
+            url uri('/Users/farlen/.m2/repository')
+        }
+    }
+    dependencies {
+        classpath group: 'com.microsoft.azure', name: 'azure-webapp-gradle-plugin',
+                version: '1.0-SNAPSHOT'
+        classpath 'io.spring.gradle:dependency-management-plugin:1.0.5.RELEASE'
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:2.0.2.RELEASE"
+        classpath 'com.bmuschko:gradle-cargo-plugin:2.3'
+    }
+}
+
+apply plugin: 'war'
+apply plugin: 'io.spring.dependency-management'
+apply plugin: "org.springframework.boot"
+apply plugin: 'com.microsoft.azure.azurewebapp'
+apply plugin: 'com.bmuschko.cargo'
+
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    compile group: 'commons-io', name: 'commons-io', version: '1.4'
+    compile group: 'log4j', name: 'log4j', version: '1.2.15', ext: 'jar'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version:'2.0.2.RELEASE'
+    compile group: 'com.microsoft.azure', name: 'spring-data-documentdb', version: '2.0.2'
+    compile group: 'com.microsoft.azure', name: 'azure-documentdb-spring-boot-starter', version: '0.2.0'
+    testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: '2.0.2.RELEASE'
+    providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
+}
+
+cargo {
+    containerId = 'tomcat8x'
+    deployable {
+        context = 'todoapp'
+    }
+    local {
+        homeDir = file("$System.env.TOMCAT_HOME")
+        outputFile = file('/Users/farlen/stuff/todo-app-java-on-azure.main/output.log')
+    }
+}
+
+azurewebapp {
+    deploymentType = 'wardeploy'
+    resourceGroup = "${System.env.WEBAPP_RESOURCE_GROUP}"
+    appName = "${System.env.WEBAPP_NAME}"
+    pricingTier = "S2"
+    authFile = file('/Users/farlen/stuff/my2.azureauth')
+    // if 'target' is not specified, dafault output of the 'war' plugin will be used
+//    target = file('C:/stuff/azure-gradle-plugins.4/samples/todo-app-java-on-azure.appservice-on-linux/build/libs/todoapp.war')
+    appServiceOnLinux = {
+        runtimeStack = 'TOMCAT 9.0-jre8'
+//        urlPath = 'todoapp'
+    }
+//    appServiceOnWindows = {
+//        javaWebContainer = "tomcat 8.5"
+//        javaVersion = "1.8.0_102"
+//        urlPath = 'todoapp'
+//    }
+}
+
