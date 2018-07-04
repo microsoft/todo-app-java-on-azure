@@ -100,7 +100,7 @@ then search and install the following plugins: EnvInject, Azure Kubernetes CD Pl
 
 1. Create Kubernetes resource yaml file fragments. 
 
-    * Create `src/main/jenkins/jenkins-sample.yml` with yaml content from [this file](../resource/jenkins/jenkins-sample.yml). This file defines a deployment and a service with the docker image you pushed to your Azure Container Registry.
+    * Create `src/main/jenkins/jenkins-sample.yml` with yaml content from [this file](../resources/jenkins/jenkins-sample.yml). This file defines a deployment and a service with the docker image you pushed to your Azure Container Registry.
 
 
 ## Run it
