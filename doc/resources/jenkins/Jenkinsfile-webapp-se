@@ -1,0 +1,19 @@
+node {
+  stage('init') {
+    checkout scm
+  }
+
+  stage('build') {
+    sh '''
+        mvn clean package
+        cp src/main/resources/web.config web.config
+        zip todo.zip todo-app-java-on-azure-1.0-SNAPSHOT web.config
+    '''
+  }
+
+  stage('deploy') {
+    azureWebAppPublish azureCredentialsId: env.AZURE_CRED_ID,
+                       resourceGroup: env.RES_GROUP, appName: env.WEB_APP, filePath: "todo.zip"
+
+  }
+}
