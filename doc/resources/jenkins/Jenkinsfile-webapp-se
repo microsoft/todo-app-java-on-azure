@@ -7,7 +7,8 @@ node {
     sh '''
         mvn clean package
         cp src/main/resources/web.config web.config
-        zip todo.zip todo-app-java-on-azure-1.0-SNAPSHOT web.config
+        cp target/todo-app-java-on-azure-1.0-SNAPSHOT.jar app.jar 
+        zip todo.zip app.jar web.config
     '''
   }
 
