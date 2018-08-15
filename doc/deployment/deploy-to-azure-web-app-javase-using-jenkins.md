@@ -64,26 +64,11 @@ then search and install the following plugins: EnvInject, Azure App Service Plug
     DOCUMENTDB_DBNAME=[your documentdb databasename]
     ```
 
-1. Paste the following text into a new document and replace the $JAR_FILE_NAME with your app's jar file name, then save the file as web.config:
+1. Copy [jenkins/web.config](../resources/jenkins/web.config) to `src/main/resources/web.config` and replace the `${JAR_FILE_NAME}` with your app's jar file name.
    
-    ```xml
-    <?xml version="1.0" encoding="UTF-8"?>
-    <configuration>
-    <system.webServer>
-        <handlers>
-        <add name="httpPlatformHandler" path="*" verb="*" modules="httpPlatformHandler" resourceType="Unspecified" />
-        </handlers>
-        <httpPlatform processPath="%JAVA_HOME%\bin\java.exe"
-            arguments="-Djava.net.preferIPv4Stack=true -Dserver.port=%HTTP_PLATFORM_PORT% -jar &quot;%HOME%\site\wwwroot\${JAR_FILE_NAME}&quot;">
-        </httpPlatform>
-    </system.webServer>
-    </configuration>
-    ```
-
 1. Choose "Pipeline script from SCM" in "Pipeline" -> "Definition".
 
 1. Fill in the SCM repo url and script path. ([Script Example](../resources/jenkins/jenkinsfile-webapp-se))
-
 
 1. Archive your jar file and web.config in zip format. 
 
@@ -92,9 +77,9 @@ then search and install the following plugins: EnvInject, Azure App Service Plug
 
 1. Verify you can run your project successfully in your local environment. ([Run project on local machine](../../README.md))
 
-2. Run jenkins job.
+1. Run jenkins job.
 
-3. Navigate to the website from your favorite browser.
+1. Navigate to the website from your favorite browser.
 You will see this app successfully running on Azure Web App for Containers.
 
 
