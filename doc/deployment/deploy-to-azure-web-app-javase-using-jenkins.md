@@ -2,50 +2,19 @@
 
 This tutorial shows you how to deploy a Java SE app to Azure Web App using [Azure App Service Plugin](https://wiki.jenkins.io/display/JENKINS/Azure+App+Service+Plugin).
 Below are the major steps in this tutorial.
-- [Create Azure Container Registry](#create-acr)
 - [Prepare Jenkins server](#prepare)
 - [Create job](#create-job)
-- [Build and Deploy Docker Container Image to Azure Web App for Containers](#deploy)
+- [Build and Deploy Java SE Application to Azure Web App](#deploy)
 - [Clean Up Resources](#clean-up)
-
-## <a name="create-acr"></a>Create Azure Container Registry
-
-1. login your Azure CLI, and set your subscription id 
-   
-    ```bash
-    az login
-    az account set -s <your-subscription-id>
-    ```
-
-1. Run below command to create an Azure Container Registry.
-After creation, use `login server` as Container Registry URL in the next section.
-
-   ```bash
-   az acr create -n <your-registry-name> -g <your-resource-group-name>
-   ```
-
-1. Run below command to show your Azure Container Registry credentials.
-You will use Docker registry username and password in the next section.
-
-    ```bash
-    az acr credential show -n <your-registry-name>
-    ```
 
 ## <a name="prepare"></a>Prepare Jenkins server
 
 1. Deploy a [Jenkins Master](https://aka.ms/jenkins-on-azure) on Azure
 
-1. Connect to the server with SSH and install the build tools:
-   ```
-   sudo apt-get install git maven docker.io
-   ```
-
 1. Install the plugins in Jenkins. Click 'Manage Jenkins' -> 'Manage Plugins' -> 'Available', 
-then search and install the following plugins: EnvInject, Azure App Service Plugin.
+then search and install the following plugins: Azure App Service Plugin.
 
 1. Add a Credential in type "Microsoft Azure Service Principal" with your service principal.
-
-1. Add a Credential in type "Username with password" with your account of docker registry.
 
 ## <a name="create-job"></a>Create job
 
@@ -57,23 +26,18 @@ then search and install the following plugins: EnvInject, Azure App Service Plug
     AZURE_CRED_ID=[your credential id of service principal]
     RES_GROUP=[your resource group of the web app]
     WEB_APP=[the name of the web app]
-    ACR_SERVER=[your address of azure container registry]
-    ACR_CRED_ID=[your credential id of ACR account]
-    DOCUMENTDB_URI=[your documentdb uri]
-    DOCUMENTDB_KEY=[your documentdb key]
-    DOCUMENTDB_DBNAME=[your documentdb databasename]
     ```
 
 1. Copy [jenkins/web.config](../resources/jenkins/web.config) to `src/main/resources/web.config` and replace the `${JAR_FILE_NAME}` with your app's jar file name.
    
 1. Choose "Pipeline script from SCM" in "Pipeline" -> "Definition".
 
-1. Fill in the SCM repo url and script path. ([Script Example](../resources/jenkins/jenkinsfile-webapp-se))
+1. Fill in the SCM repo url and script path. ([Script Example](../resources/jenkins/Jenkinsfile-webapp-se))
 
-1. Archive your jar file and web.config in zip format. 
+1. Archive your jar file and web.config in zip format manually or in command like the example script above.
 
 
-## <a name="deploy"></a>Build and Deploy Docker Container Image to Azure Web App for Containers
+## <a name="deploy"></a>Build and Deploy Java SE application to Azure Web App
 
 1. Verify you can run your project successfully in your local environment. ([Run project on local machine](../../README.md))
 
