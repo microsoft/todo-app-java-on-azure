@@ -2,10 +2,17 @@
 
 This tutorial shows you how to deploy a Java SE app to Azure Web App using [Azure App Service Plugin](https://wiki.jenkins.io/display/JENKINS/Azure+App+Service+Plugin).
 Below are the major steps in this tutorial.
+- [Create Azure Web App](#create-app)
 - [Prepare Jenkins server](#prepare)
 - [Create job](#create-job)
 - [Build and Deploy Java SE Application to Azure Web App](#deploy)
 - [Clean Up Resources](#clean-up)
+
+## <a name="create-app"></a>Create Azure Web App
+
+Create an Azure Web App by [Azure portal](https://github.com/Azure/azure-docs-sdk-java/blob/master/docs-ref-conceptual/spring-framework/deploy-spring-boot-java-web-app-on-azure.md#create-an-azure-web-app-for-use-with-java) or [Azure CLI](https://docs.microsoft.com/en-us/azure/app-service/app-service-cli-samples?toc=%2fazure%2fapp-service%2fcontainers%2ftoc.json)
+
+> If you use Web App on Linux with jre runtime stack, you have to build your app with port 80 or set the web app setting with `PORT=8080`
 
 ## <a name="prepare"></a>Prepare Jenkins server
 
