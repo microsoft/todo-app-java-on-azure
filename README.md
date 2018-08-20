@@ -77,9 +77,11 @@ WEBAPP_RESOURCEGROUP_NAME=put-your-resourcegroup-name-here
 WEBAPP_NAME=put-your-webapp-name-here
 ```
 
-Optional. If you plan to test the Web app locally, then 
+**Note**: The name of your webapp must be all lowercase.
+
+_Optional Step_: If you plan to test the Web app locally, then 
 you must start a local instance of Tomcat. Set another value in
-the system environment variable
+the system environment variable:
 
 ``` txt
 TOMCAT_HOME=put-your-tomcat-home-here
@@ -91,9 +93,9 @@ TOMCAT_HOME=put-your-tomcat-home-here
 mvn package
 ```
 
-## Run it locally - OPTIONAL STEP
+## Run it locally (optional)
 
-Deploy the todo list app to local Tomcat. You must start 
+Deploy the todo list app to your local Tomcat. You must start 
 a local instance of Tomcat.
 
 ```bash
@@ -103,8 +105,6 @@ mvn cargo:deploy
 Open `http://localhost:8080/todo-app-java-on-azure` you can see the todo list app
 
 ## Deploy to Tomcat on Azure App Service on Linux
-
-### Deploy to Tomcat on Azure App Service on Linux
 
 Deploy in one step. You can continue to deploy again and 
 again without restarting Tomcat.
@@ -127,27 +127,60 @@ mvn azure-webapp:deploy
 [INFO] Finished at: 2018-03-17T13:00:06-07:00
 [INFO] Final Memory: 51M/859M
 [INFO] ------------------------------------------------------------------------
-
 ```
+
 
 TODO: show how to deploy multiple applications.
-
-### Temporary Step - until it is fixed on the App Service service-side
-
-1. Go the Web App on Linux in the Azure Portal
-2. Click on Development Tools / SSH
-3. Click on Go --> to the app's SSH Shell
-
-```bash
-cd /home/site/wwwroot/webapps/ROOT
-rm index.jsp
-```
 
 ### Open the todo list Web app
 
 Open it in a browser
 
 ![](./media/todo-list-app.jpg)
+
+### SSH into your instance
+
+At some point you may want to SSH into your webapp. The following steps will guide you to your project directory within the web app.
+
+1. Add the "webapp" extension to your Azure CLI./
+
+```bash
+az extension add -n webapp
+```
+
+If you already have the extension installed, you may want to update it:
+
+```bash
+az extension update -n webapp
+```
+For more information on the `webapp` extension, please see [this blog post](https://blogs.msdn.microsoft.com/waws/2018/05/07/things-you-should-know-web-apps-and-ssh/).
+
+2. Open TCP port to instance
+
+```bash
+az webapp remote-connection create -g your-resourcegroup-name -n your-webapp-name
+```
+This command will return a port number, username, and password that we will use in the next step.
+Note that the command above will automatically select a port. If you would like to specify a port, append `-p port-number` to the command. (Where `port-number` is your specified port number.)
+
+3. SSH into instance
+
+Next, use your favorite SSH client to SSH into the instance. (If you require more detailed instructions on this step, please [click here](https://blogs.msdn.microsoft.com/waws/2018/05/07/things-you-should-know-web-apps-and-ssh/).)
+
+#### For OSX/*nix users
+Use your built-in SSH client with the following command:
+
+```bash
+ssh root@127.0.0.1 -p port-number
+```
+
+Enter the username and password from the previous step.
+
+#### For Windows users
+
+Open [PuTTY](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html) and set the IP address to 127.0.0.1. Set the port to the port number given in the previous step. When the console indow opens, enter the username and password from the previous step.
+
+After successfully SSHing into the web app, your project's assests from the war deployment will be under `/home/site/wwwroot/webapps/ROOT/`.
 
 ## Clean up
 
@@ -171,6 +204,6 @@ This project has adopted the [Microsoft Open Source Code of Conduct](https://ope
 For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or
 contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
 
-## Useful link
+## Useful links
 - [Azure Spring Boot Starters](https://github.com/Microsoft/azure-spring-boot)
 - [Azure Maven plugins](https://github.com/Microsoft/azure-maven-plugins)
