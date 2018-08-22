@@ -3,5 +3,5 @@ applications:
 - name: todo-app
   services:
   - todo-db
-env:
-  SPRING_PROFILES_ACTIVE: masb
+  env:
+    SPRING_PROFILES_ACTIVE: masb
