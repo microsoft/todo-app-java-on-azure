@@ -22,4 +22,5 @@ node {
               enableConfigSubstitution: true, 
               resourceGroupName: env.RES_GROUP,
               secretName: env.ACR_SECRET
+  }
 }
