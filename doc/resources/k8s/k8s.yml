@@ -19,7 +19,7 @@
       spec:
         containers:
         - name: todo-app-java-on-azure
-          image: ${IMAGE_NAME}:${BUILD_NUMBER}
+          image: ${ACR_REGISTRY}/${IMAGE_NAME}:${BUILD_NUMBER}
         imagePullSecrets:
         - name: ${ACR_SECRET}
     strategy:
