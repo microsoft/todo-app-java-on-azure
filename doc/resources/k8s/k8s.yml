@@ -1,0 +1,46 @@
+---
+- kind: Deployment
+  apiVersion: extensions/v1beta1
+  metadata:
+    name: todo-app-java-on-azure_${BUILD_NUMBER}
+    namespace: default
+    labels:
+      k8s-app: todo-app-java-on-azure
+  spec:
+    selector:
+      matchLabels:
+        k8s-app: todo-app-java-on-azure
+    template:
+      metadata:
+        name: todo-app-java-on-azure
+        labels:
+          k8s-app: todo-app-java-on-azure
+          role: ${BUILD_NUMBER}
+      spec:
+        containers:
+        - name: todo-app-java-on-azure
+          image: ${IMAGE_NAME}:${BUILD_NUMBER}
+        imagePullSecrets:
+        - name: ${ACR_SECRET}
+    strategy:
+      type: RollingUpdate
+      rollingUpdate:
+        maxUnavailable: 25%
+        maxSurge: 25%
+- kind: Service
+  apiVersion: v1
+  metadata:
+    name: todo-app-java-on-azure-service
+    namespace: default
+    labels:
+      k8s-app: todo-app-java-on-azure
+      role: ${BUILD_NUMBER}
+  spec:
+    ports:
+    - name: todo-app-java-on-azure-service
+      protocol: TCP
+      port: 80
+      targetPort: 80
+    selector:
+      k8s-app: todo-app-java-on-azure
+    type: LoadBalancer
