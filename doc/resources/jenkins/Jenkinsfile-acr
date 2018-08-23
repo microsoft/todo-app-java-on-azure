@@ -1,0 +1,23 @@
+node {
+  stage('init') {
+    // git clone
+    checkout scm
+  }
+
+  stage('build') {
+    sh 'mvn clean package'
+    acrQuickBuild azureCredentialsId: env.AZURE_CRED_ID,
+                  resourceGroupName: env.RES_GROUP, registryName: env.ACR_NAME,
+                  platform: "Linux",
+                  dockerfile: "Dockerfile",
+                  imageNames: [[image: "$env.APP:$env.BUILD_NUMBER"]]
+  }
+
+  stage('deploy') {
+    kubernetesDeploy credentialsType: 'SSH',
+                     ssh: [sshServer: env.ACS_SERVER, sshCredentialsId: env.ACS_CRED_ID],
+                     dockerCredentials: [[url: "http://$env.ACR_SERVER", credentialsId: env.ACR_CRED_ID]],
+                     secretName: env.ACR_SERVER,
+                     configs: 'doc/resources/jenkins/jenkins-sample.yml'
+  }
+}
