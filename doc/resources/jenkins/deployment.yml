@@ -2,10 +2,11 @@
 kind: Deployment
 apiVersion: extensions/v1beta1
 metadata:
-  name: todo-app-java-on-azure-${BUILD_NUMBER}
+  name: todo-app-java-on-azure
   namespace: default
   labels:
     k8s-app: todo-app-java-on-azure
+    role: ${BUILD_NUMBER}
 spec:
   selector:
     matchLabels:
