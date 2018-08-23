@@ -7,17 +7,19 @@ node {
   stage('build') {
     sh 'mvn clean package'
     acrQuickBuild azureCredentialsId: env.AZURE_CRED_ID,
-                  resourceGroupName: env.RES_GROUP, registryName: env.ACR_NAME,
+                  resourceGroupName: env.RES_GROUP,
+                  registryName: env.ACR_NAME,
                   platform: "Linux",
                   dockerfile: "Dockerfile",
-                  imageNames: [[image: "$env.APP:$env.BUILD_NUMBER"]]
+                  imageNames: [[image: "$env.ACR_REGISTRY/$env.IMAGE_NAME:$env.BUILD_NUMBER"]]
   }
 
   stage('deploy') {
-    kubernetesDeploy credentialsType: 'SSH',
-                     ssh: [sshServer: env.ACS_SERVER, sshCredentialsId: env.ACS_CRED_ID],
-                     dockerCredentials: [[url: "http://$env.ACR_SERVER", credentialsId: env.ACR_CRED_ID]],
-                     secretName: env.ACR_SERVER,
-                     configs: 'doc/resources/jenkins/jenkins-sample.yml'
-  }
+    acsDeploy azureCredentialsId: env.AZURE_CRED_ID, 
+              configFilePaths: 'doc/resources/k8s/k8s.yml', 
+              containerRegistryCredentials: [[credentialsId: env.ACR_USERNAME, url: "http://$env.ACR_REGISTRY"]],
+              containerService: "$env.AKS_NAME | AKS",
+              enableConfigSubstitution: true, 
+              resourceGroupName: env.RES_GROUP,
+              secretName: env.ACR_SECRET
 }
