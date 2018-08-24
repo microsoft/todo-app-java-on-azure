@@ -1,6 +1,10 @@
-# Deploy to Azure Container Service using Jenkins
+# Deploy to Azure Kubernetes Service using Jenkins
 
 This document shows how to deploy this todo app java project to Kubernetes cluster using Jenkins.
+
+On the Jenkins machine, it clones the toao-app-java-on-azure to local with **Git Plugin**, uses **Maven Plugin** to build out a `jar` file. 
+Using **Azure ACR PLugin**, Jenkins uploads the `jar` together with `Dockerfile` to Azure Container Registry. ACR Quick Build will build a docker image and host it when receiving the `Dockerfile` and `jar` file. 
+After ACR Quick Build finishes pushing docker image. Jenkins will use **Azure Kubernetes CD Plugin** to apply two Kubernetes resource yaml files to Azure Kubernetes Service.
 
 ## Run application on local machine
 Verify you can run your project successfully in your local environment. ([Run project on local machine](../../README.md))
@@ -77,13 +81,13 @@ You will use Docker registry username and password in the next section.
 1. Connect to the server with SSH and install the build tools:
    
    ```
-   sudo apt-get install git maven docker.io
+   sudo apt-get install git maven
    ```
 
 1. Install the plugins in Jenkins. 
 
    1. Click 'Manage Jenkins' -> 'Manage Plugins' -> 'Available', 
-      then search and install the following plugins: EnvInject, Azure Kubernetes CD Plugin.
+      then search and install the following plugins: [EnvInject](https://wiki.jenkins.io/display/JENKINS/EnvInject+Plugin), [Azure Kubernetes CD Plugin](https://wiki.jenkins.io/display/JENKINS/Azure+Container+Service+Plugin).
    1. Download Azure-acr-plugin latest preview release `hpi` file from [GitHub](https://github.com/Azure/azure-acr-plugin/releases).
       Go to Jenkins page, click `Manage Jenkins` -> `Manage Plugins` -> `Advanced` -> `Upload Plugin`,
       upload the azure-acr-plugin hpi file.
@@ -123,7 +127,7 @@ You will use Docker registry username and password in the next section.
    * `*/master` as "Branches to build"
    * `doc/resources/jenkins/Jenkinsfile-acr` as "Script Path"
 
-   > In the `Jenkinsfile-acr`, should define the pipeline logic
+   > In the `Jenkinsfile-acr`, it defines the pipeline step logic:
    > 1. stage('init') - Checkout to the scm
    > 1. stage('build') - Use `Maven` to build out a jar file. Upload the jar and `Dockerfile` to ACR to build the docker image.
    > 1. stage('deploy') - Apply a deployment to AKS with the new built docker image. Then expose the deployment to external.
