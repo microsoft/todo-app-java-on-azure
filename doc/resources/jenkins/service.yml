@@ -2,17 +2,17 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: todo-app-java-on-azure-service
+  name: ${IMAGE_NAME}-service
   namespace: default
   labels:
-    k8s-app: todo-app-java-on-azure
+    k8s-app: ${IMAGE_NAME}
     role: "${BUILD_NUMBER}"
 spec:
   ports:
-  - name: todo-app-java-on-azure-service
+  - name: ${IMAGE_NAME}e-service
     protocol: TCP
     port: 80
     targetPort: 80
   selector:
-    k8s-app: todo-app-java-on-azure
+    k8s-app: ${IMAGE_NAME}
   type: LoadBalancer
