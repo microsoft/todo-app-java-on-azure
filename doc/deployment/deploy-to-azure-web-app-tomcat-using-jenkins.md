@@ -10,7 +10,7 @@ Below are the major steps in this tutorial.
 
 ## <a name="create-app"></a>Create Azure Web App
 
-Create an Azure Web App by [Azure portal](https://github.com/Azure/azure-docs-sdk-java/blob/master/docs-ref-conceptual/spring-framework/deploy-spring-boot-java-web-app-on-azure.md#create-an-azure-web-app-for-use-with-java) or [Azure CLI](https://docs.microsoft.com/en-us/azure/app-service/app-service-cli-samples?toc=%2fazure%2fapp-service%2fcontainers%2ftoc.json).
+Create an Azure Web App with built-in support for Tomcat by [Azure portal](https://azure.microsoft.com/en-us/blog/public-preview-of-java-on-app-service-built-in-support-for-tomcat-and-openjdk) or [Azure CLI](https://docs.microsoft.com/en-us/azure/app-service/app-service-cli-samples?toc=%2fazure%2fapp-service%2fcontainers%2ftoc.json).
 
 ## <a name="prepare"></a>Prepare Jenkins server
 
@@ -45,7 +45,7 @@ then search and install the following plugins: Azure App Service Plugin, EnvInje
 1. Fill in the SCM repo url and script path. ([Script Example](../resources/jenkins/Jenkinsfile-webapp-tomcat))
 
 
-## <a name="deploy"></a>Build and Deploy Java SE application to Azure Web App
+## <a name="deploy"></a>Build and Deploy Java application to Azure Web App
 
 1. Verify you can run your project successfully in your local environment. ([Run project on local machine](../../README.md))
 
