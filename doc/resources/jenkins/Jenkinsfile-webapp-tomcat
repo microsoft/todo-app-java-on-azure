@@ -6,7 +6,7 @@ node {
   stage('build') {
     sh '''
         mvn clean package
-        mv target/todo-app-java-on-azure-1.0-SNAPSHOT.war ROOT.war
+        mv target/*.war ROOT.war
     '''
   }
 

@@ -17,7 +17,7 @@ Create an Azure Web App by [Azure portal](https://github.com/Azure/azure-docs-sd
 1. Deploy a [Jenkins Master](https://aka.ms/jenkins-on-azure) on Azure
 
 1. Install the plugins in Jenkins. Click 'Manage Jenkins' -> 'Manage Plugins' -> 'Available', 
-then search and install the following plugins: Azure App Service Plugin.
+then search and install the following plugins: Azure App Service Plugin, EnvInject Plugin.
 
 1. Add a Credential in type "Microsoft Azure Service Principal" with your service principal.
 
@@ -31,7 +31,14 @@ then search and install the following plugins: Azure App Service Plugin.
     AZURE_CRED_ID=[your credential id of service principal]
     RES_GROUP=[your resource group of the web app]
     WEB_APP=[the name of the web app]
+    DOCUMENTDB_URI=[the URI of the DocumentDB]
+    DOCUMENTDB_KEY=[the key of the DocumentDB]
+    DOCUMENTDB_DBNAME=[the name of the DocumentDB]
     ```
+
+    > You can save your DocumentDB settings in your Web App Application settings if you would like to manage your application settings independently.
+
+1. This application's default package type is jar. So you have to make some changes to enable it create a deployable war file. Please refer to Spring Boot doc [here](https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#howto-create-a-deployable-war-file).
 
 1. Choose "Pipeline script from SCM" in "Pipeline" -> "Definition".
 
@@ -45,7 +52,7 @@ then search and install the following plugins: Azure App Service Plugin.
 1. Run jenkins job.
 
 1. Navigate to the website from your favorite browser.
-You will see this app successfully running on Azure Web App for Containers.
+You will see this app successfully running on Azure Web App.
 
 
 ## <a name="clean-up"></a>Clean Up Resources
