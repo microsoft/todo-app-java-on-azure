@@ -76,7 +76,7 @@ You will use Docker registry username and password in the next section.
     ```
 
 ## Prepare Jenkins server
-1. Deploy a Jenkins Master on Azure[https://aka.ms/jenkins-on-azure]
+1. Deploy a [Jenkins Master on Azure](https://aka.ms/jenkins-on-azure).
 
 1. Connect to the server with SSH and install the build tools:
    
