@@ -1,10 +1,10 @@
-# Deploy to Azure Kubernetes Service using Jenkins
+# Build Docker image from git repo in Azure Container Registry then deploy to Azure Kubernetes Service using Jenkins
 
-This document shows how to deploy this todo app java project to Kubernetes cluster using Jenkins.
+This document shows how to deploy this todo app java project to Kubernetes cluster using Jenkins. Instead of installing Docker on the build agent, you can use **Azure ACR Plugin** to build your Docker image in Azure Container Registry with your Github repo url.
 
-On the Jenkins machine, it clones the toao-app-java-on-azure to local with **Git Plugin**, uses **Maven Plugin** to build out a `jar` file. 
-Using **Azure ACR PLugin**, Jenkins uploads the `jar` together with `Dockerfile` to Azure Container Registry. ACR Quick Build will build a docker image and host it when receiving the `Dockerfile` and `jar` file. 
-After ACR Quick Build finishes pushing docker image. Jenkins will use **Azure Kubernetes CD Plugin** to apply two Kubernetes resource yaml files to Azure Kubernetes Service.
+On the Jenkins machine, it uses **Azure ACR PLugin** to queue an Azure Container Registry Quick build to build a todo-app-java-on-azure docker image, then apply the docker image to an Azure Kubernetes Service cluster with **Azure Kubernetes CD Plugin**. 
+
+> This deployment instruction will include Maven package in the Dockerfile. If you want to do the Maven package on your Jenkins Server instead during the docker build, please go to [Build Docker image from local directory in Azure Container Registry then deploy to Azure Kubernetes Service using Jenkins](./deploy-to-aks-with-acr-build-local-using-jenkins.md).
 
 ## Run application on local machine
 Verify you can run your project successfully in your local environment. ([Run project on local machine](../../README.md))
@@ -117,7 +117,7 @@ You will use Docker registry username and password in the next section.
 1. Fill the Script part with content in [Jenkinsfile-acr-with-git](../resources/jenkins/Jenkinsfile-acr-with-git)
 
    > In the `Jenkinsfile-acr-with-git`, it defines the pipeline step logic:
-   > 1. stage('build') - Upload the jar and `Dockerfile` to ACR to build the docker image.
+   > 1. stage('build') - Send the GitHub URL to ACR to queue a build.
    > 1. stage('deploy') - Apply a deployment to AKS with the new built docker image. Then expose the deployment to external.
 
 ## Run it
