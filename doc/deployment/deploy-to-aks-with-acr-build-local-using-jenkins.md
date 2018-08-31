@@ -1,10 +1,12 @@
-# Deploy to Azure Kubernetes Service using Jenkins
+#  Build Docker image from local directory in Azure Container Registry then deploy to Azure Kubernetes Service using Jenkins
 
-This document shows how to deploy this todo app java project to Kubernetes cluster using Jenkins.
+This document shows how to deploy this todo app java project to Kubernetes cluster using Jenkins. Instead of installing Docker on the build agent, you can use **Azure ACR Plugin** to build your Docker image in Azure Container Registry with your Maven packaged `jar` file.
 
 On the Jenkins machine, it clones the toao-app-java-on-azure to local with **Git Plugin**, uses **Maven Plugin** to build out a `jar` file. 
 Using **Azure ACR PLugin**, Jenkins uploads the `jar` together with `Dockerfile` to Azure Container Registry. ACR Quick Build will build a docker image and host it when receiving the `Dockerfile` and `jar` file. 
 After ACR Quick Build finishes pushing docker image. Jenkins will use **Azure Kubernetes CD Plugin** to apply two Kubernetes resource yaml files to Azure Kubernetes Service.
+
+> This deployment instruction will include Maven package in the Dockerfile. If you want to do the Maven package on your Jenkins Server instead during the docker build, please go to [Build Docker image from git repo in Azure Container Registry then deploy to Azure Kubernetes Service using Jenkins](./deploy-to-aks-with-acr-build-local-using-jenkins.md).
 
 ## Run application on local machine
 Verify you can run your project successfully in your local environment. ([Run project on local machine](../../README.md))
