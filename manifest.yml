@@ -5,3 +5,4 @@ applications:
   - todo-db
   env:
     SPRING_PROFILES_ACTIVE: masb
+    # APPLICATION_INSIGHTS_IKEY: YOUR_APPLICATION_INSIGHTS_IKEY
