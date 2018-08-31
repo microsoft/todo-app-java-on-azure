@@ -6,7 +6,7 @@ On the Jenkins machine, it clones the toao-app-java-on-azure to local with **Git
 Using **Azure ACR PLugin**, Jenkins uploads the `jar` together with `Dockerfile` to Azure Container Registry. ACR Quick Build will build a docker image and host it when receiving the `Dockerfile` and `jar` file. 
 After ACR Quick Build finishes pushing docker image. Jenkins will use **Azure Kubernetes CD Plugin** to apply two Kubernetes resource yaml files to Azure Kubernetes Service.
 
-> This deployment instruction will include Maven package in the Dockerfile. If you want to do the Maven package on your Jenkins Server instead during the docker build, please go to [Build Docker image from git repo in Azure Container Registry then deploy to Azure Kubernetes Service using Jenkins](./deploy-to-aks-with-acr-build-local-using-jenkins.md).
+> This deployment instruction will include Maven package in the Dockerfile. If you want to do the Maven package on your Jenkins Server instead during the docker build, please go to [Build Docker image from git repo in Azure Container Registry then deploy to Azure Kubernetes Service using Jenkins](./deploy-to-aks-with-acr-build-git-using-jenkins.md).
 
 ## Run application on local machine
 Verify you can run your project successfully in your local environment. ([Run project on local machine](../../README.md))
