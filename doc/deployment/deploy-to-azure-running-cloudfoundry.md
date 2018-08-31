@@ -97,6 +97,12 @@ For OSBA:
     cf push todo-app -p target/todo-app-java-on-azure-1.0-SNAPSHOT.jar
     ```
 
+Or, you can use maven buildpack which is an experimental project that does not need the source code to be compiled locally.
+
+    ```bash
+    cf push todo-app -b https://github.com/dmikusa-pivotal/cf-maven-buildpack.git
+    ```
+
 3. Navigate to the website from your favorite browser.
 You will see this app successfully running in Cloud Foundry on Azure.
 
