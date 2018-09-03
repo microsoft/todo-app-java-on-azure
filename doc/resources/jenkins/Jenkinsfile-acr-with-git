@@ -1,0 +1,33 @@
+node {
+   stage('build') {
+    acrQuickBuild azureCredentialsId: env.AZURE_CRED_ID,
+                  resourceGroupName: env.ACR_RES_GROUP,
+                  registryName: env.ACR_NAME,
+                  platform: "Linux",
+                  dockerfile: 'doc/resources/jenkins/DockerfileWithMaven',
+                  gitBranch: '',
+                  gitPath: '',
+                  gitRepo: 'https://github.com/Microsoft/todo-app-java-on-azure',
+                  imageNames: [[image: "$env.ACR_REGISTRY/$env.IMAGE_NAME:$env.BUILD_NUMBER"]],
+                  sourceType: 'git',
+                  buildArgs: [[key: 'dbUrl', secrecy: false, value: env.DOCUMENTDB_URI],
+                              [key: 'dbKey', secrecy: true, value: env.DOCUMENTDB_KEY],
+                              [key: 'dbName', secrecy: false, value: env.DOCUMENTDB_DBNAME]]
+  }
+ stage('deploy') {
+    sh 'wget https://raw.githubusercontent.com/Microsoft/todo-app-java-on-azure/master/doc/resources/jenkins/deployment.yml -O deployment.yml'
+    acsDeploy azureCredentialsId: env.AZURE_CRED_ID, 
+              configFilePaths: 'deployment.yml', 
+              containerRegistryCredentials: [[credentialsId: env.ACR_CREDENTIAL_ID, url: "http://$env.ACR_REGISTRY"]],
+              containerService: "$env.AKS_NAME | AKS",
+              enableConfigSubstitution: true, 
+              resourceGroupName: env.AKS_RES_GROUP,
+              secretName: env.ACR_SECRET
+    sh 'wget https://raw.githubusercontent.com/Microsoft/todo-app-java-on-azure/master/doc/resources/jenkins/service.yml -O service.yml'             
+    acsDeploy azureCredentialsId: env.AZURE_CRED_ID, 
+              configFilePaths: 'service.yml', 
+              containerService: "$env.AKS_NAME | AKS",
+              enableConfigSubstitution: true, 
+              resourceGroupName: env.AKS_RES_GROUP
+  }
+}

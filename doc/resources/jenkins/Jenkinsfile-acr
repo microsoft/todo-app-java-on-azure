@@ -1,0 +1,32 @@
+node {
+  stage('init') {
+    // git clone
+    checkout scm
+  }
+
+  stage('build') {
+    sh 'mvn clean package'
+    acrQuickBuild azureCredentialsId: env.AZURE_CRED_ID,
+                  resourceGroupName: env.ACR_RES_GROUP,
+                  registryName: env.ACR_NAME,
+                  platform: "Linux",
+                  dockerfile: "Dockerfile",
+                  imageNames: [[image: "$env.ACR_REGISTRY/$env.IMAGE_NAME:$env.BUILD_NUMBER"]]
+  }
+
+  stage('deploy') {
+    acsDeploy azureCredentialsId: env.AZURE_CRED_ID, 
+              configFilePaths: 'doc/resources/jenkins/deployment.yml', 
+              containerRegistryCredentials: [[credentialsId: env.ACR_CREDENTIAL_ID, url: "http://$env.ACR_REGISTRY"]],
+              containerService: "$env.AKS_NAME | AKS",
+              enableConfigSubstitution: true, 
+              resourceGroupName: env.AKS_RES_GROUP,
+              secretName: env.ACR_SECRET
+             
+    acsDeploy azureCredentialsId: env.AZURE_CRED_ID, 
+              configFilePaths: 'doc/resources/jenkins/service.yml', 
+              containerService: "$env.AKS_NAME | AKS",
+              enableConfigSubstitution: true, 
+              resourceGroupName: env.AKS_RES_GROUP
+  }
+}

@@ -108,7 +108,7 @@ Because we are doing blue/green deployment, we need to do some initial setup. Yo
     After creation, use `login server` as Docker registry URL in the next section.
 
     ```bash
-    az acr create -n <your-registry-name> -g <your-resource-group-name>
+    az acr create -n <your-registry-name> -g <your-resource-group-name> --sku <sku-name> --admin-enabled true
     ```
 
 1. Run below command to show your Azure Container Registry credentials.

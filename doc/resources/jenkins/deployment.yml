@@ -1,0 +1,30 @@
+---
+kind: Deployment
+apiVersion: extensions/v1beta1
+metadata:
+  name: ${IMAGE_NAME}
+  namespace: default
+  labels:
+    k8s-app: ${IMAGE_NAME}
+    role: ${BUILD_NUMBER}
+spec:
+  selector:
+    matchLabels:
+      k8s-app: ${IMAGE_NAME}
+  template:
+    metadata:
+      name: ${IMAGE_NAME}
+      labels:
+        k8s-app: ${IMAGE_NAME}
+        role: "${BUILD_NUMBER}"
+    spec:
+      containers:
+      - name: ${IMAGE_NAME}
+        image: "${ACR_REGISTRY}/${IMAGE_NAME}:${BUILD_NUMBER}"
+      imagePullSecrets:
+      - name: "${ACR_SECRET}"
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 25%
+      maxSurge: 25%
