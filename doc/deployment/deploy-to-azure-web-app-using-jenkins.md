@@ -21,7 +21,7 @@ Below are the major steps in this tutorial.
 After creation, use `login server` as Container Registry URL in the next section.
 
    ```bash
-   az acr create -n <your-registry-name> -g <your-resource-group-name>
+   az acr create -n <your-registry-name> -g <your-resource-group-name> --sku <sku-name>
    ```
 
 1. Run below command to show your Azure Container Registry credentials.
