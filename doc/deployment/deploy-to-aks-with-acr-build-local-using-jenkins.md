@@ -67,7 +67,7 @@ You can create the Azure Services using [Azure CLI 2.0](https://docs.microsoft.c
 After creation, use `login server` as Docker registry URL in the next section.
 
    ```bash
-   az acr create -n <your-registry-name> -g <your-resource-group-name> --sku <sku-name>
+   az acr create -n <your-registry-name> -g <your-resource-group-name> --sku <sku-name> --admin-enabled true
    ```
 
 1. Run below command to show your Azure Container Registry credentials.
