@@ -2,7 +2,7 @@
 
 This document shows how to deploy this todo app java project to Kubernetes cluster using Jenkins. Instead of installing Docker on the build agent, you can use **Azure ACR Plugin** to build your Docker image in Azure Container Registry with your Github repo url.
 
-On the Jenkins machine, it uses **Azure ACR PLugin** to queue an Azure Container Registry Quick build to build a todo-app-java-on-azure docker image, then apply the docker image to an Azure Kubernetes Service cluster with **Azure Kubernetes CD Plugin**. 
+On the Jenkins machine, it uses **Azure ACR PLugin** to queue an Azure Container Registry Quick build to build a todo-app-java-on-azure docker image, then apply the docker image to an Azure Kubernetes Service cluster with **Azure Container Agents Plugin**. 
 
 > This deployment instruction will include Maven package in the Dockerfile. If you want to do the Maven package on your Jenkins Server instead during the docker build, please go to [Build Docker image from local directory in Azure Container Registry then deploy to Azure Kubernetes Service using Jenkins](./deploy-to-aks-with-acr-build-local-using-jenkins.md).
 
@@ -81,7 +81,7 @@ You will use Docker registry username and password in the next section.
 1. Install the plugins in Jenkins. 
 
    1. Click 'Manage Jenkins' -> 'Manage Plugins' -> 'Available', 
-      then search and install the following plugins: [EnvInject](https://wiki.jenkins.io/display/JENKINS/EnvInject+Plugin), [Azure Kubernetes CD Plugin](https://wiki.jenkins.io/display/JENKINS/Azure+Container+Service+Plugin).
+      then search and install the following plugins: [EnvInject](https://wiki.jenkins.io/display/JENKINS/EnvInject+Plugin), [Azure Container Agents Plugin](https://wiki.jenkins.io/display/JENKINS/Azure+Container+Service+Plugin).
    1. Download Azure-acr-plugin latest preview release `hpi` file from [GitHub](https://github.com/Azure/azure-acr-plugin/releases).
       Go to Jenkins page, click `Manage Jenkins` -> `Manage Plugins` -> `Advanced` -> `Upload Plugin`,
       upload the azure-acr-plugin hpi file.
