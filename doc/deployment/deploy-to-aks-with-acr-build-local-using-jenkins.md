@@ -107,12 +107,13 @@ You will use Docker registry username and password in the next section.
 1. Enable "Prepare an environment for the run", and put the following environment variables in "Properties Content":
     ```
     AZURE_CRED_ID=[your Azure Credential ID]
-    RES_GROUP=[your resource group]
+    ACR_RES_GROUP=[your ACR resource group]
     ACR_NAME=[your ACR name]
     ACR_USERNAME=[your registry username]
     ACR_REGISTRY=[your ACR registry url, without http schema]
     ACR_CREDENTIAL_ID=[your credential id of ACR account]
     ACR_SECRET=[secret name you will created in AKS to store ACR credential]
+    AKS_RES_GROUP=[your AKS resource group]
     AKS_NAME=[your AKS name]
     IMAGE_NAME=[image name you will push to ACR, without registry prefix]
     DOCUMENTDB_URI=[your documentdb uri]
