@@ -3,8 +3,8 @@
 This document shows how to deploy this todo app java project to Kubernetes cluster using Jenkins. Instead of installing Docker on the build agent, you can use **Azure ACR Plugin** to build your Docker image in Azure Container Registry with your Maven packaged `jar` file.
 
 On the Jenkins machine, it clones the toao-app-java-on-azure to local with **Git Plugin**, uses **Maven Plugin** to build out a `jar` file. 
-Using **Azure ACR PLugin**, Jenkins uploads the `jar` together with `Dockerfile` to Azure Container Registry. ACR Quick Build will build a docker image and host it when receiving the `Dockerfile` and `jar` file. 
-After ACR Quick Build finishes pushing docker image. Jenkins will use **Azure Kubernetes CD Plugin** to apply two Kubernetes resource yaml files to Azure Kubernetes Service.
+Using **Azure ACR Plugin**, Jenkins uploads the `jar` together with `Dockerfile` to Azure Container Registry. ACR Quick Build will build a docker image and host it when receiving the `Dockerfile` and `jar` file. 
+After ACR Quick Build finishes pushing docker image. Jenkins will use **Azure Container Agents Plugin** to apply two Kubernetes resource yaml files to Azure Kubernetes Service.
 
 > This deployment instruction will include Maven package in the Dockerfile. If you want to do the Maven package on your Jenkins Server instead during the docker build, please go to [Build Docker image from git repo in Azure Container Registry then deploy to Azure Kubernetes Service using Jenkins](./deploy-to-aks-with-acr-build-git-using-jenkins.md).
 
@@ -89,7 +89,7 @@ You will use Docker registry username and password in the next section.
 1. Install the plugins in Jenkins. 
 
    1. Click 'Manage Jenkins' -> 'Manage Plugins' -> 'Available', 
-      then search and install the following plugins: [EnvInject](https://wiki.jenkins.io/display/JENKINS/EnvInject+Plugin), [Azure Kubernetes CD Plugin](https://wiki.jenkins.io/display/JENKINS/Azure+Container+Service+Plugin).
+      then search and install the following plugins: [EnvInject](https://wiki.jenkins.io/display/JENKINS/EnvInject+Plugin), [Azure Container Agents Plugin](https://wiki.jenkins.io/display/JENKINS/Azure+Container+Service+Plugin).
    1. Download Azure-acr-plugin latest preview release `hpi` file from [GitHub](https://github.com/Azure/azure-acr-plugin/releases).
       Go to Jenkins page, click `Manage Jenkins` -> `Manage Plugins` -> `Advanced` -> `Upload Plugin`,
       upload the azure-acr-plugin hpi file.
