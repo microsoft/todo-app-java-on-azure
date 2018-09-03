@@ -22,6 +22,8 @@ This TodoList app is an Azure Java application. It provides end-to-end CRUD oper
     * [Deploy to Azure Web App for Java SE applications using Jenkins](./doc/deployment/deploy-to-azure-web-app-javase-using-jenkins.md)
     * [Deploy to Azure Container Service using Jenkins](./doc/deployment/deploy-to-azure-container-service-using-jenkins.md)
     * [Deploy to AKS using Jenkins and Blue/Green Deployment](./doc/deployment/deploy-to-AKS-blueegreen-using-jenkins.md)
+    * [Build Docker image from git repo in Azure Container Registry then deploy to Azure Kubernetes Service using Jenkins](./doc/deployment/deploy-to-aks-with-acr-build-git-using-jenkins.md)
+    * [Build Docker image from local directory in Azure Container Registry then deploy to Azure Kubernetes Service using Jenkins](./doc/deployment/deploy-to-aks-with-acr-build-local-using-jenkins.md)
 * [Useful link](#useful-link)
 
 ## Requirements
