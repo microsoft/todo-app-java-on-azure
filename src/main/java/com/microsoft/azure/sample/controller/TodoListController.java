@@ -51,11 +51,7 @@ public class TodoListController {
     @RequestMapping(value = "/api/todolist", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<?> getAllTodoItems() {
         try {
-            final Iterable<TodoItem> itemIterable = todoItemRepository.findAll();
-            final List<TodoItem> items = new ArrayList<>();
-            itemIterable.forEach(todoItem -> items.add(todoItem));
-
-            return new ResponseEntity<>(items, HttpStatus.OK);
+            return new ResponseEntity<>(todoItemRepository.findAll(), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>("Nothing found", HttpStatus.NOT_FOUND);
         }
