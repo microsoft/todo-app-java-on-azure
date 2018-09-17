@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
+import java.util.List;
 
 import com.microsoft.azure.sample.model.TodoItem;
 
@@ -21,25 +22,37 @@ public class TodoItemRepositoryImpl implements TodoItemService {
     @Override
     @CachePut(value="ItemCache")
     public TodoItem createItem(TodoItem todoItem) {
-        return todoItemRepository.save(todoItem);
+        try {
+            todoItemRepository.save(todoItem);
+        } catch (Exception ex){
+            ex.printStackTrace();
+        }
+        return todoItem;
     }
     
     /**
      * Fetches Employee information by id from backend for the first time and creates an entry in the cache, which will be used from next time with out executing the method.
      */
     @Override
-    @Cacheable(value="EmployeeCache", key="#id")
-    public TodoItem getById(long id) {
-        return todoItemRepository.findOne(id);
+    @Cacheable(value="ItemCache")
+    public TodoItem findOne(String index){
+        return todoItemRepository.findOne(index);
     }
 
     /**
      * Removes the Employee information by id from backend and evicts the same from cache.
      */
     @Override
-    @CacheEvict(value="EmployeeCache", key="#id")
-    public void removeEmployee(long id) {
-        directoryRepository.delete(id);
+    @Cacheable(value="ItemCache")
+    public List<TodoItem> findAll(){
+        return todoItemRepository.findAll();
     }
+
+    @Override
+    @CacheEvict(value="ItemCache")
+    public void deleteItem(String itemID){
+        todoItemRepository.delete(itemID);
+    }
+
 
 }

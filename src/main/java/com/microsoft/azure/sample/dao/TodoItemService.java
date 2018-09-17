@@ -12,7 +12,7 @@ public interface TodoItemService {
 
     List<TodoItem> findAll();
 
-    void createItem(TodoItem item);
+    TodoItem createItem(TodoItem item);
     
     void deleteItem(String itemID);
 
