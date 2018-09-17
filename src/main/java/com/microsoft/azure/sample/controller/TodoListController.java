@@ -5,7 +5,6 @@
  */
 package com.microsoft.azure.sample.controller;
 
-import com.microsoft.azure.sample.dao.TodoItemRepository;
 import com.microsoft.azure.sample.dao.TodoItemService;
 import com.microsoft.azure.sample.model.TodoItem;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,9 +20,6 @@ import java.util.UUID;
 
 @RestController
 public class TodoListController {
-
-    @Autowired
-    private TodoItemRepository todoItemRepository;
 
     @Autowired
     private TodoItemService todoItemService; 
