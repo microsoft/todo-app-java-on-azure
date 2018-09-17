@@ -43,6 +43,18 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+
+            <dependency>
+                <groupId>com.microsoft.servicefabric</groupId>
+                <artifactId>sf-reliablecache-spring</artifactId>
+                <version>1.0.0</version>
+		    </dependency>
+
+            <dependency>
+                <groupId>com.microsoft.servicefabric</groupId>
+                <artifactId>sf-web-interceptor</artifactId>
+                <version>1.0.0</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -156,6 +168,31 @@
                     <linkXRef>false</linkXRef>
                 </configuration>
                 <inherited>true</inherited>
+            </plugin>
+
+            <plugin>
+	                <groupId>org.apache.maven.plugins</groupId>
+	                <artifactId>maven-dependency-plugin</artifactId>
+	                <executions>
+	                    <execution>
+	                        <id>unpack</id>
+	                        <phase>install</phase>
+	                        <goals>
+	                            <goal>unpack</goal>
+	                        </goals>
+	                        <configuration>
+	                            <artifactItems>
+	                                <artifactItem>
+	                                    <groupId>com.microsoft.servicefabric</groupId>
+	                                    <artifactId>sf-native</artifactId>
+	                                    <version>1.0.0</version>
+	                                    <overWrite>true</overWrite>
+				                        <outputDirectory>${project.build.directory}/AppPkg</outputDirectory>
+	                                </artifactItem>
+	                            </artifactItems>
+	                        </configuration>
+	                    </execution>
+	                </executions>
             </plugin>
         </plugins>
     </build>
