@@ -28,7 +28,7 @@ public class TodoItemServiceImpl implements TodoItemService {
      * Saves Employee object in the backend database and also creates an entry in the cache.
      */
     @Override
-    @CachePut(value = "ItemCache")
+    @CachePut(value = "ItemCache", key = "#todoItem.id")
     public TodoItem createItem(TodoItem todoItem) {
         try {
             todoItemRepository.save(todoItem);
@@ -44,7 +44,7 @@ public class TodoItemServiceImpl implements TodoItemService {
      * which will be used from next time with out executing the method.
      */
     @Override
-    @Cacheable(value = "ItemCache")
+    @Cacheable(value = "ItemCache", key = "#index")
     public TodoItem findOne(String index){
         return todoItemRepository.findOne(index);
     }
@@ -53,13 +53,13 @@ public class TodoItemServiceImpl implements TodoItemService {
      * Removes the Employee information by id from backend and evicts the same from cache.
      */
     @Override
-    @Cacheable(value = "ItemCache")
+    @Cacheable(value = "ItemCache", key = "cache")
     public List<TodoItem> findAll(){
         return todoItemRepository.findAll();
     }
 
     @Override
-    @CacheEvict(value = "ItemCache")
+    @CacheEvict(value = "ItemCache", key = "#itemID")
     public void deleteItem(String itemID){
         todoItemRepository.delete(itemID);
     }

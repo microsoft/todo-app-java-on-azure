@@ -1,0 +1,9 @@
+FROM winamd64/openjdk:8u181-jdk-windowsservercore-1709
+
+WORKDIR /Code
+COPY EmployeeDirectory/target/AppPkg .
+COPY entryPoint.bat .
+ENTRYPOINT C:\\Code\\entryPoint.bat
+
+#CMD POWERSHELL Write-Host EntryPoint executed ; \
+#while ($true) { Start-Sleep -Seconds 300 }
