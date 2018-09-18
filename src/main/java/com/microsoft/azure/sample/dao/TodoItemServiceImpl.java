@@ -53,7 +53,6 @@ public class TodoItemServiceImpl implements TodoItemService {
      * Removes the Employee information by id from backend and evicts the same from cache.
      */
     @Override
-    @Cacheable(value = "ItemCache", key = "cache")
     public List<TodoItem> findAll(){
         return todoItemRepository.findAll();
     }
