@@ -1,0 +1,6 @@
+## App Definition ##
+application:
+  schemaVersion: 1.0.0
+  name: TodoApp
+  properties:
+    description: This application has no description 

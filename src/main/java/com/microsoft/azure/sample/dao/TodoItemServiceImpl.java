@@ -1,17 +1,25 @@
+/**
+ * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Licensed under the MIT License. See LICENSE in the project root for
+ * license information.
+ */
 package com.microsoft.azure.sample.dao;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.stereotype.Service;
+
 import java.util.List;
 
 import com.microsoft.azure.sample.model.TodoItem;
 
 /**
- * Implementation of DirectoryService.
+ * Implementation of todoItemService.
  */
-public class TodoItemRepositoryImpl implements TodoItemService {
+@Service
+public class TodoItemServiceImpl implements TodoItemService {
 
     @Autowired
     TodoItemRepository todoItemRepository;
@@ -20,7 +28,7 @@ public class TodoItemRepositoryImpl implements TodoItemService {
      * Saves Employee object in the backend database and also creates an entry in the cache.
      */
     @Override
-    @CachePut(value="ItemCache")
+    @CachePut(value = "ItemCache")
     public TodoItem createItem(TodoItem todoItem) {
         try {
             todoItemRepository.save(todoItem);
@@ -31,10 +39,12 @@ public class TodoItemRepositoryImpl implements TodoItemService {
     }
     
     /**
-     * Fetches Employee information by id from backend for the first time and creates an entry in the cache, which will be used from next time with out executing the method.
+     * Fetches Employee information by id from backend for 
+     * the first time and creates an entry in the cache,
+     * which will be used from next time with out executing the method.
      */
     @Override
-    @Cacheable(value="ItemCache")
+    @Cacheable(value = "ItemCache")
     public TodoItem findOne(String index){
         return todoItemRepository.findOne(index);
     }
@@ -43,13 +53,13 @@ public class TodoItemRepositoryImpl implements TodoItemService {
      * Removes the Employee information by id from backend and evicts the same from cache.
      */
     @Override
-    @Cacheable(value="ItemCache")
+    @Cacheable(value = "ItemCache")
     public List<TodoItem> findAll(){
         return todoItemRepository.findAll();
     }
 
     @Override
-    @CacheEvict(value="ItemCache")
+    @CacheEvict(value = "ItemCache")
     public void deleteItem(String itemID){
         todoItemRepository.delete(itemID);
     }
