@@ -1,0 +1,41 @@
+URL: http://104.211.211.89:19080/Resources/Applications/todoapp?api-version=6.3
+
+{
+	"name": "todoapp",
+	"description": "Todo Azure Java App",
+	"properties": {
+		"services": [{
+			"name": "todoappsvc",
+			"properties": {
+				"description": "Todo Azure Java Service.",
+				"osType": "linux",
+				"codePackages": [{
+						"name": "todoappcodepack",
+						"image": "rapatchi/todoapplinux:4.0",
+						"reliableCollectionsRefs": [
+						{
+							"name": "TestReliableCollections",
+							"doNotPersistState": true
+						}
+						],
+						"resources": {
+                            "requests": {
+                                "cpu": "0.5",
+                                "memoryInGB": "2"
+                            }
+                        },
+                        "endpoints": [
+                        {
+                            "name": "httpendpoint",
+                            "port": "8080"
+                        }]
+
+					}
+
+				],
+				"replicaCount": "1"
+			}
+		}]
+		
+	}
+}
