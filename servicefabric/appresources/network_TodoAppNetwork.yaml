@@ -1,0 +1,13 @@
+network:
+  schemaVersion: 1.0.0
+  name: TodoAppNetwork
+  properties:
+    description: This network has no description
+    addressPrefix: 10.0.0.4/22
+    ingressConfig:
+      layer4:
+        - name: TodoAppSvcListener
+          publicPort: 8080
+          applicationName: TodoApp
+          serviceName: TodoAppSvc
+          endpointName: TodoAppSvcListener
