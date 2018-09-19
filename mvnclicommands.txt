@@ -1,0 +1,11 @@
+mvn sf-mesh:init -DapplicationName=TodoApp
+mvn sf-mesh:addservice -DapplicationName=TodoApp -DserviceName=TodoAppSvc -DimageName=rapatchi/todoapplinux:4.0 -DlistenerPort=8080 -DnetworkRef=TodoAppNetwork -DmemoryUsage=2.0
+mvn sf-mesh:addnetwork -DapplicationName=TodoApp -DserviceName=TodoAppSvc -DingressPort=8080 -DnetworkRef=TodoAppNetwork -DlistenerName=TodoAppSvcListener
+
+
+
+Add the following content in code packages section:
+             reliableCollectionsRefs:
+              - name: TestReliableCollections
+                doNotPersistState: True
+				
