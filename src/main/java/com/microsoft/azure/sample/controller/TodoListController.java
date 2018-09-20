@@ -5,12 +5,13 @@
  */
 package com.microsoft.azure.sample.controller;
 
-import com.microsoft.azure.sample.dao.TodoItemRepository;
+import com.microsoft.azure.sample.dao.TodoItemService;
 import com.microsoft.azure.sample.model.TodoItem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -22,7 +23,7 @@ import java.util.UUID;
 public class TodoListController {
 
     @Autowired
-    private TodoItemRepository todoItemRepository;
+    private TodoItemService todoItemService; 
 
     public TodoListController() {
     }
@@ -38,23 +39,23 @@ public class TodoListController {
     /**
      * HTTP GET
      */
-    @RequestMapping(value = "/api/todolist/{index}",
+    @RequestMapping(value = "/api/todolist",
             method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<?> getTodoItem(@PathVariable("index") String index) {
+    public ResponseEntity<?> getTodoItem(@RequestParam("id") String id) {
         try {
-            return new ResponseEntity<TodoItem>(todoItemRepository.findOne(index), HttpStatus.OK);
+            return new ResponseEntity<TodoItem>(todoItemService.findOne(id), HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<String>(index + " not found", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<String>(id + " not found", HttpStatus.NOT_FOUND);
         }
     }
 
     /**
      * HTTP GET ALL
      */
-    @RequestMapping(value = "/api/todolist", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE})
+    @RequestMapping(value = "/api/todolist/all", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<?> getAllTodoItems() {
         try {
-            return new ResponseEntity<List<TodoItem>>(todoItemRepository.findAll(), HttpStatus.OK);
+            return new ResponseEntity<List<TodoItem>>(todoItemService.findAll(), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<String>("Nothing found", HttpStatus.NOT_FOUND);
         }
@@ -64,10 +65,9 @@ public class TodoListController {
      * HTTP POST NEW ONE
      */
     @RequestMapping(value = "/api/todolist", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> addNewTodoItem(@RequestBody TodoItem item) {
+    public ResponseEntity<String> addNewTodoItem(@RequestParam("id") String id, @RequestBody TodoItem item) {
         try {
-            item.setID(UUID.randomUUID().toString());
-            todoItemRepository.save(item);
+            todoItemService.createItem(item);
             return new ResponseEntity<String>("Entity created", HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<String>("Entity creation failed", HttpStatus.CONFLICT);
@@ -78,10 +78,10 @@ public class TodoListController {
      * HTTP PUT UPDATE
      */
     @RequestMapping(value = "/api/todolist", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> updateTodoItem(@RequestBody TodoItem item) {
+    public ResponseEntity<String> updateTodoItem(@RequestParam("id") String id, @RequestBody TodoItem item) {
         try {
-            todoItemRepository.delete(item.getID());
-            todoItemRepository.save(item);
+            todoItemService.deleteItem(item.getId());
+            todoItemService.createItem(item);
             return new ResponseEntity<String>("Entity updated", HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<String>("Entity updating failed", HttpStatus.NOT_FOUND);
@@ -91,10 +91,10 @@ public class TodoListController {
     /**
      * HTTP DELETE
      */
-    @RequestMapping(value = "/api/todolist/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity<String> deleteTodoItem(@PathVariable("id") String id) {
+    @RequestMapping(value = "/api/todolist", method = RequestMethod.DELETE)
+    public ResponseEntity<String> deleteTodoItem(@RequestParam("id") String id) {
         try {
-            todoItemRepository.delete(id);
+            todoItemService.deleteItem(id);
             return new ResponseEntity<String>("Entity deleted", HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<String>("Entity deletion failed", HttpStatus.NOT_FOUND);

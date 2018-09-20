@@ -1,0 +1,19 @@
+1. mvn sf-mesh:init -DapplicationName=TodoApp
+2. mvn sf-mesh:addservice -DapplicationName=TodoApp -DserviceName=TodoAppSvc -DimageName=rapatchi/todoapplinux:6.6 -DlistenerPort=8080 -DnetworkRef=TodoAppNetwork -DmemoryUsage=2.0
+3. mvn sf-mesh:addnetwork -DapplicationName=TodoApp -DserviceName=TodoAppSvc -DingressPort=8080 -DnetworkRef=TodoAppNetwork -DlistenerName=TodoAppSvcListener
+
+4. Add the following content in code packages section of service.yaml.:
+             reliableCollectionsRefs:
+              - name: TestReliableCollections
+                doNotPersistState: True
+                
+(Optional:) Currently we rely on the environment variable mentioned below if you want are working with multiple partitions(replicacount) and you
+want to really show that data is getting inserted into multiple partitions. If you do not add the following and use multiple partitions(replication) by default all requests will go to partition 0.
+Add the following in to code packages section of service.yaml.
+              environmentVariables: 
+                - name: Fabric_PartitionCount
+                  value: 2
+        The value of Fabric_PartitionCount should be equal with the replica count you mention
+
+5. mvn sf-mesh:deploy -DdeploymentType=cloud -DresourceGroup=rapatchimeshtestfinal -Dlocation=eastus (Note only eastus should be used for rc apps)
+6. mvn sf-mesh:remove -DdeploymentType=cloud -DresourceGroup=rapatchimeshtestfinal -DapplicationName=TodoApp -DdeleteResourceGroup=true

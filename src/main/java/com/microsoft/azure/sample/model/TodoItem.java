@@ -5,9 +5,11 @@
  */
 package com.microsoft.azure.sample.model;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class TodoItem {
+public class TodoItem implements Serializable {
+
     private String id;
     private String description;
     private String owner;
@@ -47,12 +49,18 @@ public class TodoItem {
         this.owner = owner;
     }
 
-    public String getID() {
+    public String getId() {
         return id;
     }
 
-    public void setID(String id) {
+    public void setId(String id) {
         this.id = id;
+    }
+
+    @Override
+    public String toString() {
+        return "Id:" + this.id + "\nDescripion:" + this.description +
+         "\nFinished:" + this.finished + "\nOwner:" + this.owner;
     }
 
     @Override
@@ -66,7 +74,7 @@ public class TodoItem {
         final TodoItem group = (TodoItem) o;
         return Objects.equals(this.getDescription(), group.getDescription())
                 && Objects.equals(this.getOwner(), group.getOwner())
-                && Objects.equals(this.getID(), group.getID());
+                && Objects.equals(this.getId(), group.getId());
     }
 
     @Override

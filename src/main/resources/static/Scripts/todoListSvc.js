@@ -9,21 +9,21 @@ angular.module('todoApp')
     .factory('todoListSvc', ['$http', function ($http) {
         return {
             getItems: function () {
-                return $http.get('api/todolist');
+                return $http.get('api/todolist/all');
             },
             getItem: function (id) {
-                return $http.get('api/todolist/' + id);
+                return $http.get('api/todolist?id=' + id);
             },
-            postItem: function (item) {
-                return $http.post('api/todolist/', item);
+            postItem: function (id, item) {
+                return $http.post('api/todolist?id=' + id, item);
             },
-            putItem: function (item) {
-                return $http.put('api/todolist/', item);
+            putItem: function (id, item) {
+                return $http.put('api/todolist?id=' + id, item);
             },
             deleteItem: function (id) {
                 return $http({
                     method: 'DELETE',
-                    url: 'api/todolist/' + id
+                    url: 'api/todolist?id=' + id
                 });
             }
         };

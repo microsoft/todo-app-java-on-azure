@@ -1,0 +1,25 @@
+application:
+  schemaVersion: 1.0.0
+  name: TodoApp
+  properties:  
+    services:
+      - name: TodoAppSvc
+        properties:
+          description: This service has no description
+          osType: Linux
+          codePackages:
+           - name: TodoAppSvcCodePackage
+             image: rapatchi/todoapplinux:5.1
+             reliableCollectionsRefs:
+              - name: TestReliableCollections
+                doNotPersistState: True
+             endpoints:
+                - name: TodoAppSvcListener
+                  port: 8080
+             resources:
+                requests:
+                  cpu: 0.5
+                  memoryInGB: 2.0
+          replicaCount: 1
+          networkRefs:
+            - name: TodoAppNetwork
