@@ -9,7 +9,7 @@ application:
           osType: Linux
           codePackages:
            - name: TodoAppSvcCodePackage
-             image: rapatchi/todoapplinux:4.0
+             image: rapatchi/todoapplinux:5.1
              reliableCollectionsRefs:
               - name: TestReliableCollections
                 doNotPersistState: True

@@ -66,6 +66,7 @@ public class TodoListController {
     @RequestMapping(value = "/api/todolist", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> addNewTodoItem(@RequestBody TodoItem item) {
         try {
+            System.out.println("Adding item:" + item.getOwner());
             item.setId(UUID.randomUUID().toString());
             todoItemService.createItem(item);
             return new ResponseEntity<String>("Entity created", HttpStatus.CREATED);
@@ -80,6 +81,7 @@ public class TodoListController {
     @RequestMapping(value = "/api/todolist", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> updateTodoItem(@RequestBody TodoItem item) {
         try {
+            System.out.println("Updating item:" + item.getOwner());
             todoItemService.deleteItem(item.getId());
             todoItemService.createItem(item);
             return new ResponseEntity<String>("Entity updated", HttpStatus.OK);
@@ -94,6 +96,7 @@ public class TodoListController {
     @RequestMapping(value = "/api/todolist/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<String> deleteTodoItem(@PathVariable("id") String id) {
         try {
+            System.out.println("Deleting item:" + id);
             todoItemService.deleteItem(id);
             return new ResponseEntity<String>("Entity deleted", HttpStatus.OK);
         } catch (Exception e) {

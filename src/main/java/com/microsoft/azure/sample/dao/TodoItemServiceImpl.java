@@ -31,6 +31,7 @@ public class TodoItemServiceImpl implements TodoItemService {
     @CachePut(value = "ItemCache", key = "#todoItem.id")
     public TodoItem createItem(TodoItem todoItem) {
         try {
+            System.out.println("Saving to repository:" + todoItem.getOwner());
             todoItemRepository.save(todoItem);
         } catch (Exception ex){
             ex.printStackTrace();
@@ -46,6 +47,7 @@ public class TodoItemServiceImpl implements TodoItemService {
     @Override
     @Cacheable(value = "ItemCache", key = "#index")
     public TodoItem findOne(String index){
+        System.out.println("Finding for repository:" + index);
         return todoItemRepository.findOne(index);
     }
 
@@ -60,6 +62,7 @@ public class TodoItemServiceImpl implements TodoItemService {
     @Override
     @CacheEvict(value = "ItemCache", key = "#itemID")
     public void deleteItem(String itemID){
+        System.out.println("Deleting form repository:" + itemID);
         todoItemRepository.delete(itemID);
     }
 

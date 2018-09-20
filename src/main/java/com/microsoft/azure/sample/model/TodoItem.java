@@ -58,6 +58,12 @@ public class TodoItem implements Serializable {
     }
 
     @Override
+    public String toString() {
+        return "Id:" + this.id + "\nDescripion:" + this.description +
+         "\nFinished:" + this.finished + "\nOwner:" + this.owner;
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (o == this) {
             return true;
