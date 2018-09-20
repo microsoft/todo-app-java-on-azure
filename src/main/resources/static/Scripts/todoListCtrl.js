@@ -19,8 +19,8 @@ angular.module('todoApp')
             finish: false
         };
 
-        $scope.finishSwitch = function (todo) {
-            todoListSvc.putItem(todo).error(function (err) {
+        $scope.finishSwitch = function (id, todo) {
+            todoListSvc.putItem(id, todo).error(function (err) {
                 todo.finished = !todo.finished;
                 $scope.error = err;
                 $scope.loadingMessage = '';
@@ -60,7 +60,7 @@ angular.module('todoApp')
         };
 
         $scope.update = function (todo) {
-            todoListSvc.putItem($scope.editInProgressTodo).success(function (results) {
+            todoListSvc.putItem($scope.editInProgressTodo.id, $scope.editInProgressTodo).success(function (results) {
                 $scope.populate();
                 $scope.editSwitch(todo);
                 $scope.loadingMessage = results;
@@ -77,8 +77,17 @@ angular.module('todoApp')
                 localStorage.setItem('user', user);
                 return user;
             }
-
-            todoListSvc.postItem({
+            function guid() {
+                function s4() {
+                return Math.floor((1 + Math.random()) * 0x10000)
+                    .toString(16)
+                    .substring(1);
+                }
+                return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
+            }
+            var uuid = guid();
+            todoListSvc.postItem(uuid, {
+                'id': uuid,
                 'description': $scope.newTodoCaption,
                 'owner': getUser(),
                 'finish': 'false'
