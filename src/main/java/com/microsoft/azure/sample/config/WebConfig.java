@@ -37,7 +37,6 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 
 	@Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-		//registry.addResourceHandler("/**").addResourceLocations("/WEB-INF/classes/static/");
 		registry.addResourceHandler("/**").addResourceLocations("/", "classpath:/static/");
 	}
 	
@@ -58,7 +57,6 @@ public class WebConfig extends WebMvcConfigurerAdapter {
       registry.addInterceptor(
     			new PartitionResolutionHandler(
     					(HttpServletRequest request, Integer numOfPartitions) -> {
-    						System.out.println("____ " + request.getQueryString());
     						String query = request.getQueryString();
     						if (query == null || "".equals(query)) {
     							return "0";
@@ -68,8 +66,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     							return "0";
     						}
     						String id = tokens[1];
-    						System.out.println("____ " + id + " ___ " + id.hashCode());
-    						return Long.toString(id.hashCode() % numOfPartitions);
+    						return Long.toString(Math.abs(id.hashCode()) % numOfPartitions);
     					}));
    }
 

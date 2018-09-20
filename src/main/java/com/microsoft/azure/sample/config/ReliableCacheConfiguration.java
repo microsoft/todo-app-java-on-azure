@@ -24,19 +24,19 @@ public class ReliableCacheConfiguration {
      * Gets the Reliable Cache Provider
      * @return returns new ReliableCacheProvider instance
      */
-   /* public ReliableCacheProvider cachingProvider() { 
+	public ReliableCacheProvider cachingProvider() { 
         return new ReliableCacheProvider(); 
-    } */
+    }
     
     /**
      * Bean to define Reliable Cache Manager. 
      * This enables spring to use Reliable Cache Provider for caching.
      * @return returns ReliableCacheManager instance
      */
-    /*@Bean 
+    @Bean 
     public CacheManager cacheManager() { 
         final ReliableCacheManager cacheManager = new ReliableCacheManager(cachingProvider().getCacheManager());
         return cacheManager; 
-    } */
+    }
 
 }
