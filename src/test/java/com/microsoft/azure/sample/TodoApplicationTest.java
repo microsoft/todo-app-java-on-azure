@@ -19,6 +19,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 import org.junit.After;
 import org.junit.Before;
@@ -61,7 +62,7 @@ public class TodoApplicationTest {
         repository.put(mockItemB.getID(), mockItemB);
 
         given(this.todoItemRepository.save(any(TodoItem.class))).willAnswer((InvocationOnMock invocation) -> {
-            final TodoItem item = invocation.getArgumentAt(0, TodoItem.class);
+            final TodoItem item = invocation.getArgument(0);
             if (repository.containsKey(item.getID())) {
                 throw new Exception("Conflict.");
             }
@@ -69,9 +70,9 @@ public class TodoApplicationTest {
             return item;
         });
 
-        given(this.todoItemRepository.findOne(any(String.class))).willAnswer((InvocationOnMock invocation) -> {
-            final String id = invocation.getArgumentAt(0, String.class);
-            return repository.get(id);
+        given(this.todoItemRepository.findById(any(String.class))).willAnswer((InvocationOnMock invocation) -> {
+            final String id = invocation.getArgument(0);
+            return Optional.of(repository.get(id));
         });
 
         given(this.todoItemRepository.findAll()).willAnswer((InvocationOnMock invocation) -> {
@@ -79,13 +80,13 @@ public class TodoApplicationTest {
         });
 
         willAnswer((InvocationOnMock invocation) -> {
-            final String id = invocation.getArgumentAt(0, String.class);
+            final String id = invocation.getArgument(0);
             if (!repository.containsKey(id)) {
                 throw new Exception("Not Found.");
             }
             repository.remove(id);
             return null;
-        }).given(this.todoItemRepository).delete(any(String.class));
+        }).given(this.todoItemRepository).deleteById(any(String.class));
     }
 
     @After

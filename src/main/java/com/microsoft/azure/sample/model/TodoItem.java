@@ -5,8 +5,11 @@
  */
 package com.microsoft.azure.sample.model;
 
+import com.microsoft.azure.spring.data.cosmosdb.core.mapping.Document;
+
 import java.util.Objects;
 
+@Document
 public class TodoItem {
     private String id;
     private String description;
