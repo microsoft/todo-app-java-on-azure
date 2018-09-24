@@ -7,7 +7,7 @@
     <groupId>com.microsoft.azure</groupId>
     <artifactId>todo-app-java-on-azure</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <packaging>jar</packaging>
+    <packaging>war</packaging>
 
     <name>todo-app-java-on-azure</name>
     <description>A todo list application uses AngularJS and Azure DocumentDB Spring boot starter</description>
