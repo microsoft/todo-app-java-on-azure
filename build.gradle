@@ -3,7 +3,7 @@ buildscript {
     repositories {
         jcenter()
         maven {
-            url uri('/Users/farlen/.m2/repository')
+            url uri('<path_to_local_maven_repo>')
         }
     }
     dependencies {
@@ -47,22 +47,33 @@ cargo {
     }
 }
 
-azurewebapp {
-    deploymentType = 'wardeploy'
+azureWebApp {
     resourceGroup = "${System.env.WEBAPP_RESOURCE_GROUP}"
     appName = "${System.env.WEBAPP_NAME}"
     pricingTier = "S2"
-    authFile = file('/Users/farlen/stuff/my2.azureauth')
-    // if 'target' is not specified, dafault output of the 'war' plugin will be used
-//    target = file('C:/stuff/azure-gradle-plugins.4/samples/todo-app-java-on-azure.appservice-on-linux/build/libs/todoapp.war')
-    appServiceOnLinux = {
+    region = "southcentralus"
+
+    appService = {
+        type = 'linux'
         runtimeStack = 'TOMCAT 9.0-jre8'
-//        urlPath = 'todoapp'
     }
-//    appServiceOnWindows = {
-//        javaWebContainer = "tomcat 8.5"
-//        javaVersion = "1.8.0_102"
-//        urlPath = 'todoapp'
-//    }
+
+/*    appService = {
+        type = 'windows'
+        javaWebContainer = "tomcat 8.5"
+        javaVersion = "1.8.0_102"
+    }*/
+
+    authentication = {
+        type = "file"
+        file = "<path_to_auth_file>"
+    }
+
+    deployment = {
+        type = "war"
+// if 'warFile' is not specified, default output of the 'war' plugin will be used
+//        warFile = '<path_to_war_file>'
+        contextPath = 'todoapp'
+    }
 }
 
