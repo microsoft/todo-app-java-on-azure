@@ -3,7 +3,7 @@ buildscript {
     repositories {
         jcenter()
         maven {
-            url uri('/Users/farlen/.m2/repository')
+            url uri('<path_to_local_maven_repo>')
         }
     }
     dependencies {

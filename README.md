@@ -84,6 +84,13 @@ the system environment variable
 TOMCAT_HOME=put-your-tomcat-home-here
 ```
 
+In build.gradle provide following values:
+```
+<path_to_local_maven_repo> - path to local maven repository
+<path_to_auth_file> - path to file containing authentication information
+```
+For more information see [how to create auth file](https://github.com/Azure/azure-libraries-for-java/blob/master/AUTH.md).
+
 ## Build Todo List Web App - WAR
 
 ```bash
@@ -115,19 +122,6 @@ again without restarting Tomcat.
 
 ```bash
 gradle azureWebappDeploy
-```
-
-TODO: show how to deploy multiple applications.
-
-### Temporary Step - until it is fixed on the App Service service-side
-
-1. Go the Web App on Linux in the Azure Portal
-2. Click on Development Tools / SSH
-3. Click on Go --> to the app's SSH Shell
-
-```bash
-cd /home/site/wwwroot/webapps/ROOT
-rm index.jsp
 ```
 
 ### Open the todo list Web app
