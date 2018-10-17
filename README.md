@@ -9,7 +9,7 @@ This TodoList app is an Azure Java application. It provides end-to-end CRUD oper
 * [Create Azure Cosmos DB documentDB](#create-azure-cosmos-db-documentdb)
 * [Configuration](#configuration)
 * [Run it](#run-it)
-* [Contribution](#contribution)
+* [Contribution](#contributing)
 * Add new features
     * [Add AAD](https://github.com/Microsoft/todo-app-java-on-azure/tree/aad-start)
     * [Add KeyVault](https://github.com/Microsoft/todo-app-java-on-azure/tree/keyvault-secrets)
