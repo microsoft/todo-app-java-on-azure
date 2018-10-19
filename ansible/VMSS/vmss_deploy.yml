@@ -37,19 +37,19 @@
     - name: update uri
       lineinfile:
         dest: "{{ workspace }}/src/main/resources/application.properties"
-        regexp: '^azure.documentdb.uri='
+        regexp: '^azure.cosmosdb.uri='
         line: "{{ dburi }}"
 
     - name: update key
       lineinfile:
         dest: "{{ workspace }}/src/main/resources/application.properties"
-        regexp: '^azure.documentdb.key='
+        regexp: '^azure.cosmosdb.key='
         line: "{{ dbkey }}"
 
     - name: update db name
       lineinfile:
         dest: "{{ workspace }}/src/main/resources/application.properties"
-        regexp: '^azure.documentdb.database='
+        regexp: '^azure.cosmosdb.database='
         line: "{{ dbstring }}"
 
     - name: Build sample app

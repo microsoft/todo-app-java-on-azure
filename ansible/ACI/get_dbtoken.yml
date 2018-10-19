@@ -7,9 +7,9 @@
 
     - name: Set DB facts
       set_fact:
-        dburi: 'azure.documentdb.uri=https://{{dbname}}.documents.azure.com:443'
-        dbkey: 'azure.documentdb.key={{cosmosdb.response.primaryMasterKey}}'
-        dbstring: 'azure.documentdb.database={{dbname}}'
+        dburi: 'azure.cosmosdb.uri=https://{{dbname}}.documents.azure.com:443'
+        dbkey: 'azure.cosmosdb.key={{cosmosdb.response.primaryMasterKey}}'
+        dbstring: 'azure.cosmosdb.database={{dbname}}'
 
     - debug:
         msg: "{{dbkey}}"
