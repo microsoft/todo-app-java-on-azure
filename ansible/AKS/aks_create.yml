@@ -1,3 +1,7 @@
+# Description
+# ===========
+# This playbook create an ACR, an AKS and deploy secrets into AKS
+
 ---
 - hosts: localhost
   vars_files:

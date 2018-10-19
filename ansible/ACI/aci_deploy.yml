@@ -1,17 +1,6 @@
 # Description
 # ===========
-# This plabyook build a docker image, then push to azure container registry, 
-# then provision an azure container instance with that image.
-# 1. clone a sample helloworld app
-# 1. create azure container registery
-# 1. build docker image from helloworld app, and push image to azure container azure container registry
-# 1. create azure container instance with the image in azure container registry
-#
-# Prequisite
-# ===========
-# - git
-# - Docker
-# - Maven
+# This playbook build the sample application into a docker image, push the image into ACR and create ACI from the image.
 
 - hosts: localhost
   vars_files:
