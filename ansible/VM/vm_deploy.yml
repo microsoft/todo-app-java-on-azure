@@ -2,7 +2,6 @@
 # ===========
 # This playbook build the sample application and deploy it into VM
 
----
 - hosts: localhost
   vars_files:
   - vm_vars.yml
