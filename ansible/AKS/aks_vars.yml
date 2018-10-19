@@ -1,0 +1,13 @@
+---
+resource_group: tododemo_aks
+resource_name: tododemoaks
+location: eastus
+AZURE_CLIENT_ID: your_azure_client_id
+AZURE_SECRET: your_azure_secret
+SSH_PUBLIC_KEY: your_ssh_key
+registry_name: tododemoaksacr
+image_name: tododemo
+workspace: ~/src/todo
+repo_url: https://github.com/xiangyan99/todo-app-java-on-azure.git
+email: test@email.com
+dbname: tododemoaksdb

@@ -1,0 +1,40 @@
+    - name: Call REST API - DatabaseAccounts_CreateOrUpdate
+      azure_rm_resource:
+        # url: /subscriptions/{{ lookup('env','AZURE_SUBSCRIPTION_ID') }}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}
+        api_version: '2015-04-08'
+        resource_group: "{{ resource_group }}"
+        provider: documentdb
+        resource_type: databaseaccounts
+        resource_name: "{{ dbname }}"
+        body:
+          # Parameters to create and update Cosmos DB database accounts.
+          # A database account resource.
+          location: "{{ location }}"
+          tags: # Tags are a list of key-value pairs that describe the resource. These tags can be used in viewing and grouping this resource (across resource groups). A maximum of 15 tags can be provided for a resource. Each tag must have a key no greater than 128 characters and value no greater than 256 characters. For example, the default experience for a template type is set with "defaultExperience": "Cassandra". Current "defaultExperience" values also include "Table", "Graph", "DocumentDB", and "MongoDB".
+          kind: GlobalDocumentDB
+          properties:
+            databaseAccountOfferType: Standard
+    
+    - name: Wait for namespace to be ready
+      azure_rm_resource_facts:
+        api_version: '2015-04-08'
+        resource_group: "{{ resource_group }}"
+        provider: documentdb
+        resource_type: databaseaccounts
+        resource_name: "{{ dbname }}"
+      register: output
+      until: output.response[0].properties.readLocations[0].provisioningState == 'Succeeded'
+      delay: 100
+
+    - name: Get cosmos db facts
+      azure_rm_resource_facts:
+        # url: /subscriptions/{{ lookup('env','AZURE_SUBSCRIPTION_ID') }}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}
+        api_version: '2015-04-08'
+        resource_group: "{{ resource_group }}"
+        provider: documentdb
+        resource_type: databaseaccounts
+        resource_name: "{{ dbname }}"
+      register: output
+
+    - debug:
+        var: output
