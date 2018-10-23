@@ -18,6 +18,5 @@
         name: "{{ registry_name}}"
         admin_user_enabled: True
         sku: Standard
-      register: acr_result
       
     - include: db_create.yml

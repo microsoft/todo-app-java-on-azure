@@ -1,6 +1,17 @@
 # Description
 # ===========
-# This playbook build the sample application into a docker image, push the image into ACR and create ACI from the image.
+# Use this playbook to 
+# - git clone and build a sample java app into docker image
+# - Push the image into ACR
+# - Create an ACI instance
+#
+# Use aci_create playbook to create ACR first
+#
+# Dependencies
+# ============
+# - maven on ansible host
+# - git on ansible host
+# - docker on ansible host
 
 - hosts: localhost
   vars_files:
