@@ -1,0 +1,22 @@
+# Description
+# ===========
+# This playbook create an Azure Container Registry.
+
+- hosts: localhost
+  vars_files:
+  - aci_vars.yml
+
+  tasks:
+    - name: Create a resource group
+      azure_rm_resourcegroup:
+        name: "{{ resource_group }}"
+        location: "{{ location }}"
+    
+    - name: Create Azure Container Registry
+      azure_rm_containerregistry:
+        resource_group: "{{ resource_group }}"
+        name: "{{ registry_name}}"
+        admin_user_enabled: True
+        sku: Standard
+      
+    - include: db_create.yml

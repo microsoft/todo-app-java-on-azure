@@ -1,0 +1,73 @@
+# Description
+# ===========
+# This playbook create an ACR, an AKS and deploy secrets into AKS
+
+- hosts: localhost
+  vars_files:
+  - aks_vars.yml
+      
+  tasks:
+  - name: Create a resource group
+    azure_rm_resourcegroup:
+     name: "{{ resource_group }}"
+     location: "{{ location }}"
+
+  - name: Create an AKS instance
+    azure_rm_aks:
+     name: "{{ resource_name }}"
+     resource_group: "{{ resource_group }}"
+     location: eastus
+     dns_prefix: "{{ resource_name }}"
+     service_principal:
+         client_id: "{{ AZURE_CLIENT_ID }}"
+         client_secret: "{{ AZURE_SECRET }}"
+     linux_profile:
+         admin_username: azureuser
+         ssh_key: "{{ SSH_PUBLIC_KEY }}"
+     agent_pool_profiles:
+         - name: default
+           count: 1
+           vm_size: Standard_DS1_v2
+    register: aks
+
+  - name: Create Azure Container Registry
+    azure_rm_containerregistry:
+      resource_group: "{{ resource_group }}"
+      name: "{{ registry_name}}"
+      admin_user_enabled: True
+      sku: Standard
+    register: acr_result
+
+  - name: Removing
+    file:
+      path: "{{ workspace }}"
+      state: absent
+
+  - name: Git Clone
+    git:
+      repo: "{{ repo_url }}"
+      dest: "{{ workspace }}"
+
+  - name: Login docker registry
+    docker_login:
+      registry: "{{ registry_name }}.azurecr.io"
+      username: "{{ registry_name }}"
+      password: "{{ acr_result.credentials.password }}"
+      email: "{{ email }}"
+
+  - name: generate secret.yaml
+    shell: cat {{ workspace }}/ansible/AKS/secret.yaml | sed "s/dockersecret/$(cat ~/.docker/config.json | base64  | tr -d '\n')/g" > {{ workspace }}/ansible/AKS/secret1.yaml
+
+  - name: Save kubeconfig
+    copy:
+      content: "{{ aks.kube_config }}"
+      dest: "{{ workspace }}/config"
+    
+  - name: Deploy secret
+    k8s_raw:
+      state: present
+      force: true
+      kubeconfig: "{{ workspace }}/config"
+      src: "{{ workspace }}/ansible/AKS/secret1.yaml"
+  
+  - include: db_create.yml

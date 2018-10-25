@@ -1,0 +1,21 @@
+---
+- hosts: localhost
+  vars_files:
+  - aks_vars.yml
+  
+  tasks:
+  - name: Scale the AKS instance agent count from 1 to 2
+    azure_rm_aks:
+     name: "{{ resource_name }}"
+     resource_group: "{{ resource_group }}"
+     location: eastus
+     dns_prefix: "{{ resource_name }}"
+     service_principal:
+         client_id: "{{ AZURE_CLIENT_ID }}"
+     linux_profile:
+         admin_username: azureuser
+         ssh_key: "{{ SSH_PUBLIC_KEY }}"
+     agent_pool_profiles:
+         - name: default
+           count: 2
+           vm_size: Standard_DS1_v2

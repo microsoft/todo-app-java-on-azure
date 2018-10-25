@@ -1,0 +1,9 @@
+---
+resource_group: tododemo_vm
+vm_name: tododemovm
+admin_username: your_user_name
+admin_password: your_password
+location: eastus
+repo_url: https://github.com/xiangyan99/todo-app-java-on-azure.git
+workspace: ~/src/todo
+dbname: tododemovmdb

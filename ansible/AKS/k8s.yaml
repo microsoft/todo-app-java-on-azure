@@ -1,0 +1,48 @@
+---
+kind: Deployment
+apiVersion: extensions/v1beta1
+metadata:
+  name: tododemo
+  namespace: default
+  labels:
+    app: tododemo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tododemo
+  template:
+    metadata:
+      name: tododemo
+      labels:
+        app: tododemo
+    spec:
+      containers:
+      - name: tododemo
+        image: YourACRName.azurecr.io/YourImageName
+        imagePullPolicy: Always
+      imagePullSecrets:
+      - name: regsecret
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: tododemo
+  namespace: default
+  labels:
+    app: tododemo
+spec:
+  ports:
+  - name: tcp-80-80-z4417
+    protocol: TCP
+    port: 80
+    targetPort: 80
+  selector:
+    app: tododemo
+  type: LoadBalancer

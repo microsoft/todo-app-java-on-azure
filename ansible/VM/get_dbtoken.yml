@@ -1,0 +1,17 @@
+    - name: Call REST API - DatabaseAccounts_ListKeys
+      azure_rm_resource:
+        url: /subscriptions/{{ AZURE_SUBSCRIPTION_ID }}/resourceGroups/{{ resource_group }}/providers/Microsoft.DocumentDB/databaseAccounts/{{ dbname }}/listKeys
+        api_version: '2015-04-08'
+        method: POST
+      register: cosmosdb
+
+    - name: Set DB facts
+      set_fact:
+        dburi: 'azure.cosmosdb.uri=https://{{dbname}}.documents.azure.com:443'
+        dbkey: 'azure.cosmosdb.key={{cosmosdb.response.primaryMasterKey}}'
+        dbstring: 'azure.cosmosdb.database={{dbname}}'
+
+    - debug:
+        msg: "{{dbkey}}"
+    
+

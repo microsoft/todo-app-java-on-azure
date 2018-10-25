@@ -1,0 +1,10 @@
+---
+resource_group: tododemo_vmss
+vmss_name: tododemovmss
+location: eastus
+admin_username: your_user_name
+admin_password: your_password
+lb_name: "{{ vmss_name }}_lb"
+repo_url: https://github.com/xiangyan99/todo-app-java-on-azure.git
+workspace: ~/src/todo
+dbname: tododemovmssdb

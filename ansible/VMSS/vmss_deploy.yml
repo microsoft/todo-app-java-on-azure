@@ -1,0 +1,82 @@
+# Description
+# ===========
+# Use this playbook to 
+# - git clone and build a sample hello world Spring java app
+# - Install JRE on VMSS, 
+# - then copy jar file to VMSS.
+# - start the application.
+#
+# Use vmss-create playbook to create VMSS first
+# This sample requires Ansible 2.6 
+#
+# Dependencies
+# ============
+# - maven on ansible host
+# - git on ansible host
+
+---
+- hosts: localhost
+  vars_files:
+  - vmss_vars.yml
+
+  tasks:   
+    - include: get_vmss_host.yml
+
+    - include: get_dbtoken.yml
+    
+    - name: Removing
+      file:
+        path: "{{ workspace }}"
+        state: absent
+
+    - name: Git Clone sample app
+      git:
+        repo: "{{ repo_url }}"
+        dest: "{{ workspace }}"
+
+    - name: update uri
+      lineinfile:
+        dest: "{{ workspace }}/src/main/resources/application.properties"
+        regexp: '^azure.cosmosdb.uri='
+        line: "{{ dburi }}"
+
+    - name: update key
+      lineinfile:
+        dest: "{{ workspace }}/src/main/resources/application.properties"
+        regexp: '^azure.cosmosdb.key='
+        line: "{{ dbkey }}"
+
+    - name: update db name
+      lineinfile:
+        dest: "{{ workspace }}/src/main/resources/application.properties"
+        regexp: '^azure.cosmosdb.database='
+        line: "{{ dbstring }}"
+
+    - name: Build sample app
+      shell: mvn package chdir="{{ workspace }}"
+
+
+- name: Install JRE on VMSS
+  hosts: vmsshost
+  become: yes
+  vars_files:
+  - vmss_vars.yml
+
+  tasks:
+  - name: Install JRE
+    apt:
+      name: default-jre
+      update_cache: yes
+
+
+  - name: Copy app to Azure VM
+    copy:
+      src: "{{ workspace }}/target/todo-app-java-on-azure-1.0-SNAPSHOT.jar"
+      dest: "/home/{{ admin_username }}/app.jar"
+      force: yes
+      mode: 0755
+
+  - name: Start the app
+    shell: java -jar "/home/{{ admin_username }}/app.jar" --server.port=8080 >/dev/null 2>&1 &
+    async: 5000
+    poll: 0

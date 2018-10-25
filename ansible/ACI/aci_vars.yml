@@ -1,0 +1,10 @@
+---
+resource_group: tododemo_aci
+location: eastus
+registry_name: tododemoaciacr
+repo_url: https://github.com/xiangyan99/todo-app-java-on-azure.git
+workspace: ~/src/todo
+image_name: tododemo
+http_port: 80
+email: test@email.com
+dbname: tododemoacidb
