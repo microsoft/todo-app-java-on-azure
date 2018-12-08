@@ -29,7 +29,7 @@ This TodoList app is an Azure Java application. It provides end-to-end CRUD oper
 
 ## Requirements
 
-* [JDK](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html) 1.8 and above
+* [JDK](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html) 1.8
 * [Maven](https://maven.apache.org/) 3.0 and above
 
 ## Create Azure Cosmos DB documentDB
