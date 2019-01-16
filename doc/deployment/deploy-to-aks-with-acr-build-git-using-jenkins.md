@@ -80,11 +80,7 @@ You will use Docker registry username and password in the next section.
 
 1. Install the plugins in Jenkins. 
 
-   1. Click 'Manage Jenkins' -> 'Manage Plugins' -> 'Available', 
-      then search and install the following plugins: [EnvInject](https://wiki.jenkins.io/display/JENKINS/EnvInject+Plugin), [Azure Container Agents Plugin](https://wiki.jenkins.io/display/JENKINS/Azure+Container+Service+Plugin).
-   1. Download Azure-acr-plugin latest preview release `hpi` file from [GitHub](https://github.com/Azure/azure-acr-plugin/releases).
-      Go to Jenkins page, click `Manage Jenkins` -> `Manage Plugins` -> `Advanced` -> `Upload Plugin`,
-      upload the azure-acr-plugin hpi file.
+   Click 'Manage Jenkins' -> 'Manage Plugins' -> 'Available', then search and install the following plugins: [EnvInject](https://wiki.jenkins.io/display/JENKINS/EnvInject+Plugin), [Azure Container Agents Plugin](https://wiki.jenkins.io/display/JENKINS/Azure+Container+Service+Plugin), [Azure Container Registry Tasks Plugin](https://wiki.jenkins.io/display/JENKINS/Azure+Container+Registry+Tasks+Plugin).
 
 1. Add a Credential in type "Microsoft Azure Service Principal" with the service principal you created. Note the ID as `AZURE_CRED`.
 
