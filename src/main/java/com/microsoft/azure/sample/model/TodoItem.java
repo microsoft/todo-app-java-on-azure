@@ -6,9 +6,15 @@
 package com.microsoft.azure.sample.model;
 
 import com.microsoft.azure.spring.data.cosmosdb.core.mapping.Document;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Objects;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Document
 public class TodoItem {
     private String id;
@@ -16,65 +22,23 @@ public class TodoItem {
     private String owner;
     private boolean finished;
 
-    public TodoItem() {
-    }
-
-    public TodoItem(String id, String description, String owner) {
-        this.description = description;
-        this.id = id;
-        this.owner = owner;
-        this.finished = false;
-    }
-
-    public boolean isFinished() {
-        return finished;
-    }
-
-    public void setFinish(boolean finished) {
-        this.finished = finished;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getOwner() {
-        return owner;
-    }
-
-    public void setOwner(String owner) {
-        this.owner = owner;
-    }
-
-    public String getID() {
-        return id;
-    }
-
-    public void setID(String id) {
-        this.id = id;
+    public TodoItem(String s, String s1, String s2) {
     }
 
     @Override
     public boolean equals(Object o) {
-        if (o == this) {
-            return true;
-        }
-        if (!(o instanceof TodoItem)) {
-            return false;
-        }
-        final TodoItem group = (TodoItem) o;
-        return Objects.equals(this.getDescription(), group.getDescription())
-                && Objects.equals(this.getOwner(), group.getOwner())
-                && Objects.equals(this.getID(), group.getID());
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        TodoItem todoItem = (TodoItem) o;
+        return finished == todoItem.finished &&
+            Objects.equals(id, todoItem.id) &&
+            Objects.equals(description, todoItem.description) &&
+            Objects.equals(owner, todoItem.owner);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(description, id, owner);
+        return Objects.hash(id, description, owner, finished);
     }
 }
 
