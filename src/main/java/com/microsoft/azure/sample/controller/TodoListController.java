@@ -63,7 +63,7 @@ public class TodoListController {
     @RequestMapping(value = "/api/todolist", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> addNewTodoItem(@RequestBody TodoItem item) {
         try {
-            item.setID(UUID.randomUUID().toString());
+            item.setId(UUID.randomUUID().toString());
             todoItemRepository.save(item);
             return new ResponseEntity<String>("Entity created", HttpStatus.CREATED);
         } catch (Exception e) {
@@ -77,7 +77,7 @@ public class TodoListController {
     @RequestMapping(value = "/api/todolist", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> updateTodoItem(@RequestBody TodoItem item) {
         try {
-            todoItemRepository.deleteById(item.getID());
+            todoItemRepository.deleteById(item.getId());
             todoItemRepository.save(item);
             return new ResponseEntity<String>("Entity updated", HttpStatus.OK);
         } catch (Exception e) {
